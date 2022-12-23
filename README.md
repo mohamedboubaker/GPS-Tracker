@@ -8,3 +8,4 @@ The power input is regulated using a DC-DC down converter Texas Instruments TPS5
 Below is a picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
 
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
+![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/3D frontside.png)
