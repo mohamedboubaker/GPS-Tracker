@@ -1,4 +1,4 @@
-# Project Intorudction
+# Project Introduction
 
 The idea is basically a microcontroller, STM32F030, that periodically sends AT commands via UART to the SIM808 GPS/GPRS chip to get GPS and time data and then sends these data to a Mosquitto MQTT server on AWS. This data gets also encrypted with AES before being sent to the server. 
 
