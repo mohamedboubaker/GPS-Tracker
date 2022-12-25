@@ -11,4 +11,3 @@ Below is a picture of the manufactured PCB. The front side is on the left and co
 
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
 
-![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/3D_frontside.png)
