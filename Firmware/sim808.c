@@ -1,3 +1,10 @@
+/** @file sim808.c
+ *  @brief Function implementation for the SIM808 STM32 driver.
+ *
+ *  @author Mohamed Boubaker
+ *  @bug full of bugs
+ *  @todo implement DEBUG mode
+ */
 #include <string.h>
 #include <stdio.h>
 #include "sim808.h"
@@ -73,9 +80,8 @@ static uint8_t strcmpr(const char * a,const char * b, uint8_t n){
 /*
  * function name: sim_init()
  * 
- * it initialises the other UART (defined DEBUG_UART in the header file) that will be used to send debug messsages
- *
- * it initialises The UART, defined SIM_UART in the header file, that is used to communicate with the SIM808 module
+ * it initialises the UART (defined DEBUG_UART in the header file) that will be used to send debug messsages
+ * it also initialises The UART, defined SIM_UART in the header file, that is used to communicate with the SIM808 module
  * it sends AT command = 'AT\r' to module
  * the module will reply OK if it is ready otherwise it will reply ERROR	
  * it uses the Glabal Array sim_rx_buffer to store the reply of the module.
@@ -227,6 +233,13 @@ uint8_t sim_gps_get_location(char * coordinates){
 
 
 /**** GPRS functions ****/
+/*
+ * Function name: sim_gprs_enable()
+ * 
+ * it enables the GPRS modem of the SIM808 module. Before accessing the internet, GPRS must be enabled.
+ *
+ * it returns 1 if the GPRS was successfully enabled and 0 otherwise
+ */
 
 uint8_t sim_gprs_enable(){
 	const char gprs_enable_cmd[]= "AT+CFUN=1\r";
@@ -297,7 +310,7 @@ uint8_t sim_tcp_send(char * host, char * port, uint8_t * data,uint8_t length, ui
 			
 	
 	
-	/*Wait for TCP connection to be established*/
+	/* Wait for TCP connection to be established */
 	while(con_status==0 && timeout_counter<=TCP_CONNECT_TIMEOUT){
 		HAL_Delay(500);/*Wait for connection to finish*/
 		if(strstr(sim_rx_buffer,"CONNECT OK")!=NULL)

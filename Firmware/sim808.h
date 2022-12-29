@@ -1,3 +1,9 @@
+/** @file sim808.h
+ *  @brief Function prototypes for the SIM808 STM32 driver.
+ *
+ *  @author Mohamed Boubaker
+ *  @bug full of bugs
+ */
 #ifndef SIM808_H
 #define SIM808_H
 
@@ -16,75 +22,86 @@
 
 
 
-/*
- * Function name: sim_init()
- * 
- * it initilizes the SIM808 module
- * it returns 1 if the module is Ready and 0 otherwise
+/**
+ * @brief initilizes the SIM808 module
+ * @return 1 if the module is initialised and ready, 0 otherwise
  */
 uint8_t sim_init();
 
-/*
- * Function name: sim_gps_power_on()
- *
- * it enables the GPS functionality of the SIM808 module
- * it returns 1 if the GPS was successfully enabled and 0 otherwise
+/**
+ * @brief enables the GPS functionality of the SIM808 module
+ * @return 1 if the GPS is successfully enabled, 0 otherwise
  */
 uint8_t sim_gps_enable();
 
 
-/*
- * function name: sim_gps_get_status()
- * 
- * it checks if the GPS has a location fix. which means, it knows its position.
- * it returns 1 if the GPS has a fix and 0 otherwise
-*/
-uint8_t sim_gps_get_status();
+/**
+ * @brief checks if the GPS has a location fix (position known).
+ * @return 1 if the GPS has a fix, 0 otherwise
+ */
+uint8_t sim_gps_fix_status();
 
-/*
- * function name: sim_gps_get_location(char*) 
- * 
- * it returns the GPS coordinates as a char array. The format of the output is Longitude,Latitude Example: 3937.656010,1406.059400
- * 
- * char * position: it is used to store the coordinates. 
- *
- * it always returns 1.
-*/
+/** 
+ * @brief returns the GPS coordinates. The format of the output is longitude,latitude Example: 3937.656010,1406.059400
+ * @param position is used to store the coordinates. 
+ * @return always 1.
+ */
 uint8_t sim_gps_get_location(char* position);
 
-/* 
- * function name: sim_gps_get_time
- *
- * it returns the GPS time as a char array.
- * 
- * char * time: it is used to store the time. 
- *
- * it always returns 1.
-*/
+/** 
+ * @brief returns the GPS time
+ * @param time is used to store the time. 
+ * @return always returns 1.
+ */
 uint8_t sim_gps_get_time(char * time);
  
 uint8_t sim_gps_power_off();
 
-/* Enable GPRS modem*/
+/**
+ * @brief enables GPRS modem. 
+ * GPRS modem must be enabled before trying to connect to the internet.
+ * @return 1 if modem is successfully enabled, 0 otherwise.
+ */
 uint8_t sim_gprs_enable();
 
-/* put PIN code */
+/**
+ * @brief insert PIN code in the SIM CARD
+ * @param pin is used to provide the PIN
+ * @return 1 if PIN is accepted, 0 otherwise.
+ */
 uint8_t sim_gprs_insert_PIN(char * pin);
 
-/* set APN */
+/**
+ * @brief set Access Point Name (APN) for the GPRS 
+ * @param apn is the APN name
+ * @param username is the name user to access the GPRS network
+ * @param password is the password
+ * @return 1 if login is successfully, 0 otherwise 
+ */
 uint8_t sim_gprs_set_APN(char * apn, char * username, char * password);
 
 
-/* 
-Send data over TCP, 
-if TCP connection is already open then it closes it and opens a new connection 
-then sends data, then closes the connection.
-param char * host can be IP adress or DNS name
-if parameter keep_con_open=1 the connection will not be closed 
-*/
-uint8_t sim_tcp_send(char * host, char * port, uint8_t * data, uint8_t length, uint8_t keep_con_open);
+/**
+ * @brief sends raw data over a TCP connection. 
+ * @param server_address is the remote TCP peer address. it can be an IP adress or DNS name
+ * @param port is the remote TCP port
+ * @param data is the data to be sent
+ * @param length is the length of the data to be sent in bytes
+ * @param keep_con_open if it is set to 1 then the connection will not be closed after sending the data. if it is set to 0, the connection will closed after sending the data. Other values are not defined.
+ *        if the function is called when there is already an open TCP connection then it sends data over this connection, otherwise it creates a new connection. 
+ * @return 1 if data is successfully sent, 0 otherwise
+ */
+uint8_t sim_tcp_send(char * server_address, char * port, uint8_t * data, uint8_t length, uint8_t keep_con_open);
 
 
-/* Publish payload to MQTT topic with QoS 1 by default*/
-uint8_t sim_mqtt_publish(char * server_address, char * port, char * client_id, char * payload);
+/**
+ * @brief publishes a message to an MQTT topic with QoS 1 by default.
+ * @param server_address is the MQTT server IP address or DNS name.
+ * @param port is the MQTT server port 
+ * @param client_id is the MQTT client id
+ * @param topic is the MQTT topic name
+ * @param message is the message to be sent
+ * @return 1 if the message is successfully delivered, 0 otherwise.
+ */
+uint8_t sim_mqtt_publish(char * server_address, char * port, char * client_id, char * topic, char * message);
 #endif
