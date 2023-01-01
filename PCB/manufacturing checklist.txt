@@ -1,0 +1,3 @@
+BOM
+Gerber files
+footprint position file

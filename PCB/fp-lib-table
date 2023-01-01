@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name "U")(type "KiCad")(uri "${KIPRJMOD}/U.FL-R-SMT_10_")(options "")(descr ""))
+  (lib (name "78800-0001")(type "KiCad")(uri "${KIPRJMOD}/78800-0001")(options "")(descr ""))
+)
