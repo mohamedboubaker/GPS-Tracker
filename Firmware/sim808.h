@@ -19,6 +19,22 @@
 #define GPS_COORDINATES_LENGTH 23 /*4927.656000,1106.059700,319.200000\n*/
 
 
+/* SIM808_typedef is used to abstract the SIM808 module.
+ * The UART peripheral used to send AT commands to the module and the UART used to send Debug messages
+ * and the pins used to power on, reset and check status of the module are combined together in this struct.
+ * This struct will be passed to all the functions that perform actions on the module.
+ */
+
+typedef struct {
+	USART_TypeDef * AT_uart_instance; /*send AT commands through this UART.*/
+	USART_TypeDef * debug_uart_instance;
+	GPIO_TypeDef  * power_on_gpio;
+	uint16_t power_on_pin;
+	GPIO_TypeDef  * reset_gpio;
+	uint16_t reset_pin;
+	GPIO_TypeDef  * status_gpio;
+	uint16_t status_pin;
+} SIM808_typedef;
 
 
 
@@ -29,12 +45,31 @@
 uint8_t sim_init();
 
 /**
+ * @brief sim_uart_init() initilizes the 2 UART peripherals of the SIM808_typedef 
+ *  												that will be used to send AT commands and debug
+ * @param SIM808_typedef sim is the definition of the sim808 hardware
+ * @param 
+ * @return 1 if both uarts are enabled correctly, 0 otherwise
+ */
+uint8_t sim_uart_init(SIM808_typedef * sim);
+
+/**
  * @brief enables the GPS functionality of the SIM808 module
  * @return 1 if the GPS is successfully enabled, 0 otherwise
  */
 uint8_t sim_gps_enable();
 
-
+/*
+ * function name: sim_gps_get_status()
+ * 
+ * it checks if the GPS has a location fix. 
+ * Possible replies from the SIM808 are
+ *	"Location Unknown" if GPS is not enabled
+ *	"Location not Fix" 
+ *	"Location 2D Fix"
+ *	"Location 3D Fix"
+*/
+uint8_t sim_gps_get_status();
 /**
  * @brief checks if the GPS has a location fix (position known).
  * @return 1 if the GPS has a fix, 0 otherwise
@@ -103,5 +138,5 @@ uint8_t sim_tcp_send(char * server_address, char * port, uint8_t * data, uint8_t
  * @param message is the message to be sent
  * @return 1 if the message is successfully delivered, 0 otherwise.
  */
-uint8_t sim_mqtt_publish(char * server_address, char * port, char * client_id, char * topic, char * message);
+uint8_t sim_mqtt_publish(char * server_address, char * port, char * client_id, char * message);
 #endif

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "sim808.h"
-#include <string.h>
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -32,10 +32,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define MQTT_SERVER "3.126.135.135"
-#define MQTT_PORT "1883"
-#define CLIENT_ID "FFFF"
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -44,41 +40,50 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+  //UART_HandleTypeDef AT_uart;
+  //UART_HandleTypeDef debug_uart;
+	SIM808_typedef sim;
+
 
 
 /* USER CODE BEGIN PV */
-char gps_coordinates[]="4927.656000,1106.059700";
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+/* USER CODE BEGIN PFP */
 
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
 int main(void)
 {
-
   HAL_Init();
   SystemClock_Config();
   MX_GPIO_Init();
-
-	if (sim_init())
-		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_8,GPIO_PIN_SET);
-		
 	
-	sim_gps_enable();
-	sim_gprs_insert_PIN("2271"); /*you need to wait some time till card is ready)*/
-	sim_gprs_enable();
-	HAL_Delay(5000);
+	sim.AT_uart_instance=USART1;
+	sim.debug_uart_instance=USART2;
+	sim.power_on_gpio=GPIOB; 
+	sim.power_on_pin=GPIO_PIN_9;
+	sim.reset_gpio=GPIOF;
+	sim.reset_pin=GPIO_PIN_7;
+	sim.status_gpio=GPIOC;
+	sim.status_pin=GPIO_PIN_14;
+	
+
+
+	sim_uart_init(&sim);
+//sim_init();
   while (1)
   {
-		
-	if(sim_gps_get_status()){
-		sim_gps_get_location(gps_coordinates);
-		sim_mqtt_publish(MQTT_SERVER,MQTT_PORT,CLIENT_ID,gps_coordinates);
-	}
+		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
+		HAL_Delay(300);
 
   }
-  
+
 }
 
 /**
@@ -122,18 +127,6 @@ void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
-
-
-/**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
 
 
 /**
@@ -146,27 +139,26 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOF_CLK_ENABLE();
+	__HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12 | GPIO_PIN_13, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PC8 PC9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+  /*Configure GPIO pins : PB13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 4 */
 
-
-
-	
 /* USER CODE END 4 */
 
 /**

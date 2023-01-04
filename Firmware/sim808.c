@@ -11,6 +11,8 @@
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
+UART_HandleTypeDef AT_uart;
+UART_HandleTypeDef debug_uart;
 
 
 /*Generic reply that indicate the command is successful*/
@@ -27,8 +29,8 @@ static char sim_rx_buffer[RX_BUFFER_LENGTH];
 void printrx(){
 	uint8_t i=0;
 	while(sim_rx_buffer[i]!='\0') i++;
-	HAL_UART_Transmit(&DEBUG_UART,(uint8_t*)sim_rx_buffer,i,100);
-	HAL_UART_Transmit(&DEBUG_UART,(uint8_t*)'\n',1,100);
+	HAL_UART_Transmit(&debug_uart,(uint8_t*)sim_rx_buffer,i,100);
+	HAL_UART_Transmit(&debug_uart,(uint8_t*)'\n',1,100);
 }
 
 /* Print to debug uart ****/
@@ -39,7 +41,7 @@ void print_debug(uint8_t * msg){
 
 /* send a command to the  SIM module through SIM UARTT*/
 void send_cmd(const char * msg){
-	HAL_UART_Transmit(&SIM_UART,(uint8_t *)msg,strlen(msg),TX_TIMEOUT);
+	HAL_UART_Transmit(&AT_uart,(uint8_t *)msg,strlen(msg),TX_TIMEOUT);
 	HAL_Delay(RX_WAIT);
 	printrx();
 }
@@ -50,11 +52,11 @@ void send_raw_cmd(uint8_t * data,uint8_t length){
 	printrx();
 }
 
-/* UART 2 RX buffer full interrupt callback */
+/* AT_uart==usart1  RX buffer full interrupt callback */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-	if (huart->Instance==USART2){
+	if (huart->Instance==USART1){
 		sim_rx_buffer[rx_index++]=rx_byte;
-		HAL_UART_Receive_IT(&SIM_UART,&rx_byte,1);
+		HAL_UART_Receive_IT(&AT_uart,&rx_byte,1);
 	}
 }	
 
@@ -124,6 +126,8 @@ uint8_t sim_init(){
     Error_Handler();
   }
 	
+
+
 	/* Enable UART 2 receive interrupt for every received byte*/
 	HAL_UART_Receive_IT(&SIM_UART,&rx_byte,1);
 	clear_rx_buffer();
@@ -139,6 +143,114 @@ uint8_t sim_init(){
 
 }																				 
 
+
+/*
+ * function name: sim_uart_init();
+ */
+	uint8_t sim_uart_init(SIM808_typedef * sim){
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	
+	AT_uart.Instance = sim->AT_uart_instance;
+  AT_uart.Init.BaudRate = 9600;
+  AT_uart.Init.WordLength = UART_WORDLENGTH_8B;
+  AT_uart.Init.StopBits = UART_STOPBITS_1;
+  AT_uart.Init.Parity = UART_PARITY_NONE;
+  AT_uart.Init.Mode = UART_MODE_TX_RX;
+  AT_uart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  AT_uart.Init.OverSampling = UART_OVERSAMPLING_16;
+  AT_uart.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  AT_uart.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&AT_uart) != HAL_OK)
+  {
+    Error_Handler();
+  }
+	
+	debug_uart.Instance = sim->debug_uart_instance;
+  debug_uart.Init.BaudRate = 9600;
+  debug_uart.Init.WordLength = UART_WORDLENGTH_8B;
+  debug_uart.Init.StopBits = UART_STOPBITS_1;
+  debug_uart.Init.Parity = UART_PARITY_NONE;
+  debug_uart.Init.Mode = UART_MODE_TX_RX;
+  debug_uart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  debug_uart.Init.OverSampling = UART_OVERSAMPLING_16;
+  debug_uart.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  debug_uart.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&debug_uart) != HAL_OK)
+  {
+    Error_Handler();
+  }	
+
+	
+
+
+
+	/* clear buffer and enable receive interrupt for every received byte on AT_uart*/
+	clear_rx_buffer();
+	//HAL_UART_Receive_IT(&AT_uart,&rx_byte,1);
+	
+
+	
+	  /*Configure Reset GPIO pin */
+  HAL_GPIO_WritePin(sim->reset_gpio, sim->reset_pin, GPIO_PIN_SET);
+	GPIO_InitStruct.Pin = sim->reset_pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(sim->reset_gpio, &GPIO_InitStruct);
+
+	  /*Configure  power on GPIO pin */
+	HAL_GPIO_WritePin(sim->power_on_gpio, sim->power_on_pin, GPIO_PIN_SET);
+  GPIO_InitStruct.Pin = sim->power_on_pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(sim->power_on_gpio, &GPIO_InitStruct);
+	
+	  /*Configure  STATUS GPIO pin */
+  GPIO_InitStruct.Pin = sim->status_pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(sim->status_gpio, &GPIO_InitStruct);
+	
+	
+	
+ /* Power on module:
+  * Check if the module is Powered on by reading the value of STATUS pin.
+	* If the module is powered off then pull down the power pin of sim808 for at least 1 second to power it on.
+	* Then read the STATUS pin again. If the device is not powered on, try 2 more times.
+  */
+	
+	/* Count number of power on trials */
+	uint8_t trials=0;  
+	
+	while(!HAL_GPIO_ReadPin(sim->status_gpio,sim->status_pin) && trials<3){
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(sim->power_on_gpio,sim->power_on_pin,GPIO_PIN_RESET);
+	HAL_Delay(1500);
+	HAL_GPIO_WritePin(sim->power_on_gpio,sim->power_on_pin,GPIO_PIN_SET);
+	trials++;
+	}
+	/* Read STATUS pin of the SIM808 to check the power on status*/
+	if (HAL_GPIO_ReadPin(sim->status_gpio,sim->status_pin)){
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
+		
+		/* Send AT to synchronize baude rate*/
+		HAL_UART_Transmit(&AT_uart,(uint8_t *)"AT\r",3,TX_TIMEOUT);
+		
+		/*It is recommended to wait 3 to 5 seconds before sending the first AT character.*/
+		HAL_Delay(3000);	
+	} 
+	else{
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
+		return 1;
+	}
+	
+	/*Send the First AT Command*/
+	send_cmd("AT\r");
+
+	return 0;
+	}
 
 
 /**** GPS Functions ****/
@@ -382,6 +494,7 @@ uint8_t publish_packet[] ={
 	0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46 // dummy payload
 };
 
+/*change the dummy data with the payload*/
 for(uint8_t i=0;i<GPS_COORDINATES_LENGTH;i++){
 publish_packet[i+8]=(uint8_t)payload[i];
 }
