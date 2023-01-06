@@ -16,25 +16,10 @@ UART_HandleTypeDef huart2;
 #define debug_uart huart2
 
 
-/*Generic reply that indicate the command is successful*/
-static const char sim_ok[]= "OK";
-
 /* These Global variables should only be touched by sim_send_cmd, get_cmd_reply, UART_receive_IT,*/
 static volatile uint8_t rx_byte; /* The receive interupt routine uses rx_byte to store a copy of the received byte*/
 static volatile uint8_t rx_index=0; /*track the number of received bytes.*/
 static volatile char sim_rx_buffer[RX_BUFFER_LENGTH];
-
-
-static uint8_t cmd_result=0;
-
-
-/* Print RX buffer in debug UART */
-void printrx(){
-	uint8_t i=0;
-	while(sim_rx_buffer[i]!='\0') i++;
-	HAL_UART_Transmit(&debug_uart,(uint8_t*)sim_rx_buffer,i,100);
-	HAL_UART_Transmit(&debug_uart,(uint8_t*)'\n',1,100);
-}
 
 
 /**
@@ -139,7 +124,7 @@ uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply){
 /* AT_uart==usart1  RX buffer full interrupt callback */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if (huart->Instance==USART1){
-		sim_rx_buffer[rx_index++]=rx_byte; /*rx_index++ module RX_BUFFER_LENGTH to ensure it always stays smaller*/
+		sim_rx_buffer[rx_index++ % RX_BUFFER_LENGTH]=rx_byte; /*rx_index++ modulo RX_BUFFER_LENGTH to ensure it always stays smaller then RX_BUFFER_LENGTH*/
 		/* Enable UART receive interrupt again*/
 		HAL_UART_Receive_IT(&AT_uart,(uint8_t *)&rx_byte,1);
 	}
