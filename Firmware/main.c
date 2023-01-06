@@ -75,13 +75,19 @@ int main(void)
 	
 
 
-	sim_uart_init(&sim);
-//sim_init();
-  while (1)
+	sim_init(&sim);
+  sim_gps_enable();
+	
+	char position[23];
+  
+	while (!sim_gps_get_location(position)) 
+		HAL_Delay(2000);
+  
+while (1)
   {
+		sim_gps_get_location(position);
 		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
-		HAL_Delay(300);
-
+		HAL_Delay(1000);
   }
 
 }

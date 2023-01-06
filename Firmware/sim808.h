@@ -10,8 +10,9 @@
 #include <stdint.h>
 #include "main.h"
 
-#define RX_WAIT 200 /*After transmitting wait RX_WAIT ms  to ensure that all the reply is receeived in the buffer*/
+#define RX_WAIT 200 /*After sending AT command, wait RX_WAIT ms  to ensure that the reply is receeived in the buffer*/
 #define TX_TIMEOUT 100
+#define BAUD_RATE 38400 /*BAUD_RATE=38400 => it take 26 ms to send 100 bytes */
 #define RX_BUFFER_LENGTH 128
 #define SIM_UART huart2
 #define DEBUG_UART huart1
@@ -19,7 +20,8 @@
 #define GPS_COORDINATES_LENGTH 23 /*4927.656000,1106.059700,319.200000\n*/
 
 
-/* SIM808_typedef is used to abstract the SIM808 module.
+/* SIM808_typedef is used to abstract the SIM808 module. 
+ * It will decouple the functions from the hardware (uart+pins) used to interface with the module.
  * The UART peripheral used to send AT commands to the module and the UART used to send Debug messages
  * and the pins used to power on, reset and check status of the module are combined together in this struct.
  * This struct will be passed to all the functions that perform actions on the module.
@@ -39,19 +41,13 @@ typedef struct {
 
 
 /**
- * @brief initilizes the SIM808 module
- * @return 1 if the module is initialised and ready, 0 otherwise
- */
-uint8_t sim_init();
-
-/**
- * @brief sim_uart_init() initilizes the 2 UART peripherals of the SIM808_typedef 
- *  												that will be used to send AT commands and debug
+ * @brief sim_init()  it initialises the SIM808_typedef struct members and powers on the module.
+ *  initializes the UARTs and the GPIOs used to power on, reset and check the status of the module.
+ *	Which UART peripheral is used for what is specified in the parameter SIM808_typedef members: AT_uart and debug_uart.
  * @param SIM808_typedef sim is the definition of the sim808 hardware
- * @param 
- * @return 1 if both uarts are enabled correctly, 0 otherwise
+ * @return 1 if module is ready for use, 0 otherwise
  */
-uint8_t sim_uart_init(SIM808_typedef * sim);
+uint8_t sim_init(SIM808_typedef * sim);
 
 /**
  * @brief enables the GPS functionality of the SIM808 module
