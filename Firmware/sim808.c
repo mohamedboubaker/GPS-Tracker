@@ -245,7 +245,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		return 0;
 	}
 	
-	/*Send the First AT Command*/
+	/*Send the First AT Command to check if the module is responding*/
 	return send_cmd("AT\r");
 
 	
