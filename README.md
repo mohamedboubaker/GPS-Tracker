@@ -13,8 +13,8 @@ The power input of the circuit is regulated using a DC-DC down converter Texas I
 
 
 #### Table of Contents
-- [Project overview](#Project overview)
-- [System design](#System design)
+- [Project overview](#Project-overview)
+- [System design](#System-design)
   * [System architecture](#System architecture)
   * [Firmware design](#Firmware design)
   * [Server design](#Server design)
