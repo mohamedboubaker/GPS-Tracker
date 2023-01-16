@@ -2,7 +2,7 @@
  *  @brief Function prototypes for the SIM808 STM32 driver.
  *
  *  @author Mohamed Boubaker
- *  @bug full of bugs
+ *  @bug issue #9
  */
 #ifndef SIM808_H
 #define SIM808_H
@@ -10,6 +10,8 @@
 #include <stdint.h>
 #include "main.h"
 
+#define FAIL 0
+#define SUCCESS 1
 #define RX_WAIT 200 /*After sending AT command, wait RX_WAIT ms  to ensure that the reply is receeived in the buffer*/
 #define TX_TIMEOUT 100
 #define BAUD_RATE 38400 /*BAUD_RATE=38400 => it take 26 ms to send 100 bytes */
@@ -19,6 +21,11 @@
 #define TCP_CONNECT_TIMEOUT 5 /*value in second*/
 #define GPS_COORDINATES_LENGTH 23 /*4927.656000,1106.059700,319.200000\n*/
 
+/*GPRS definitions*/
+#define APN "TM"
+#define USERNAME ""
+#define PASSWORD ""
+#define SIM_PIN ""
 
 /* SIM808_typedef is used to abstract the SIM808 module. 
  * It will decouple the functions from the hardware (uart+pins) used to interface with the module.
@@ -49,28 +56,15 @@ typedef struct {
  */
 uint8_t sim_init(SIM808_typedef * sim);
 
+
+/******************* GPS functions ********************/
+
 /**
  * @brief enables the GPS functionality of the SIM808 module
  * @return 1 if the GPS is successfully enabled, 0 otherwise
  */
 uint8_t sim_gps_enable();
 
-/*
- * function name: sim_gps_get_status()
- * 
- * it checks if the GPS has a location fix. 
- * Possible replies from the SIM808 are
- *	"Location Unknown" if GPS is not enabled
- *	"Location not Fix" 
- *	"Location 2D Fix"
- *	"Location 3D Fix"
-*/
-uint8_t sim_gps_get_status();
-/**
- * @brief checks if the GPS has a location fix (position known).
- * @return 1 if the GPS has a fix, 0 otherwise
- */
-uint8_t sim_gps_fix_status();
 
 /** 
  * @brief returns the GPS coordinates. The format of the output is longitude,latitude Example: 3937.656010,1406.059400
@@ -80,37 +74,44 @@ uint8_t sim_gps_fix_status();
 uint8_t sim_gps_get_location(char* position);
 
 /** 
- * @brief returns the GPS time
- * @param time is used to store the time. 
+ * @brief returns the speed 
+ * @param char * speed is used to store speed. 
  * @return always returns 1.
  */
-uint8_t sim_gps_get_time(char * time);
+uint8_t sim_gps_get_speed(char * speed);
  
-uint8_t sim_gps_power_off();
+ /**
+ * @brief disables the GPS functionality of the SIM808 module and the active antenna power supply
+ * @return 1 if the GPS is successfully disabled, 0 otherwise
+ */
+uint8_t sim_gps_disable();
+
+
+/******************* GPRS functions ********************/
 
 /**
- * @brief enables GPRS modem. 
- * GPRS modem must be enabled before trying to connect to the internet.
- * @return 1 if modem is successfully enabled, 0 otherwise.
+ * @brief enables GPRS connection. 
+ * GPRS must be enabled before trying to establish TCP connection.
+ * This function goes through a series of the tests below. action is taken depending on the test result
+ * 1. Checks if the SIM card is detected
+ * 2. Checks if the SIM card requires PIN code
+ * 3. Checks the signal stregth. If it is very low, it returns an error value.
+ * 4. Checks if the Mobile Equipement (ME) is registered to the Network. If not, it tries to register.
+ * 5. Checks if ME is attached to GPRS service. if not it tries to attach.
+ * 6. Checks if GPRS PDP context is defined, if not it tries to define it, enable it, and get IP address.
+ * 
+ * @return 1 if gprs is active, 2 if SIM card is not detected, 3 if SIM PIN is incorrect, 4 if the signal is weak, 0 otherwise
  */
 uint8_t sim_gprs_enable();
 
-/**
- * @brief insert PIN code in the SIM CARD
- * @param pin is used to provide the PIN
- * @return 1 if PIN is accepted, 0 otherwise.
- */
-uint8_t sim_gprs_insert_PIN(char * pin);
 
-/**
- * @brief set Access Point Name (APN) for the GPRS 
- * @param apn is the APN name
- * @param username is the name user to access the GPRS network
- * @param password is the password
- * @return 1 if login is successfully, 0 otherwise 
+ /**
+ * @brief disables the GPRS functionality and the whole radio module
+ * @return 1 if the GPRS is successfully disabled, 0 otherwise
  */
-uint8_t sim_gprs_set_APN(char * apn, char * username, char * password);
+uint8_t sim_gprs_disable();
 
+/******************* Application layer functions ********************/
 
 /**
  * @brief sends raw data over a TCP connection. 

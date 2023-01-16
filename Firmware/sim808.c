@@ -23,7 +23,7 @@ static volatile char sim_rx_buffer[RX_BUFFER_LENGTH];
 
 
 /**
- * @brief send_cmd() is used to send AT commands to the SIM808 module through the AT_uart peripheral.
+ * @brief send_cmd() sends AT commands to the SIM808 module through the AT_uart peripheral.
  * in case the module replies with an error, or doesn't reply anything, it will try to send the command 2 more times
  * after a timeout period.
  * @param const char * cmd contains the command 
@@ -72,8 +72,6 @@ uint8_t send_cmd(const char * cmd){
 	*/
 	return 0;
 }
-
-
 
 
 /**
@@ -132,7 +130,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
 
 
-/*
+/**
  * function name: sim_init()
  * 
  * it initialises the SIM808_typedef struct members: 
@@ -140,9 +138,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
  * it also sends the first AT command to sync the baud rate.
  * it returns 1 if the module is ready to be used, 0 therwise.
  */
-											 
+										 
 	uint8_t sim_init(SIM808_typedef * sim){
-		
 	
 	/*Initialize UART peripherals*/
 	
@@ -237,7 +234,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		/* Send the string "AT" to synchronize baude rate of the SIM808 module*/
 		HAL_UART_Transmit(&AT_uart,(uint8_t *)"AT\r",3,TX_TIMEOUT);
 		
-		/*It is recommended to wait 3 to 5 seconds before sending the first AT character.*/
+		/*It is recommended to wait 3 to 5 seconds before sending the first AT character. */
 		HAL_Delay(3000);	
 	} 
 	else{
@@ -253,13 +250,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
 
 
+
+/*******************************************************/
+/*                     GPS functions                   */
+/*******************************************************/
 	
-
-	/**** GPS Functions ****/
-
 uint8_t sim_gps_enable(){
 	const char gps_power_on_cmd[]= "AT+CGPSPWR=1\r";
-	const char gps_set_mode_cold_cmd[]= "AT+CGPSRST=0\r";
+	const char gps_set_mode_cold_cmd[]= "AT+CGPSRST=2\r";
 	uint8_t power_on_status=0;
 	uint8_t set_mode_status=0;
 	
@@ -268,23 +266,6 @@ uint8_t sim_gps_enable(){
 
 	return (power_on_status && set_mode_status);
 }
-
-/**** GPRS functions ****/
-/**
- * @brief sim_gprs_enable() enables the GPRS function on the module.
- * @return 1 if GPRS is enabled and SIM is ready, 0 otherwise
- */
-
-uint8_t sim_gprs_enable(){
-	
-	const char gprs_enable_cmd[]= "AT+CFUN=1\r";
-	const char sim_card_status_cmd[]= "AT+CPIN?\r";
-	return (send_cmd(gprs_enable_cmd) && send_cmd(sim_card_status_cmd));
-
-}
-
-
-/*** GPS Functions ***/
 
 /**
  * @brief sim_gps_get_location() checks if the module has a GPS fix and querries the GPS module for the current position.
@@ -314,6 +295,7 @@ uint8_t sim_gps_get_location(char * coordinates){
 	sim_get_cmd_reply(gps_get_status_cmd,local_rx_buffer);
 
 	if (strstr(local_rx_buffer,"Location 3D Fix")!=NULL){
+		
 		/*clear local buffer*/
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
@@ -332,4 +314,53 @@ uint8_t sim_gps_get_location(char * coordinates){
 	else
 		/* GPS has no fix, return 0 to indicate failure*/
 		return 0;
+}
+
+/*******************************************************/
+/*                    GPRS functions                   */
+/*******************************************************/
+
+uint8_t sim_gprs_enable(){
+	char local_rx_buffer[RX_BUFFER_LENGTH]; /* make sure to clear the buffer before every use */
+	
+	/* Detect if SIM card is present*/
+	static const char SIM_detect_cmd[]= " AT+CSMINS?\r";
+	sim_get_cmd_reply(SIM_detect_cmd,local_rx_buffer);
+	if (!strstr(local_rx_buffer,"+CSMINS: 0,1")) return 2;
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH); /*clear buffer for next use*/
+	
+	/* Check if PIN code is required */
+	static const char PIN_status_cmd[]= "AT+CPIN?\r";
+	static char PIN_insert_cmd[13]= "AT+CPIN=";
+	sim_get_cmd_reply(PIN_status_cmd,local_rx_buffer);
+	if (!strstr(local_rx_buffer,"READY")){
+		strcat(PIN_insert_cmd,SIM_PIN);   /* build string = AT+CPIN=XXXX   */
+		strcat(PIN_insert_cmd,"\r");      /* build string = AT+CPIN=XXXX\r */
+		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+		sim_get_cmd_reply(PIN_insert_cmd,local_rx_buffer);
+		if (!strstr(local_rx_buffer,"OK")) return 3;
+		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	}
+	
+	/* Check Signal Quality 
+	 * command = AT+CSQ
+	 * the reply is +CSQ: RSSI,BER
+	 * RSSI = Received Signal Strength Indicator
+	 * BER  = Bit Error Rate
+	 * When antenna is disconnected, RSSI would be 0
+	 * RSSI typical values
+	 * 0 => -115 dBm or less
+	 * 1 => -111 dBm
+	 * [2 : 30] => [-110 : -54] dBm
+	 * 31 => -52 dBm or greater
+	 * 99 not known or not detectable
+	 * BER (in percent):
+	 * 0...7 As RXQUAL values in the table in GSM 05.08 subclause 7.2.4
+	 * 99 Not known or not detectable
+	 */
+	static const char check_signal_cmd[]= " AT+CSQ\r";
+	sim_get_cmd_reply(check_signal_cmd,local_rx_buffer);
+	if (strstr(local_rx_buffer,"0,") || strstr(local_rx_buffer,"99,")) return 3;
+	
+	return 1;
 }

@@ -76,17 +76,18 @@ int main(void)
 
 
 	sim_init(&sim);
-  sim_gps_enable();
+	if (sim_gprs_enable()) HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);;
+  //sim_gps_enable();
 	
-	char position[23];
+	//char position[23];
   
-	while (!sim_gps_get_location(position)) 
-		HAL_Delay(2000);
+	//while (!sim_gps_get_location(position)) 
+	//	HAL_Delay(2000);
   
 while (1)
   {
-		sim_gps_get_location(position);
-		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
+		//sim_gps_get_location(position);
+		
 		HAL_Delay(1000);
   }
 
