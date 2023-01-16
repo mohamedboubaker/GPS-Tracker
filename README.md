@@ -3,8 +3,8 @@ Important Note: This project is still under developement. The documentation is a
 
 The objective of this project is to deliever a GPS tracking device that can be used to track a vehicule. 
 The scope of the project includes: 
-*Designing a circuit and a PCB.  
-*Manufacturing the PCB. 
+- Designing a circuit and a PCB.  
+- Manufacturing the PCB. 
 *Developing firmware for the PCB. 
 *Configuring a server to receive and store the GPS data.
 
