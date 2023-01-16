@@ -19,10 +19,9 @@ Above is a picture of the manufactured PCB. The front side is on the left and co
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/circuit_diagram.jpg)
 *Figure 2. Circuit Diagram*
 
-## PCB Layout 
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Layout_FrontAndBack.png)
 *Figure 3. Layout: front side on the left, back side on the right*
 
-## PCB 3D Model
+
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/3D_FrontAndBack.png)
 *Figure 4. 3D Model of the PCB*
