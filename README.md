@@ -2,10 +2,8 @@
 
 This is a GPS tracker board that periodically checks the GPS coordinates and sends them to a predefined remote server on the internet.
 
-<p align="center">
-  ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
-*Figure 1. Manufactured PCB*
-</p>
+![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
+<p align="center"> *Figure 1. Manufactured PCB* </p>
 
 
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/3D_FrontAndBack.png)
