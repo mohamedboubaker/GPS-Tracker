@@ -15,33 +15,12 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
+
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "sim808.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
-  //UART_HandleTypeDef AT_uart;
-  //UART_HandleTypeDef debug_uart;
 	SIM808_typedef sim;
 
 
@@ -77,7 +56,8 @@ int main(void)
 
 	sim_init(&sim);
 	if (sim_gprs_enable()) HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);;
-  //sim_gps_enable();
+  sim_tcp_send("18.197.145.205","1883","hello",5,1);
+	//sim_gps_enable();
 	
 	//char position[23];
   

@@ -22,10 +22,31 @@ static volatile char sim_rx_buffer[RX_BUFFER_LENGTH];
 
 
 /**
+ * @brief send_serial() sends raw serial data to the SIM808 module through the AT_uart peripheral. Then it deletes the receive buffer.
+ * @param const char * cmd contains the command 
+ * @param uint32_t rx_wait waiting time before exit. To make sure the reply is received.
+ * @returns void
+ */
+void send_serial(uint8_t * data, uint8_t length, uint32_t rx_wait){
+	HAL_UART_Transmit(&AT_uart,data,length,TX_TIMEOUT);
+	
+	/* Wait for command to be processed */
+	HAL_Delay(rx_wait);
+	
+	/* Clear the sim_rx_buffer, reset the receive counter rx_index 
+	 * and then return 1 to acknowledge the success of the command
+	 */
+	memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	rx_index=0;
+}
+
+
+/**
  * @brief send_cmd() sends AT commands to the SIM808 module through the AT_uart peripheral.
  * in case the module replies with an error, or doesn't reply anything, it will try to send the command 2 more times
  * after a timeout period.
  * @param const char * cmd contains the command 
+ * @param uint32_t rx_wait waiting time before checking the receive buffer.
  * @returns 1 if the module replies with OK, 0 otherwise
  */
 uint8_t send_cmd(const char * cmd, uint32_t rx_wait){
@@ -137,8 +158,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
 /**
  * @brief sim_init()  it initialises the SIM808_typedef struct members and powers on the module.
- *  initializes the UARTs and the GPIOs used to power on, reset and check the status of the module.
- *	Which UART peripheral is used for what is specified in the parameter SIM808_typedef members: AT_uart and debug_uart.
+ * initializes the UARTs and the GPIOs used to power on, reset and check the status of the module.
+ * Which UART peripheral is used for what is specified in the parameter SIM808_typedef members: AT_uart and debug_uart.
  * @param SIM808_typedef sim is the definition of the sim808 hardware
  * @return 1 if module is ready for use, 0 otherwise
  */			 
@@ -222,7 +243,7 @@ uint8_t sim_init(SIM808_typedef * sim){
 		trials++;
 	}
 	
-	/* Read STATUS pin of the SIM808 to check the power on status*/
+	/* Read STATUS pin of the SIM808 to check the power on status. if the module is ON then power on indicator LED*/
 	if (HAL_GPIO_ReadPin(sim->status_gpio,sim->status_pin)){
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
 
@@ -233,8 +254,9 @@ uint8_t sim_init(SIM808_typedef * sim){
 	HAL_Delay(3000);	
 	} 
 	else{
+		/*Turn down the indicator LED and return FAIL */
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
-		return 0;
+		return FAIL;
 	}
 
 	/*Send the First AT Command to check if the module is responding*/
@@ -320,7 +342,7 @@ uint8_t sim_gps_get_location(char * coordinates){
 /*******************************************************/
 
 /**
- * @brief enables GPRS connection. 
+ * @brief sim_gprs_enable() enables GPRS connection. 
  * GPRS must be enabled before trying to establish TCP connection.
  * This function goes through a series of the tests below. action is taken depending on the test result
  * 1. Checks if the SIM card is detected
@@ -376,7 +398,7 @@ uint8_t sim_gprs_enable(){
 	 */
 	static const char check_signal_cmd[]= "AT+CSQ\r";
 	sim_get_cmd_reply(check_signal_cmd,local_rx_buffer);
-	if (strstr(local_rx_buffer,"0,") || strstr(local_rx_buffer,"99,")) 
+	if (strstr(local_rx_buffer,"+CSQ: 0,") || strstr(local_rx_buffer,"99,")) 
 		return 3; /* if signal is weak return 3 */
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 
@@ -470,4 +492,81 @@ uint8_t sim_gprs_enable(){
 		return FAIL;
 	
 	return 1;
+}
+
+/**
+ * @brief sends raw data over a TCP connection. 
+ * @param server_address is the remote TCP peer address. it can be an IP adress or DNS name
+ * @param port is the remote TCP port
+ * @param data is the data to be sent
+ * @param length is the length of the data to be sent in bytes
+ * @param keep_con_open if it is set to 1 then the connection will not be closed after sending the data. if it is set to 0, the connection will closed after sending the data. Other values are not defined.
+ * if the function is called when there is already an open TCP connection then it sends data over this connection, otherwise it creates a new connection. 
+ * @return 1 if data is successfully sent, 0 otherwise
+ */
+uint8_t sim_tcp_send(char * host, char * port, uint8_t * data, uint8_t length, uint8_t keep_con_open){
+	
+	static const char get_tcp_status_cmd[]="AT+CIPSTATUS\r";
+	static const char tcp_disconnect_cmd[16]= "AT+CIPCLOSE\r";
+	char send_tcp_data_cmd[24]= "AT+CIPSEND=";
+	char tcp_connect_cmd[64]= "AT+CIPSTART=\"TCP\",\"";
+	
+	char local_rx_buffer[RX_BUFFER_LENGTH]; /* make sure to clear the buffer after every use */
+
+	/* Check underlying GPRS connection before trying to open a TCP connection.
+	 * If it is disconnected, then try to enable it.
+	 * if enabling GPRS fails, then return FAIL.
+	 */
+	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer);
+	if ( !(strstr(local_rx_buffer,"IP STATUS") || strstr(local_rx_buffer,"CONNECT OK") || strstr(local_rx_buffer,"ALREADY CONNECT") || strstr(local_rx_buffer,"TCP CLOSED") ) )
+		if (!sim_gprs_enable())
+			return FAIL;
+	/* clear receive buffer */
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	
+	/* Check connection Status.
+	 * if there is no open connection, then open a new TCP connection.
+	 */
+	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer);
+	if( !(strstr(local_rx_buffer,"ALREADY CONNECT") || strstr(local_rx_buffer,"CONNECT OK"))){
+		
+		/* clear receive buffer */
+		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+		
+		/* build the connect command by adding address and port */
+		strcat(tcp_connect_cmd,host);    /* AT+CIPSTART=\"TCP\","host.com           */
+		strcat(tcp_connect_cmd,"\",\""); /* AT+CIPSTART=\"TCP\","host.com","        */
+		strcat(tcp_connect_cmd,port);    /* AT+CIPSTART=\"TCP\","host.com","port    */
+		strcat(tcp_connect_cmd,"\"\r");  /* AT+CIPSTART=\"TCP\","host.com","port"\r */
+		
+		/*Send open connection command */
+		sim_get_cmd_reply(tcp_connect_cmd,local_rx_buffer);
+		
+		/* Wait for connection to establish or fail*/
+		HAL_Delay(1000);
+		if (strstr(local_rx_buffer,"CONNECT FAIL") || strstr(local_rx_buffer,"ERROR"))
+			return FAIL;
+		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	}
+	
+	/* Send TCP data */
+	
+//	/* build command */
+//	strcat(send_tcp_data_cmd,length); /* AT+CIPSEND=L where L is an uint8_t */ 
+//	strcat(send_tcp_data_cmd,"\r");       /* AT+CIPSEND=L\r                     */ 
+//	
+//	/* start data transmission */
+//	send_serial(send_tcp_data_cmd,24,RX_WAIT);
+//	
+//	/* Send TCP data */
+//	sim_get_cmd_reply(data,local_rx_buffer);
+//	
+//	if (!strstr(local_rx_buffer,"SEND OK"))
+//		return FAIL;
+//	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	
+	if (keep_con_open == 0 )
+		send_cmd(tcp_disconnect_cmd,RX_WAIT);
+	
+	return SUCCESS;
 }
