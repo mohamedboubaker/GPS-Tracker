@@ -3,17 +3,16 @@ Important Note: This project is still under developement. The documentation is a
 
 The objective of this project is to deliever a GPS tracking system that can be used to track a vehicule. The system includes a device that periodically sends its position and speed data to a remote server. The data is stored on the server where it can be accessed through a browser for visualization.
 
-The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not very mature. However, the PCB and the firmware have been developed thouroughly. Below is a picture of the manufactured device PCB.
+The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not mature. However, the PCB and the firmware have been developed thouroughly. Below is a picture of the manufactured device PCB.
 
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
 *Figure 1. Manufactured PCB*
 
-
-
-The idea is basically a microcontroller, STM32F030, that periodically sends AT commands via UART to the SIM808 GPS/GPRS module to get GPS data and then sends these data to a Mosquitto MQTT server hosted on an AWS EC2. This data gets also encrypted with AES-128 in Electronic Code Book (ECB) mode before being sent to the server. AES algorithm was implemented from scratch for learning purposes. (Note: In a production application, it's better to use a known AES implementations. Example: WolfSSL)
-
-The power input of the circuit is regulated using a DC-DC down converter Texas Instruments TPS5430DDA with input voltage ranging from 5.5V to 36V 
-
+This documentation describes all the steps and ideas behind the realisation of this project. 
+- Designing a circuit and a PCB.  
+- Manufacturing the PCB. 
+- Developing firmware for the PCB. 
+- Configuring a server to receive and store the GPS data.
 
 #### Table of Contents
 - [1. Project overview](#1-Project-overview)
@@ -37,6 +36,11 @@ The power input of the circuit is regulated using a DC-DC down converter Texas I
 
 # 2. System design
 ## 2.1 System architecture
+
+The idea is basically a microcontroller, STM32F030, that periodically sends AT commands via UART to the SIM808 GPS/GPRS module to get GPS data and then sends these data to a Mosquitto MQTT server hosted on an AWS EC2. This data gets also encrypted with AES-128 in Electronic Code Book (ECB) mode before being sent to the server. AES algorithm was implemented from scratch for learning purposes. (Note: In a production application, it's better to use a known AES implementations. Example: WolfSSL)
+
+The power input of the circuit is regulated using a DC-DC down converter Texas Instruments TPS5430DDA with input voltage ranging from 5.5V to 36V 
+
 ## 2.2 Firmware design
 ## 2.3 Server design
 ## 2.4 Circuit design
