@@ -23,8 +23,7 @@
 
 /*GPRS definitions*/
 #define APN "TM"
-#define USERNAME ""
-#define PASSWORD ""
+#define APN_LENGTH 2 /* Length of APN string */
 #define SIM_PIN ""
 
 /* SIM808_typedef is used to abstract the SIM808 module. 
