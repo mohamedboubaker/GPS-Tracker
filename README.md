@@ -15,20 +15,24 @@ The power input of the circuit is regulated using a DC-DC down converter Texas I
 #### Table of Contents
 - [Project overview](#Project-overview)
 - [System design](#System-design)
-  * [System architecture](#System architecture)
-  * [Firmware design](#Firmware design)
-  * [Server design](#Server design)
-  * [Circuit design](#Circuit design)
-  * [PCB design](#PCB design)
-
-
+  * [System architecture](#System-architecture)
+  * [Firmware design](#Firmware-design)
+  * [Server design](#Server-design)
+  * [Circuit design](#Circuit-design)
+  * [PCB design](#PCB-design)
 
 
 # System design
-Above is a picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
+## System architecture
+## Firmware design
+## Server design
+## Circuit design
 
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/circuit_diagram.jpg)
 *Figure 2. Circuit Diagram*
+
+## PCB design
+Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
 
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Layout_FrontAndBack.png)
 *Figure 3. Layout: front side on the left, back side on the right*
