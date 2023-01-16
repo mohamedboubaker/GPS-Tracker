@@ -2,9 +2,9 @@
 
 This is a GPS tracker board that periodically checks the GPS coordinates and sends them to a predefined remote server on the internet.
 
-![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
+![Manufactured PCB](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
 
-![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/3D_FrontAndBack.png)
+![3D Model of the PCB](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/3D_FrontAndBack.png)
 
 The idea is basically a microcontroller, STM32F030, that periodically sends AT commands via UART to the SIM808 GPS/GPRS module to get GPS data and then sends these data to a Mosquitto MQTT server hosted on an AWS EC2. This data gets also encrypted with AES-128 in Electronic Code Book (ECB) mode before being sent to the server. AES algorithm was implemented from scratch for learning purposes. (Note: In a production application, it's better to use a known AES implementations. Example: WolfSSL)
 
