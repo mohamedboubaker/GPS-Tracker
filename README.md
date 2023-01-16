@@ -1,4 +1,4 @@
-# Project overview
+# 1. Project overview
 
 This is a GPS tracker board that periodically checks the GPS coordinates and sends them to a predefined remote server on the internet.
 
@@ -20,13 +20,23 @@ The power input of the circuit is regulated using a DC-DC down converter Texas I
   * [Server design](#Server-design)
   * [Circuit design](#Circuit-design)
   * [PCB design](#PCB-design)
+- [Implementation](#Implementation)
+  * [Manufacturing](#Manufacturing)
+  * [Testing and debugging](#Testing-and-debugging)
+- [Results and evaluation](#Results-and-evaluation)
+  * [Test drive](#Test-drive)
+  * [Performance evaluation](#Performance-evaluation)
+- [Conclusion](#Conclusion)
+  * [Summary](#Summary)
+  * [Reference and bibliography](#Reference and bibliography)
 
 
-# System design
-## System architecture
-## Firmware design
-## Server design
-## Circuit design
+
+# 2. System design
+## 2.1 System architecture
+## 2.2 Firmware design
+## 2.3 Server design
+## 2.4 Circuit design
 
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/circuit_diagram.jpg)
 *Figure 2. Circuit Diagram*
