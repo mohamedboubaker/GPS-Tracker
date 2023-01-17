@@ -5,12 +5,14 @@ The objective of this project is to deliever a GPS tracking system that can be u
 
 The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not mature. However, this work is mainly concerned with: designing a circuit, manufacturing the PCB, and creating firmware to power it, all while ensuring reliability. Below is a picture of the  produced PCB.
 
+Keywords: C | STM-32 | ST-HAL | STMCubeMX | MDK-Keil | SIM808 | GPS | GPRS | UART | Electronics | PCB | KiCAD | TCP/IP | AES-128 | MQTT | Algorithm implementation | Python | Linux | httpd | AWS EC2 |  
+
 <p>&nbsp;</p>
 
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
 *Figure 1. Manufactured PCB*
 
-Keywords: C | STM-32 | ST-HAL | STMCubeMX | MDK-Keil | SIM808 | GPS | GPRS | UART | Electronics | PCB | KiCAD | TCP/IP | AES-128 | MQTT | Algorithm implementation | Python | Linux | httpd | AWS EC2 |  
+
 
 This documentation describes all the thoughs behind the design and realisation of this project. 
 
