@@ -3,7 +3,7 @@ Important Note: This project is still under developement. The documentation is a
 
 The objective of this project is to deliever a GPS tracking system that can be used to track a vehicule. The system includes a device that periodically sends its position and speed data to a remote server. The data is stored on the server where it can be accessed through a browser for visualization.
 
-The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not mature. However, this work is focoused on: designing a circuit and a PCB, manufacturing the PCB and developing reliable firmware for the PCB. Below is a picture of the manufactured PCB.
+The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not mature. However, this work is focoused on: designing a circuit and a PCB, manufacturing the PCB and developing reliable firmware. Below is a picture of the manufactured PCB.
 
 <p>&nbsp;</p>
 
