@@ -3,18 +3,18 @@ Important Note: This project is still under developement. The documentation is a
 
 The objective of this project is to deliever a GPS tracking system that can be used to track a vehicule. The system includes a device that periodically sends its position and speed data to a remote server. The data is stored on the server where it can be accessed through a browser for visualization.
 
-The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not mature. However, the PCB and the firmware have been developed thouroughly. Below is a picture of the manufactured device PCB.
+The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not mature. However, this work is focoused on: designing a circuit and a PCB, manufacturing the PCB and developing reliable firmware for the PCB. Below is a picture of the manufactured PCB.
 
 <p>&nbsp;</p>
 
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
 *Figure 1. Manufactured PCB*
 
-This documentation describes all the steps and ideas behind the realisation of this project. 
-- Designing a circuit and a PCB.  
-- Manufacturing the PCB. 
-- Developing firmware for the PCB. 
-- Configuring a server to receive and store the GPS data.
+This documentation describes all the thoughs behind the design and realisation of this project. 
+- 
+-  
+-  
+
 
 #### Table of Contents
 - [1. Project overview](#1-Project-overview)
