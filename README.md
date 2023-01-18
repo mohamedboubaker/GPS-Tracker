@@ -3,7 +3,7 @@
 
 The objective of this project is to deliever a GPS tracking system that can be used to track a vehicule. The system includes a device that periodically sends its position and speed information to a remote server. The data is stored on the server where it can be accessed through a web browser for visualization.
 
-The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform are not mature. However, this work is mainly concerned with: designing a circuit, manufacturing the PCB, and creating firmware to power it, all while ensuring reliability. Below is a picture of the  produced PCB.
+The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform are not mature. However, this work is mainly concerned with: designing a circuit, manufacturing the PCB, and developing firmware to power it, all while ensuring reliability. Below is a picture of the  produced PCB.
 
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
 *Figure 1. Manufactured PCB*
@@ -30,11 +30,12 @@ The scope of the project is more focoused on the embedded side. In other words, 
 
 ## 1.2 Methodology
 
-The first phase of the project consisted of designing a minimalistic proof of concept using development boards.
+The first phase of the project consisted of designing a minimalistic proof of concept (POC) using development boards.
 
-The second phaseinvolved designing the circuit and PCB using KiCAD version 6. After the hardware design phase completed, PCB prototypes were  ordered from JLCPCB.
+The second phase involved designing the circuit and PCB using KiCAD version 6. After the hardware design phase completed, PCB prototypes were  ordered from JLCPCB.
 
-The firmware development is ARM MDK-keil 5
+In the third phase, the firmware that was initially developed during the POC stage was further refined and enhanced to become more reliable. 
+STMCubeMX and ARM MDK-Keil version 5 were used to develop the firmware. STM32 ST-LINK Utility along with an ST-link programmer were used for flashing the firmware on the Microcontroller (MCU).
 
 # 2. System design
 ## 2.1 System architecture
