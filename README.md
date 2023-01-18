@@ -16,7 +16,7 @@ This documentation describes all the thoughs behind the design and realisation o
 
 #### Table of Contents
 - [1. Introduction](#1-Introduction)
- * [1.1 Project overview](#11-Project-overview)
+  * [1.1 Project overview](#11-Project-overview)
 - [2. System design](#2-System-design)
   * [2.1 System architecture](#21-System-architecture)
   * [2.2 Firmware design](#22-Firmware-design)
