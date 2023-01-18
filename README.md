@@ -30,12 +30,12 @@ The scope of the project is more focoused on the embedded side. In other words, 
 
 ## 1.2 Methodology
 
-The first phase of the project consisted of designing a minimalistic proof of concept (POC) using development boards.
+The first phase of the project consisted of choosing a Microcontroller (MCU) and a GPS/GPRS module and then designing a minimalistic proof of concept (POC) using development boards. STM32F030 MCU and SIM808 GPS/GPRS module were chosen. STMCubeMX and ARM MDK-Keil version 5 were used to develop the firmware. STM32 ST-LINK Utility along with an ST-link programmer were used for flashing the firmware on the (MCU).
 
 The second phase involved designing the circuit and PCB using KiCAD version 6. After the hardware design phase completed, PCB prototypes were  ordered from JLCPCB.
 
-In the third phase, the firmware that was initially developed during the POC stage was further refined and enhanced to become more reliable. 
-STMCubeMX and ARM MDK-Keil version 5 were used to develop the firmware. STM32 ST-LINK Utility along with an ST-link programmer were used for flashing the firmware on the Microcontroller (MCU).
+In the third phase, the firmware that was initially developed during the POC stage was further refined to fit the new custom PCB and enhanced to become more reliable. 
+
 
 # 2. System design
 ## 2.1 System architecture
