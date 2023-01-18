@@ -28,11 +28,11 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [5.1 Summary](#51-Summary)
   * [5.2 Reference and bibliography](#52-Reference-and-bibliography)
 
-## 2.2 Methodology
+## 1.2 Methodology
 
 The first phase of the project consisted of designing a minimalistic proof of concept using development boards.
 
-The second phase of the project involved designing the circuit and PCB using KiCAD version 6. After the hardware design phase completed, PCB prototypes were  ordered from JLCPCB.
+The second phaseinvolved designing the circuit and PCB using KiCAD version 6. After the hardware design phase completed, PCB prototypes were  ordered from JLCPCB.
 
 The firmware development is ARM MDK-keil 5
 
