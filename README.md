@@ -29,7 +29,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [5.1 Summary](#51-Summary)
   * [5.2 Reference and bibliography](#52-Reference-and-bibliography)
 
-## 1.3 Toolchain
+## 1.2 Toolchain
 
 Developement boards: STM32F0 Discovery and SIM808 EVB-v3.2.4
 MCU Configuration: STMCubeMX
