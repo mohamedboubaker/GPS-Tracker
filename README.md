@@ -1,4 +1,5 @@
-# 1. Project overview
+# 1. Introduction
+## 1.1 Project overview
 Important Note: This project is still under developement.
 
 The objective of this project is to deliever a GPS tracking system that can be used to track a vehicule. The system includes a device that periodically sends its position and speed information to a remote server. The data is stored on the server where it can be accessed through a web browser for visualization.
@@ -17,7 +18,8 @@ This documentation describes all the thoughs behind the design and realisation o
 
 
 #### Table of Contents
-- [1. Project overview](#1-Project-overview)
+- [1. Introduction](#1-Introduction)
+ * [1.1 Project overview](#11-Project-overview)
 - [2. System design](#2-System-design)
   * [2.1 System architecture](#21-System-architecture)
   * [2.2 Firmware design](#22-Firmware-design)
