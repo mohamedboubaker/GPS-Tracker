@@ -11,7 +11,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 #### Table of Contents
 - [1. Introduction](#1-Introduction)
   * [1.1 Project overview](#11-Project-overview)
-  * [1.2 Project timeline and methodology](#12-Projec-timeline-and-methodology)
+  * [1.2 Project timeline](#12-Projec-timeline)
 - [2. System design](#2-System-design)
   * [2.1 System architecture](#21-System-architecture)
   * [2.2 Firmware design](#22-Firmware-design)
@@ -28,13 +28,13 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [5.1 Summary](#51-Summary)
   * [5.2 Reference and bibliography](#52-Reference-and-bibliography)
 
-## 1.2 Project timeline and Methodology
+## 1.2 Project timeline
 
 The realization of this project was divided into 3 main phases. 
 
 The first phase of the project consisted of choosing a Microcontroller (MCU) and a GPS/GPRS module and then designing a minimalistic proof of concept (POC) using development boards. 
 
-STM32F030 MCU and SIM808 GPS/GPRS module were chosen. STMCubeMX and ARM MDK-Keil version 5 were used to develop the firmware. STM32 ST-LINK Utility along with an ST-link programmer were used for flashing the firmware on the (MCU).
+STMCubeMX and ARM MDK-Keil version 5 were used to develop the firmware. STM32 ST-LINK Utility along with an ST-link programmer were used for flashing the firmware on the (MCU).
 
 The second phase involved designing the circuit and PCB using KiCAD version 6. After the hardware design phase completed, PCB prototypes were  ordered from JLCPCB.
 
