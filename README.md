@@ -32,7 +32,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 
 The realization of this project was divided into 3 main phases. 
 
-The first phase of the project consisted of choosing a Microcontroller (MCU) and a GPS/GPRS module and then designing a minimalistic proof of concept (POC) using development boards. 
+The first phase of the project involved selecting the Microcontroller (MCU) and GPS/GPRS module, and then designing a minimalistic proof of concept using development boards.
 
 The second phase involved designing the circuit and PCB. After the hardware design phase completed, PCB prototypes were  ordered.
 
