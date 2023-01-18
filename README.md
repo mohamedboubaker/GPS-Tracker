@@ -34,9 +34,7 @@ The realization of this project was divided into 3 main phases.
 
 The first phase of the project consisted of choosing a Microcontroller (MCU) and a GPS/GPRS module and then designing a minimalistic proof of concept (POC) using development boards. 
 
-STMCubeMX and ARM MDK-Keil version 5 were used to develop the firmware. STM32 ST-LINK Utility along with an ST-link programmer were used for flashing the firmware on the (MCU).
-
-The second phase involved designing the circuit and PCB using KiCAD version 6. After the hardware design phase completed, PCB prototypes were  ordered from JLCPCB.
+The second phase involved designing the circuit and PCB. After the hardware design phase completed, PCB prototypes were  ordered.
 
 In the third phase, the firmware that was initially developed during the POC stage was further refined to fit the new custom PCB and enhanced to become more reliable. 
 
