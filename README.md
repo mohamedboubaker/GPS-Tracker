@@ -34,8 +34,8 @@ The scope of the project is more focoused on the embedded side. In other words, 
 - Developement boards: STM32F0 Discovery and SIM808 EVB-v3.2.4
 - MCU Configuration: STMCubeMX
 - IDE and compiler: ARM MDK-Keil version 5
-- Flashing utilities:  STM32 ST-LINK Utility and  ST-link programmer
-- PCB Design:KiCAD version 6
+- Flashing utilities: STM32 ST-LINK Utility and  ST-link programmer
+- PCB Design: KiCAD version 6
 
 ## 1.3 Project timeline
 
