@@ -36,6 +36,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 - IDE and compiler: ARM MDK-Keil version 5
 - Flashing utilities: STM32 ST-LINK Utility and  ST-link programmer
 - PCB Design: KiCAD version 6
+- PCB Manufacturing: JLCPCB
 
 ## 1.3 Project timeline
 
