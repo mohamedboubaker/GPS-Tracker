@@ -1,3 +1,13 @@
+# 1. Introduction
+## 1.1 Project overview
+
+The objective of this project is to deliever a GPS tracking system that can be used to track a vehicule. The system includes a device that periodically sends its position and speed information to a remote server. The data is stored on the server where it can be accessed through a web browser for visualization.
+
+The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not mature. However, this work is mainly concerned with: designing a circuit, manufacturing the PCB, and creating firmware to power it, all while ensuring reliability. Below is a picture of the  produced PCB.
+
+![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
+*Figure 1. Manufactured PCB*
+
 #### Table of Contents
 - [1. Introduction](#1-Introduction)
   * [1.1 Project overview](#11-Project-overview)
@@ -16,18 +26,6 @@
 - [5. Conclusion](#5-Conclusion)
   * [5.1 Summary](#51-Summary)
   * [5.2 Reference and bibliography](#52-Reference-and-bibliography)
-
-
-# 1. Introduction
-## 1.1 Project overview
-
-The objective of this project is to deliever a GPS tracking system that can be used to track a vehicule. The system includes a device that periodically sends its position and speed information to a remote server. The data is stored on the server where it can be accessed through a web browser for visualization.
-
-The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform is not mature. However, this work is mainly concerned with: designing a circuit, manufacturing the PCB, and creating firmware to power it, all while ensuring reliability. Below is a picture of the  produced PCB.
-
-![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
-*Figure 1. Manufactured PCB*
-
 
 
 This documentation describes all the thoughs behind the design and realisation of this project. 
