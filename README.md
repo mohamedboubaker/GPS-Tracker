@@ -11,7 +11,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 #### Table of Contents
 - [1. Introduction](#1-Introduction)
   * [1.1 Project overview](#11-Project-overview)
-  * [1.2 Tools and methodology](#12-Tools-and-methodology)
+  * [1.2 Toolchain](#12-Toolchain)
   * [1.3 Project timeline](#13-Project-timeline)
 - [2. System design](#2-System-design)
   * [2.1 System architecture](#21-System-architecture)
@@ -29,12 +29,13 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [5.1 Summary](#51-Summary)
   * [5.2 Reference and bibliography](#52-Reference-and-bibliography)
 
-## 1.3 Tools and methodology
+## 1.3 Toolchain
 
-In the development of this project, the STMCubeMX software was used to generate the initial firmware for the STM32 microcontroller. ARM MDK-Keil version 5 was then used to develop and refine the firmware.The STM32 ST-LINK Utility was utilized to flash the firmware onto the microcontroller using the ST-link programmer. 
-
-The PCB design was created using KiCAD version 6, taking into account the specific requirements of the SIM808 GPS/GPRS module. The resulting design was then sent to a PCB manufacturer for fabrication. 
-
+Developement boards: STM32F0 Discovery and SIM808 EVB-v3.2.4
+MCU Configuration: STMCubeMX
+Development environement: ARM MDK-Keil version 5
+Flashing utilities:  STM32 ST-LINK Utility and  ST-link programmer
+PCB Design:KiCAD version 6
 
 ## 1.3 Project timeline
 
