@@ -11,7 +11,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 #### Table of Contents
 - [1. Introduction](#1-Introduction)
   * [1.1 Project overview](#11-Project-overview)
-  * [1.2 Project timeline](#12-Projec-timeline)
+  * [1.2 Project timeline](#12-Project-timeline)
 - [2. System design](#2-System-design)
   * [2.1 System architecture](#21-System-architecture)
   * [2.2 Firmware design](#22-Firmware-design)
