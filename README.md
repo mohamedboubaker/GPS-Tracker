@@ -11,7 +11,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 #### Table of Contents
 - [1. Introduction](#1-Introduction)
   * [1.1 Project overview](#11-Project-overview)
-  * [1.2 Methodology](#12-Methodology)
+  * [1.2 Project timeline and methodology](#12-Projec-timeline-and-methodology)
 - [2. System design](#2-System-design)
   * [2.1 System architecture](#21-System-architecture)
   * [2.2 Firmware design](#22-Firmware-design)
@@ -28,7 +28,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [5.1 Summary](#51-Summary)
   * [5.2 Reference and bibliography](#52-Reference-and-bibliography)
 
-## 1.2 Methodology
+## 1.2 Project timeline and Methodology
 
 The realization of this project was divided into 3 main phases. 
 
