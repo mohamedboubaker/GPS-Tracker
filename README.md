@@ -55,9 +55,9 @@ In the third phase, the firmware that was initially developed during the POC sta
 The system is composed of 3 main parts: a PCB, firmware and a server. 
 
 * The PCB circuit contains 3 major elements: 
- * A power regulation circuit based on the Texas Instruments TPS5430DDA DC-DC down converter, which is configured to safely convert any voltage between 5.5V and 20V to 3.6V. 
- * An STM32 MCU: STM32F030, which is the brains of the PCB.
- * A GPS/GPRS module: SIM808, which is capable of receiving GPS signals and also connecting to a GPRS network, which means connecting to the internet.
+     * A power regulation circuit based on the Texas Instruments TPS5430DDA DC-DC down converter, which is configured to safely convert any voltage between 5.5V and 20V to 3.6V. 
+     * An STM32 MCU: STM32F030, which is the brains of the PCB.
+     * A GPS/GPRS module: SIM808, which is capable of receiving GPS signals and also connecting to a GPRS network, which means connecting to the internet.
 
 
 
