@@ -60,6 +60,7 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
      * An STM32 MCU: STM32F030, which is the brains of the PCB. It controls the SIM808 module via UART.
 
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Architecture_overview.svg)
+
 *Figure 2. Architecture overview*
 
 
