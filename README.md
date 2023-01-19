@@ -59,6 +59,9 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
      * A GPS/GPRS module: SIM808, which is capable of receiving GPS signals and also connecting to a GPRS network, which means connecting to the internet.
      * An STM32 MCU: STM32F030, which is the brains of the PCB. It controls the SIM808 module via UART.
 
+![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Architecture_overview.svg)
+*Figure 2. Architecture overview*
+
 
 ## 2.2 Firmware design
 ## 2.3 Server design
