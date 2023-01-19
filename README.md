@@ -60,11 +60,6 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
      * An STM32 MCU: STM32F030, which is the brains of the PCB. It controls the SIM808 module via UART.
 
 
-
-STM32F030, that periodically sends AT commands via UART to the SIM808 GPS/GPRS module to get GPS data and then sends these data to a Mosquitto MQTT server hosted on an AWS EC2. This data gets also encrypted with AES-128 in Electronic Code Book (ECB) mode before being sent to the server. AES algorithm was implemented from scratch for learning purposes. (Note: In a production application, it's better to use a known AES implementations. Example: WolfSSL)
-
-The power input of the circuit is regulated using a DC-DC down converter Texas Instruments TPS5430DDA with input voltage ranging from 5.5V to 36V 
-
 ## 2.2 Firmware design
 ## 2.3 Server design
 ## 2.4 Circuit design
