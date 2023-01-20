@@ -10,8 +10,23 @@
 #include <stdint.h>
 #include "main.h"
 
+/* Error codes */
 #define FAIL 0
 #define SUCCESS 1
+#define TRUE 1
+#define FALSE 0
+#define ERR_PHONE_FUNCTION 48
+#define ERR_SIM_PRESENCE 49
+#define ERR_PIN_WRONG 50
+#define ERR_WEAK_SIGNAL 51
+#define ERR_REGISTRATION 52
+#define ERR_GPRS_ATTACH 52
+#define ERR_PDP_DEACTIVATED 53
+#define ERR_PDP_DEFINE 54
+#define ERR_PDP_ACTIVATE 55
+#define ERR_GET_IP 56
+
+
 #define RX_WAIT 200 /*After sending AT command, wait RX_WAIT ms  to ensure that the reply is receeived in the buffer*/
 #define TX_TIMEOUT 100
 #define BAUD_RATE 38400 /*BAUD_RATE=38400 => it take 26 ms to send 100 bytes */
@@ -25,6 +40,8 @@
 #define APN "TM"
 #define APN_LENGTH 2 /* Length of APN string */
 #define SIM_PIN ""
+
+
 
 /* SIM808_typedef is used to abstract the SIM808 module. 
  * It will decouple the functions from the hardware (uart+pins) used to interface with the module.

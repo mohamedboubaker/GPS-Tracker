@@ -100,7 +100,7 @@ uint8_t send_cmd(const char * cmd, uint32_t rx_wait){
  * @param char * cmd_reply is an array where to modules reply will be copied. 
  * @returns 1 if the module replies with OK, 0 otherwise
  */
-uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply){
+uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait){
 
 	/* the implementation of this function is very similar to send_cmd. The difference is
 	 * that this function sends the command only 1 time and copies the reply from the receive buffer 
@@ -110,7 +110,7 @@ uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply){
 	HAL_UART_Transmit(&AT_uart,(uint8_t *)cmd,strlen(cmd),TX_TIMEOUT);
 
 	/* Wait for the module to finish transmitting the reply.*/
-	HAL_Delay(RX_WAIT);
+	HAL_Delay(rx_wait);
 
 	/* Note: 
 	 * The reply from the module will be captured by the UART receive interrupt callback routine HAL_UART_RxCpltCallback() 
@@ -311,14 +311,14 @@ uint8_t sim_gps_get_location(char * coordinates){
 
 
 	/*Check GPS Fix status*/
-	sim_get_cmd_reply(gps_get_status_cmd,local_rx_buffer);
+	sim_get_cmd_reply(gps_get_status_cmd,local_rx_buffer,RX_WAIT);
 
 	if (strstr(local_rx_buffer,"Location 3D Fix")!=NULL){
 		
 		/*clear local buffer*/
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 
-		err_status=sim_get_cmd_reply(gps_get_location_cmd,local_rx_buffer);
+		err_status=sim_get_cmd_reply(gps_get_location_cmd,local_rx_buffer,RX_WAIT);
 		
 		/* Example reply 
 		* AT+CGPSINF=0 +CGPSINF: 0,4927.656000,1106.059700,319.200000,20220816200132.000,0,12,1.592720,351
@@ -341,6 +341,26 @@ uint8_t sim_gps_get_location(char * coordinates){
 /*                    GPRS functions                   */
 /*******************************************************/
 
+uint8_t sim_insert_PIN(char * pin){
+	
+	char PIN_insert_cmd[13]= "AT+CPIN=";
+	uint8_t PIN_status=0;
+	char local_rx_buffer[RX_BUFFER_LENGTH]; 
+	
+	/* build string PIN_insert_cmd = AT+CPIN=XXXX   SIM_PIN length is assumed = 4 */
+	strcat(PIN_insert_cmd,SIM_PIN);   
+	
+	/* build string PIN_insert_cmd = AT+CPIN=XXXX\r */
+	strcat(PIN_insert_cmd,"\r");      
+	
+
+	sim_get_cmd_reply(PIN_insert_cmd,local_rx_buffer,RX_WAIT);
+	if (!strstr(local_rx_buffer,"OK")) 
+		return FAIL;
+
+	return SUCCESS;
+}
+
 /**
  * @brief sim_gprs_enable() enables GPRS connection. 
  * GPRS must be enabled before trying to establish TCP connection.
@@ -355,32 +375,80 @@ uint8_t sim_gps_get_location(char * coordinates){
  * @return 1 if gprs is active, 2 if SIM card is not detected, 3 if SIM PIN is incorrect, 4 if the signal is weak, 0 otherwise
  */
 uint8_t sim_gprs_enable(){
+	
+	/* Make sure to clear the buffer after every use */
+	char local_rx_buffer[RX_BUFFER_LENGTH]; 
 
-	char local_rx_buffer[RX_BUFFER_LENGTH]; /* make sure to clear the buffer after every use */
+	/* Some tests are performed 3 times, trials_counter keep track of how many trials took place */
+	uint8_t trials_counter=0;
+	
+	
+	
+	/*** Check if phone functionality of the module is enabled ***/
+	
+	static const char phone_status_check_cmd[]= "AT+CFUN?\r";
+	static const char enable_phone_function_cmd[]= "AT+CFUN=1\r";
+	uint8_t phone_status=0;
+	
+	while(trials_counter <3){
+		sim_get_cmd_reply(phone_status_check_cmd,local_rx_buffer,RX_WAIT); 
+		/* Check the reply of the module in local_rx_buffer to see if the phone is enabled.
+		 * Save the status in phone_status
+		 */
+		phone_status = (strstr(local_rx_buffer,"+CFUN: 1")==NULL?0:1);
+			
+		/* Clear receive buffer*/
+		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+		
+			if (phone_status)
+				break;
+			else
+				if (trials_counter>=3)
+					return ERR_PHONE_FUNCTION;
+				else
+					send_cmd(enable_phone_function_cmd,3*RX_WAIT);
+				trials_counter++;
+		}
+		trials_counter=0;
+		
 
-	/* Detect if SIM card is present*/
+	
+	
+	/*** Detect if SIM card is present ***/
+		
 	static const char SIM_detect_cmd[]= "AT+CSMINS?\r";
-	sim_get_cmd_reply(SIM_detect_cmd,local_rx_buffer);
+	sim_get_cmd_reply(SIM_detect_cmd,local_rx_buffer,RX_WAIT);
 	if (!strstr(local_rx_buffer,"+CSMINS: 0,1")) 
-		return 2;
-	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH); /*clear buffer for next use*/
+		return ERR_SIM_PRESENCE;
+	/*clear buffer for next use*/
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH); 
 
-	/* Check if PIN code is required */
+	
+	
+	/*** Check if PIN code is required ***/
+	
 	static const char PIN_status_cmd[]= "AT+CPIN?\r";
 	static char PIN_insert_cmd[13]= "AT+CPIN=";
-	sim_get_cmd_reply(PIN_status_cmd,local_rx_buffer);
-	if (!strstr(local_rx_buffer,"READY")){
-		strcat(PIN_insert_cmd,SIM_PIN);   /* build string = AT+CPIN=XXXX   SIM_PIN length is assumed = 4 */
-		strcat(PIN_insert_cmd,"\r");      /* build string = AT+CPIN=XXXX\r */
-		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-		sim_get_cmd_reply(PIN_insert_cmd,local_rx_buffer);
-		if (!strstr(local_rx_buffer,"OK")) 
-			return 3;
-		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	uint8_t pin_status=0;
+	/* send command to Check if PIN is required*/
+	sim_get_cmd_reply(PIN_status_cmd,local_rx_buffer,RX_WAIT);
+	
+	/* Note: the module replies READY if the PIN is not required*/
+	/* If the PIN is required, then insert PIN, if the PIN is wrong then exit*/
+	pin_status=strstr(local_rx_buffer,"READY")==NULL?0:1;
+	if (pin_status==0){
+		if (!sim_insert_PIN(SIM_PIN))
+			return ERR_PIN_WRONG;
 	}
-
-	/* Check Signal Quality 
-	 * command = AT+CSQ
+	/* Clear receive buffer */
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH); 
+	
+	
+	
+	/*** Check GPRS signal quality ***/
+	
+	/* Note
+   * command = AT+CSQ
 	 * the reply is +CSQ: RSSI,BER
 	 * RSSI = Received Signal Strength Indicator
 	 * BER  = Bit Error Rate
@@ -394,15 +462,37 @@ uint8_t sim_gprs_enable(){
 	 * BER (in percent):
 	 * 0...7 As RXQUAL values in the table in GSM 05.08 subclause 7.2.4
 	 * 99 Not known or not detectable
-	 * Note ! After first reboot, the first querry will always result in 0,0.
+	 * Note ! After the startup of the module, it will take around 5s to aquire signal strength report.
 	 */
 	static const char check_signal_cmd[]= "AT+CSQ\r";
-	sim_get_cmd_reply(check_signal_cmd,local_rx_buffer);
-	if (strstr(local_rx_buffer,"+CSQ: 0,") || strstr(local_rx_buffer,"99,")) 
-		return 3; /* if signal is weak return 3 */
-	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	
+	uint8_t signal_status=0;
 
-	/* Check Network Registration Status
+		while(trials_counter <3){
+			sim_get_cmd_reply(check_signal_cmd,local_rx_buffer,RX_WAIT);
+			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
+			* Save the status in signal_status
+			*/
+			signal_status = !( (strstr(local_rx_buffer,"+CSQ: 0,")==NULL?0:1) || (strstr(local_rx_buffer,"99,")==NULL?0:1)) ;
+			/* Clear receive buffer*/
+			memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+		
+			if (signal_status)
+				break;
+			else
+				if (trials_counter>=3)
+					return ERR_WEAK_SIGNAL;
+				/* if the signal is weak, wait 1 second before measuring again */
+				else
+					HAL_Delay(4000);
+				trials_counter++;
+		}
+		trials_counter=0;
+		
+		
+	/*** Check Network Registration Status ***/
+	
+	/* Note 
 	 * Command = AT+CREG?
 	 * the reply is +CREG: 0,5
 	 * First integer is status of result code presentation (Not sure what is this)
@@ -416,41 +506,101 @@ uint8_t sim_gprs_enable(){
 	 */
 	static const char check_registration_cmd[]= "AT+CREG?\r";
 	static const char register_ME_cmd[]= "AT+CREG=1\r";
-	sim_get_cmd_reply(check_registration_cmd,local_rx_buffer);
-	if (!(strstr(local_rx_buffer,",1") || strstr(local_rx_buffer,",5"))) 
-		if (!send_cmd(register_ME_cmd,RX_WAIT)) 
-			return FAIL; /* Try to register, if registration fails return 0*/
-	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-
-	/* Check if GPRS is attached */
+	uint8_t registration_status=0;
+		
+	while(trials_counter<3){
+	/*Send command to check registration status*/
+	sim_get_cmd_reply(check_registration_cmd,local_rx_buffer,RX_WAIT);
+	
+	/*check the reply to determine if ME is registered at home network or roaming */
+		registration_status= (strstr(local_rx_buffer,",1")==NULL?0:1) || (strstr(local_rx_buffer,",5")==NULL?0:1);
+	
+	/*Clear receive buffer*/
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);	
+	
+	if (registration_status)
+		break;
+	else{
+		if (trials_counter >= 3)
+			return ERR_REGISTRATION;
+		/* send command to register ME to network */
+		send_cmd(register_ME_cmd,5*RX_WAIT);
+	}
+	trials_counter++;
+	}
+	trials_counter=0;
+	
+	
+	
+	/*** Check if GPRS is attached ***/
+	
 	static const char check_grps_attach_cmd[]= "AT+CGATT?\r";
 	static const char grps_attach_cmd[]= "AT+CGATT=1\r";
-	sim_get_cmd_reply(check_grps_attach_cmd,local_rx_buffer);
-	if ( strstr(local_rx_buffer,"CGATT: 0") )/* if GPRS is not attached, try to attach and return FAIL if cmd fails */
-		if (!send_cmd(grps_attach_cmd,RX_WAIT)) return FAIL; 
-	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	uint8_t attach_status=0;
+	
+			while(trials_counter <3){
+				sim_get_cmd_reply(check_grps_attach_cmd,local_rx_buffer,RX_WAIT);
 
-	/* 
-	 * The sequence of GPRS states that must be followed for a correct GPRS connection establishement
+			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
+			* Save the status in signal_status
+			*/
+			attach_status = !(strstr(local_rx_buffer,"CGATT: 0")==NULL?0:1);
+			
+				/* Clear receive buffer*/
+			memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+		
+			if (attach_status)
+				break;
+			else
+				if (trials_counter>=3)
+					return ERR_GPRS_ATTACH;
+				/* if the signal is weak, wait 1 second before measuring again */
+				else
+					send_cmd(grps_attach_cmd,4*RX_WAIT);
+				trials_counter++;
+		}
+		trials_counter=0;
+		
+	
+		
+	/* At this point, the module should be attached to GPRS.
+	 * The sequence below of GPRS states  must be followed for a correct GPRS connection establishement
 	 * [PDP DEACT] => AT+CIPSHUT => [IP INITIAL] => AT+CSTT="TM","","" => [IP START] => AT+CIICR => [IP GPRSACT] => AT+CIFSR => [IP STATUS]
 	 */
-
-	static const char check_gprs_state_cmd[]= "AT+CIPSTATUS\r"; /* This command can be used to check gprs or TCP state */
-
-	/*Check if PDP context is deactivated*/
-	static const char deactivate_PDP_cmd[]= "AT+CIPSHUT\r";
-	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer);
-	if ( strstr(local_rx_buffer,"PDP DEACT") ) /*When PDP is deactivated it is necessary to run  AT+CIPSHUT to bring the status to [IP INITIAL] */
-		if(!send_cmd(deactivate_PDP_cmd,RX_WAIT)) 
-			return FAIL;
+		
+	/*** Check if PDP context is deactivated [PDP DEACT] ***/
+		
+	/* This command can be used to check gprs or TCP state */
+	static const char check_gprs_state_cmd[]= "AT+CIPSTATUS\r"; 
+	static const char reset_PDP_cmd[]= "AT+CIPSHUT\r";
+		
+	uint8_t pdp_deactivated=0;
+	
+	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer,RX_WAIT);
+		
+	/*When PDP is deactivated it is necessary to run  AT+CIPSHUT to bring the status to [IP INITIAL] */
+	pdp_deactivated = strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1;
+	if ( pdp_deactivated ) 
+		if(!send_cmd(reset_PDP_cmd,RX_WAIT)) 
+			return ERR_PDP_DEACTIVATED;
+	
+	/*clear receive buffer*/
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-
-	/* Check if PDP context is correctly defined and define it.
-	 * when no PDP context is not defined the reply is the default PDP +CSTT: "CMNET","",""
-	 */
+	
+		
+		
+	/*** Check if PDP context is correctly defined ***/
+	/* Note: 
+	* command = AT+CSTT?
+	* When no PDP context is not defined the reply is the default PDP: +CSTT: "CMNET","",""
+	*/
+	uint8_t pdp_defined=0;
 	static const char check_PDP_context_cmd[]= "AT+CSTT?\r";
-	sim_get_cmd_reply(check_PDP_context_cmd,local_rx_buffer);
-	if ( strstr(local_rx_buffer,"CMNET") ){
+	sim_get_cmd_reply(check_PDP_context_cmd,local_rx_buffer,RX_WAIT);
+		
+	pdp_defined = strstr(local_rx_buffer,"CMNET")==NULL?1:0;
+		
+	if(pdp_defined==0){
 		/* Build enable_PDP_context_cmd 
 		 * APN Name length is very important in this implementation 
 		 * APN_LENGTH must be adjusted when APN is changed in the header file
@@ -460,38 +610,73 @@ uint8_t sim_gprs_enable(){
 		strcat(define_PDP_context_cmd,APN); /* AT+CSTT="APN */
 		strcat(define_PDP_context_cmd,"\",\"\",\"\"\r"); /* AT+CSTT="APN","","" */
 		if(!send_cmd(define_PDP_context_cmd,RX_WAIT)) 
-			return FAIL;
+			return ERR_PDP_DEFINE;
 	}
+	/*Clear receive buffer*/
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-
-	/* Enable PDP context 
-	 * Check the GPRS status, if it is IP START, then enable PDP context, otherwise jump to next test
+	
+	/*** Check if PDP context is active ***/ 
+	
+	/* Note:
+	 * Check the GPRS status, if it is IP START, then activate PDP context
 	 */
-	static const char enable_PDP_context_cmd[]= "AT+CIICR\r";
-	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer); 
-	if ( strstr(local_rx_buffer,"IP START") ){
-		if (!send_cmd(enable_PDP_context_cmd,1000)) /* This command takes around 1 second to finish hence 1s wait time */
-			return FAIL; 	
-	}
+	
+	uint8_t pdp_ready=0;
+	static const char activate_PDP_context_cmd[]= "AT+CIICR\r";
+	
+	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer,RX_WAIT); 
+	
+	/* Check if PDP context is defined and ready to be activated == [IP START] */
+	pdp_ready = strstr(local_rx_buffer,"IP START")==NULL?0:1;
+	
+	/* Clear receive buffer */
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 
-	/* Get IP address 
+	/*if PDP context is correctly defined then activate it */
+	if ( pdp_ready==1 ){
+		
+		/* This command takes around 1 second to finish hence 1s wait time */
+		if (!send_cmd(activate_PDP_context_cmd,1000)) 
+			return ERR_PDP_ACTIVATE; 	
+	}	
+	
+	/*** Get IP address ***/ 
+	/*
 	 * check GPRS status, if it is IP GPRSACT, then request IP, otherwise abort.
 	 * AT+CIFSR\r does not reply OK. it replies the IP address if successful or ERROR
 	 */
+	
+	/* This command takes around 1 second to finish hence wait 1s after it is sent */
+	uint8_t error=0;
 	static const char get_IP_address_cmd[]= "AT+CIFSR\r";
-	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer);
+	
+	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer,RX_WAIT);
+	
 	if ( strstr(local_rx_buffer,"IP GPRSACT") ){
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-		sim_get_cmd_reply(get_IP_address_cmd,local_rx_buffer);
-		HAL_Delay(1000); /* This command takes around 1 second to finish hence 1s wait time */
-		if ( strstr(local_rx_buffer,"ERROR")) 
-			return FAIL;
+		
+		sim_get_cmd_reply(get_IP_address_cmd,local_rx_buffer,5*RX_WAIT);
+		
+		error=strstr(local_rx_buffer,"ERROR")==NULL?0:1;
+		if ( error ) 
+			return ERR_GET_IP;
 	}
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	
+	
+	
+	/*** Check if GPRS connection is ready ***/
+	
+	uint8_t gprs_ready=0;
+	
+	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer,RX_WAIT);
+	
+	gprs_ready=strstr(local_rx_buffer,"IP STATUS")==NULL?0:1;
+	
+	if (gprs_ready)
+		return SUCCESS;
 	else 
 		return FAIL;
-	
-	return 1;
 }
 
 /**
@@ -517,7 +702,7 @@ uint8_t sim_tcp_send(char * host, char * port, uint8_t * data, uint8_t length, u
 	 * If it is disconnected, then try to enable it.
 	 * if enabling GPRS fails, then return FAIL.
 	 */
-	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer);
+	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer,RX_WAIT);
 	if ( !(strstr(local_rx_buffer,"IP STATUS") || strstr(local_rx_buffer,"CONNECT OK") || strstr(local_rx_buffer,"ALREADY CONNECT") || strstr(local_rx_buffer,"TCP CLOSED") ) )
 		if (!sim_gprs_enable())
 			return FAIL;
@@ -527,7 +712,7 @@ uint8_t sim_tcp_send(char * host, char * port, uint8_t * data, uint8_t length, u
 	/* Check connection Status.
 	 * if there is no open connection, then open a new TCP connection.
 	 */
-	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer);
+	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer,RX_WAIT);
 	if( !(strstr(local_rx_buffer,"ALREADY CONNECT") || strstr(local_rx_buffer,"CONNECT OK"))){
 		
 		/* clear receive buffer */
@@ -540,7 +725,7 @@ uint8_t sim_tcp_send(char * host, char * port, uint8_t * data, uint8_t length, u
 		strcat(tcp_connect_cmd,"\"\r");  /* AT+CIPSTART=\"TCP\","host.com","port"\r */
 		
 		/*Send open connection command */
-		sim_get_cmd_reply(tcp_connect_cmd,local_rx_buffer);
+		sim_get_cmd_reply(tcp_connect_cmd,local_rx_buffer,RX_WAIT);
 		
 		/* Wait for connection to establish or fail*/
 		HAL_Delay(1000);

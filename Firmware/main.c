@@ -55,8 +55,9 @@ int main(void)
 
 
 	sim_init(&sim);
-	if (sim_gprs_enable()) HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);;
-  sim_tcp_send("18.197.145.205","1883","hello",5,1);
+	if (sim_gprs_enable()) 
+		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);;
+  //sim_tcp_send("18.197.145.205","1883","hello",5,1);
 	//sim_gps_enable();
 	
 	//char position[23];
