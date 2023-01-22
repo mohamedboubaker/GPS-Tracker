@@ -64,14 +64,13 @@ int main(void)
 	
 	char position[23];
   
-
-while (1)
+int i=0;
+while (i<100)
   {
 		//sim_gps_get_location(position);
-		sim_gps_get_location(position);
-		sim_tcp_send("3.122.114.120","1883","hello",5);
-
-		HAL_Delay(1000);
+		//sim_gps_get_location(position);
+		sim_tcp_send("3.122.114.120","1883","hello\n","6");
+		i++;
   }
 
 }

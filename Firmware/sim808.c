@@ -20,6 +20,15 @@ static volatile uint8_t rx_byte; /* The receive interupt routine uses rx_byte to
 static volatile uint8_t rx_index=0; /*track the number of received bytes.*/
 static volatile char sim_rx_buffer[RX_BUFFER_LENGTH];
 
+void  send_debug(const char * debug_msg, uint32_t rx_wait)
+{
+	
+	HAL_UART_Transmit(&debug_uart,(uint8_t*)debug_msg,strlen(debug_msg),TX_TIMEOUT);
+	
+	/* Wait for command to be processed */
+	HAL_Delay(rx_wait);
+	
+}
 
 /**
  * @brief send_serial() sends raw serial data to the SIM808 module through the AT_uart peripheral. Then it deletes the receive buffer.
@@ -27,8 +36,8 @@ static volatile char sim_rx_buffer[RX_BUFFER_LENGTH];
  * @param uint32_t rx_wait waiting time before exit. To make sure the reply is received.
  * @returns void
  */
-void send_serial(uint8_t * data, uint8_t length, uint32_t rx_wait){
-	HAL_UART_Transmit(&AT_uart,data,length,TX_TIMEOUT);
+void send_serial(char * data, uint8_t length, uint32_t rx_wait){
+	HAL_UART_Transmit(&AT_uart,(uint8_t *)data,length,TX_TIMEOUT);
 	
 	/* Wait for command to be processed */
 	HAL_Delay(rx_wait);
@@ -148,7 +157,7 @@ uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait){
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if (huart->Instance==USART1){
-		sim_rx_buffer[rx_index++ % RX_BUFFER_LENGTH]=rx_byte; /*rx_index++ modulo RX_BUFFER_LENGTH to ensure it always stays smaller then RX_BUFFER_LENGTH*/
+		sim_rx_buffer[rx_index++ ]=rx_byte; /*rx_index++ modulo RX_BUFFER_LENGTH to ensure it always stays smaller then RX_BUFFER_LENGTH*/
 		
 		/* Enable UART receive interrupt again*/
 		HAL_UART_Receive_IT(&AT_uart,(uint8_t *)&rx_byte,1);

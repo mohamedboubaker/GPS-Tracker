@@ -15,22 +15,13 @@
 #define SUCCESS 1
 #define TRUE 1
 #define FALSE 0
-#define ERR_PHONE_FUNCTION 48
-#define ERR_SIM_PRESENCE 49
-#define ERR_PIN_WRONG 50
-#define ERR_WEAK_SIGNAL 51
-#define ERR_REGISTRATION 52
-#define ERR_GPRS_ATTACH 52
-#define ERR_PDP_DEACTIVATED 53
-#define ERR_PDP_DEFINE 54
-#define ERR_PDP_ACTIVATE 55
-#define ERR_GET_IP 56
+
 
 
 #define RX_WAIT 200 /*After sending AT command, wait RX_WAIT ms  to ensure that the reply is receeived in the buffer*/
 #define TX_TIMEOUT 100
 #define BAUD_RATE 38400 /*BAUD_RATE=38400 => it take 26 ms to send 100 bytes */
-#define RX_BUFFER_LENGTH 128
+#define RX_BUFFER_LENGTH 256
 #define SIM_UART huart2
 #define DEBUG_UART huart1
 #define TCP_CONNECT_TIMEOUT 5 /*value in second*/
@@ -83,7 +74,9 @@ uint8_t sim_init(SIM808_typedef * sim);
  */
 uint8_t send_cmd(const char * cmd, uint32_t rx_wait);
 
-	
+void send_debug(const char * debug_msg, uint32_t rx_wait);
+void send_serial(char * data, uint8_t length, uint32_t rx_wait);
+
 	
 /**
  * @brief sim_get_cmd_reply() sends a cmd to the module and copies the reply into the parameter char * cmd_reply

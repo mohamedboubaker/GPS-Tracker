@@ -2,7 +2,7 @@
 *  @brief This file contains GPS function implementations
 *
 *  @author Mohamed Boubaker
-*  @bug issue #9
+*  
 */
 #include <string.h>
 #include <stdio.h>

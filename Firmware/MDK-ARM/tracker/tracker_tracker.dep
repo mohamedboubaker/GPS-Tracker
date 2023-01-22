@@ -68,10 +68,10 @@ I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr_ex.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart_ex.h)(0x6367BDC6)
-F (..\sim808.c)(0x63CD31B9)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Drivers/CMSIS/Include-I./RTE/_tracker-IC:/Users/bouba/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/bouba/AppData/Local/Arm/Packs/Keil/STM32F0xx_DFP/2.1.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F051x8 -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F051x8-o tracker/sim808.o -MD)
+F (..\sim808.c)(0x63CD67A0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Drivers/CMSIS/Include-I./RTE/_tracker-IC:/Users/bouba/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/bouba/AppData/Local/Arm/Packs/Keil/STM32F0xx_DFP/2.1.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F051x8 -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F051x8-o tracker/sim808.o -MD)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x6252B536)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x6252B536)
-I (..\sim808.h)(0x63CD30A6)
+I (..\sim808.h)(0x63CD67A0)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252B538)
 I (..\Core\Inc\main.h)(0x63B45B84)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h)(0x6367BDC6)
@@ -104,8 +104,8 @@ I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr_ex.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart_ex.h)(0x6367BDC6)
-F (..\sim808.h)(0x63CD30A6)()
-F (..\main.c)(0x63CD31F6)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Drivers/CMSIS/Include-I./RTE/_tracker-IC:/Users/bouba/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/bouba/AppData/Local/Arm/Packs/Keil/STM32F0xx_DFP/2.1.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F051x8 -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F051x8-o tracker/main.o -MD)
+F (..\sim808.h)(0x63CD67A0)()
+F (..\main.c)(0x63CD6AEC)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Drivers/CMSIS/Include-I./RTE/_tracker-IC:/Users/bouba/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/bouba/AppData/Local/Arm/Packs/Keil/STM32F0xx_DFP/2.1.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F051x8 -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F051x8-o tracker/main.o -MD)
 I (..\Core\Inc\main.h)(0x63B45B84)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h)(0x6367BDC6)
 I (..\Core\Inc\stm32f0xx_hal_conf.h)(0x63B45B84)
@@ -138,14 +138,14 @@ I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr_ex.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart_ex.h)(0x6367BDC6)
-I (..\sim808.h)(0x63CD30A6)
-I (..\gps.h)(0x63CD2DE8)
-I (..\network_functions.h)(0x63CD318D)
-F (..\gps.c)(0x63CD2FEE)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Drivers/CMSIS/Include-I./RTE/_tracker-IC:/Users/bouba/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/bouba/AppData/Local/Arm/Packs/Keil/STM32F0xx_DFP/2.1.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F051x8 -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F051x8-o tracker/gps.o -MD)
+I (..\sim808.h)(0x63CD67A0)
+I (..\gps.h)(0x63CD35AF)
+I (..\network_functions.h)(0x63CD67A0)
+F (..\gps.c)(0x63CD3647)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Drivers/CMSIS/Include-I./RTE/_tracker-IC:/Users/bouba/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/bouba/AppData/Local/Arm/Packs/Keil/STM32F0xx_DFP/2.1.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F051x8 -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F051x8-o tracker/gps.o -MD)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x6252B536)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x6252B536)
-I (..\gps.h)(0x63CD2DE8)
-I (..\sim808.h)(0x63CD30A6)
+I (..\gps.h)(0x63CD35AF)
+I (..\sim808.h)(0x63CD67A0)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252B538)
 I (..\Core\Inc\main.h)(0x63B45B84)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h)(0x6367BDC6)
@@ -178,11 +178,12 @@ I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr_ex.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart.h)(0x6367BDC6)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart_ex.h)(0x6367BDC6)
-F (..\network_functions.c)(0x63CD3300)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Drivers/CMSIS/Include-I./RTE/_tracker-IC:/Users/bouba/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/bouba/AppData/Local/Arm/Packs/Keil/STM32F0xx_DFP/2.1.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F051x8 -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F051x8-o tracker/network_functions.o -MD)
+F (..\network_functions.c)(0x63CD6A07)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc -I ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I ../Drivers/CMSIS/Include-I./RTE/_tracker-IC:/Users/bouba/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/bouba/AppData/Local/Arm/Packs/Keil/STM32F0xx_DFP/2.1.1/Drivers/CMSIS/Device/ST/STM32F0xx/Include-D__UVISION_VERSION="537" -D_RTE_ -DSTM32F051x8 -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F051x8-o tracker/network_functions.o -MD)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x6252B536)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x6252B536)
-I (..\network_functions.h)(0x63CD318D)
-I (..\sim808.h)(0x63CD30A6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6252B536)
+I (..\network_functions.h)(0x63CD67A0)
+I (..\sim808.h)(0x63CD67A0)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6252B538)
 I (..\Core\Inc\main.h)(0x63B45B84)
 I (..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h)(0x6367BDC6)

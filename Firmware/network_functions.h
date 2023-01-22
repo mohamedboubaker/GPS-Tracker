@@ -54,7 +54,7 @@ uint8_t sim_gprs_disable();
  * @param length is the length of the data to be sent in bytes
  * @return 1 if data is successfully sent, 0 otherwise
  */
-uint8_t sim_tcp_send(char * server_address, char * port, char * data, uint8_t length);
+uint8_t sim_tcp_send(char * server_address, char * port, char * data, char * length);
 
 
 /**

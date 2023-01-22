@@ -1,6 +1,7 @@
 tracker/network_functions.o: ..\network_functions.c \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h ..\network_functions.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\network_functions.h \
   ..\sim808.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Core\Inc\main.h ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal.h \
   ..\Core\Inc\stm32f0xx_hal_conf.h \

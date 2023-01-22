@@ -2,10 +2,11 @@
 *  @brief this file include the implementation of functions related to GPRS, TCP and MQTT
 *
 *  @author Mohamed Boubaker
-*
+*  @bug issue #9
 */
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "network_functions.h"
 
 
@@ -358,12 +359,12 @@ uint8_t sim_enable_gprs(){
  * @param length is the length of the data to be sent in bytes
  * @return 1 if data is successfully sent, 0 otherwise
  */
-uint8_t sim_tcp_send(char * host, char * port, char * data, uint8_t length){
+uint8_t sim_tcp_send(char * host, char * port, char * data, char * length){
 	
 	static const char get_tcp_status_cmd[]="AT+CIPSTATUS\r";
-	char tcp_connect_cmd[64]= "AT+CIPSTART=\"TCP\",\"";
+	char tcp_connect_cmd[128]= "AT+CIPSTART=\"TCP\",\"";
 	char send_tcp_data_cmd[24]= "AT+CIPSEND=";
-	static const char tcp_disconnect_cmd[16]= "AT+CIPCLOSE\r";
+	static const char tcp_disconnect_cmd[]= "AT+CIPCLOSE\r";
 	
 	uint8_t tcp_ready=0;
 	
@@ -380,16 +381,26 @@ uint8_t sim_tcp_send(char * host, char * port, char * data, uint8_t length){
 	 */
 	
 	
-	/*** Attemp to close any TCP connections ***/
-	//send_cmd(tcp_disconnect_cmd,RX_WAIT);
 	
 	/*** Check TCP/GPRS Status ***/
 	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer,RX_WAIT);
 	
-	tcp_ready = ( (strstr(local_rx_buffer,"IP STATUS")==NULL?0:1) || (strstr(local_rx_buffer,"TCP CLOSED")==NULL?0:1) );
-	
-	if (tcp_ready==0)
+	/* If the TCP/GPRS stack is not in usable status, then enable GPRS 
+	 * else if there is an open TCP connection then close it.
+	 */
+	 
+
+	if ( (strstr(local_rx_buffer,"IP INITIAL")==NULL?0:1) || (strstr(local_rx_buffer,"IP START")==NULL?0:1) || (strstr(local_rx_buffer,"IP CONFIG")==NULL?0:1)  || (strstr(local_rx_buffer,"IP GPRSACT")==NULL?0:1) || (strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1) ) 
 		sim_enable_gprs();
+		
+	else if ( (strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) || (strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1)   || (strstr(local_rx_buffer,"ALREADY CONNECT")==NULL?0:1)  )
+		send_cmd(tcp_disconnect_cmd,RX_WAIT);
+	
+	/*clear receive buffer */
+		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+
+
+
 	
 	/*** Open TCP connection ***/
 	
@@ -403,14 +414,36 @@ uint8_t sim_tcp_send(char * host, char * port, char * data, uint8_t length){
 		sim_get_cmd_reply(tcp_connect_cmd,local_rx_buffer,RX_WAIT);
 		
 		/* Wait for connection to establish or fail*/
-		HAL_Delay(1000);
-		if (strstr(local_rx_buffer,"CONNECT FAIL") || strstr(local_rx_buffer,"ERROR"))
-			return FAIL;
-		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	HAL_Delay(1000);
 	
-		HAL_Delay(1000);
+	/*clear buffer*/
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
-			/*** close TCP connections ***/
+	/*check if the connection was established or failed */	
+	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer,RX_WAIT);
+
+	uint8_t tcp_fail_to_open = 0;
+
+	tcp_fail_to_open = (strstr(local_rx_buffer,"FAIL")==NULL?0:1);
+	send_debug(local_rx_buffer,RX_WAIT);
+
+	if (tcp_fail_to_open==1){
+		return FAIL;
+	}
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	
+	/*Construct the command that sends N bytes */
+	strcat(send_tcp_data_cmd,length);
+	strcat(send_tcp_data_cmd,"\r");
+	
+	/*Send open TCP connection command */
+	sim_get_cmd_reply(send_tcp_data_cmd,local_rx_buffer,RX_WAIT);
+	
+	/*Send the data */
+	send_serial(data,(uint8_t)atoi(length),RX_WAIT);
+	HAL_Delay(1000);
+
+	/*** close TCP connections ***/
 	send_cmd(tcp_disconnect_cmd,RX_WAIT);
 	
 	return SUCCESS;
