@@ -64,6 +64,12 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
      * gps.c contains functions to enable/disable GPS functionality and get GPS position and speed information.
      * network_functions.c contains functions to set up GPRS, send raw data through a TCP session,  publish messages to an MQTT Broker.
      * aes_encryption.c contains an implementation of the AES-128 encryption algorithm. It is used to encrypt the MQTT messages before sending them to the server.
+
+* The server, which is an EC2 instance that has the following services running:
+     * Mosquitto MQTT Broker, which is used to receive messages from the remote GPS boards.
+     * An MQTT subscriber, which is a python script running as a systemd daemon responsible for processing all incoming messages to the broker and saving the Board ID, position, speed and time stamp to a database.
+     * An SQL database which is PostgreSQL used to store the position data of the boards.
+     * An Apache httpd server used to host a web application that can be used to visualize the  historical position on a map.
      
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Architecture_overview.svg)
 
