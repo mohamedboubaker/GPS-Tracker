@@ -59,6 +59,12 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
      * A GPS/GPRS module: SIM808, which is capable of receiving GPS signals and also connecting to a GPRS network, which means connecting to the internet.
      * An STM32 MCU: STM32F030, which is the brains of the PCB. It controls the SIM808 module via UART.
 
+* The firmware is composed of 4 main source files
+     * sim808.c contains the functions to startup, reset and send commands to the SIM808 module. 
+     * gps.c contains functions to enable/disable GPS functionality and get GPS position and speed information.
+     * network_functions.c contains functions to set up GPRS, send raw data through a TCP session,  publish messages to an MQTT Broker.
+     * aes_encryption.c contains an implementation of the AES-128 encryption algorithm. It is used to encrypt the MQTT messages before sending them to the server.
+     
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Architecture_overview.svg)
 
 *Figure 2. Architecture overview*
