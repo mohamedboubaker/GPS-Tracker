@@ -69,7 +69,7 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
      * Mosquitto MQTT Broker, which is used to receive messages from the remote GPS boards.
      * An MQTT subscriber, which is a python script running as a systemd daemon responsible for processing all incoming messages to the broker and saving the Board ID, position, speed and time stamp to a database.
      * An SQL database which is PostgreSQL used to store the position data of the boards.
-     * An Apache httpd server used to host a web application that can be used to visualize the  historical position on a map.
+     * A web application utilizing Angular and Spring Boot, hosted on Apache HTTP Server, used to display the historical location of the device on a map.
      
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Architecture_overview.svg)
 
