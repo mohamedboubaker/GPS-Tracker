@@ -420,6 +420,16 @@
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
             </File>
+            <File>
+              <FileName>gps.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\gps.c</FilePath>
+            </File>
+            <File>
+              <FileName>network_functions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\network_functions.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

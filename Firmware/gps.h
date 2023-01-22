@@ -2,7 +2,7 @@
 *  @brief This file include the declaration of functions related to GPS 
 *
 *  @author Mohamed Boubaker
-*  @bug issue #9
+*  
 */
 #ifndef GPS_H
 #define GPS_H

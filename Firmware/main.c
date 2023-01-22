@@ -19,6 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "sim808.h"
+#include "gps.h"
+#include "network_functions.h"
 
 
 	SIM808_typedef sim;
@@ -55,20 +57,20 @@ int main(void)
 
 
 	sim_init(&sim);
-	if (sim_gprs_enable()) 
-		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);;
-  //sim_tcp_send("18.197.145.205","1883","hello",5,1);
-	//sim_gps_enable();
+	//if (sim_enable_gprs()) 
+		//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);;
+  //;
+	sim_gps_enable();
 	
-	//char position[23];
+	char position[23];
   
-	//while (!sim_gps_get_location(position)) 
-	//	HAL_Delay(2000);
-  
+
 while (1)
   {
 		//sim_gps_get_location(position);
-		
+		sim_gps_get_location(position);
+		sim_tcp_send("3.122.114.120","1883","hello",5);
+
 		HAL_Delay(1000);
   }
 

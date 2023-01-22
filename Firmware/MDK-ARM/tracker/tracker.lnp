@@ -4,6 +4,8 @@
 "tracker\stm32f0xx_hal_msp.o"
 "tracker\sim808.o"
 "tracker\main.o"
+"tracker\gps.o"
+"tracker\network_functions.o"
 "tracker\stm32f0xx_hal_tim.o"
 "tracker\stm32f0xx_hal_tim_ex.o"
 "tracker\stm32f0xx_hal_uart.o"

@@ -2,7 +2,7 @@
 *  @brief this file include the implementation of functions related to GPRS, TCP and MQTT
 *
 *  @author Mohamed Boubaker
-*  @bug issue #9
+*
 */
 #include <string.h>
 #include <stdio.h>

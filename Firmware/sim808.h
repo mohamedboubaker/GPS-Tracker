@@ -73,83 +73,26 @@ typedef struct {
 uint8_t sim_init(SIM808_typedef * sim);
 
 
+/**
+ * @brief send_cmd() sends AT commands to the SIM808 module through the AT_uart peripheral.
+ * in case the module replies with an error, or doesn't reply anything, it will try to send the command 2 more times
+ * after a timeout period.
+ * @param const char * cmd contains the command 
+ * @param uint32_t rx_wait waiting time before checking the receive buffer.
+ * @returns 1 if the module replies with OK, 0 otherwise
+ */
+uint8_t send_cmd(const char * cmd, uint32_t rx_wait);
+
+	
+	
+/**
+ * @brief sim_get_cmd_reply() sends a cmd to the module and copies the reply into the parameter char * cmd_reply
+ * @param char * cmd is the command
+ * @param char * cmd_reply is an array where to modules reply will be copied. 
+ * @returns 1 if the module replies with OK, 0 otherwise
+ */
+uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait);
+
 /******************* GPS functions ********************/
 
-/**
- * @brief enables the GPS functionality of the SIM808 module
- * @return 1 if the GPS is successfully enabled, 0 otherwise
- */
-uint8_t sim_gps_enable();
-
-
-/** 
- * @brief returns the GPS coordinates. The format of the output is longitude,latitude Example: 3937.656010,1406.059400
- * @param position is used to store the coordinates. 
- * @return always 1.
- */
-uint8_t sim_gps_get_location(char* position);
-
-/** 
- * @brief returns the speed 
- * @param char * speed is used to store speed. 
- * @return always returns 1.
- */
-uint8_t sim_gps_get_speed(char * speed);
- 
- /**
- * @brief disables the GPS functionality of the SIM808 module and the active antenna power supply
- * @return 1 if the GPS is successfully disabled, 0 otherwise
- */
-uint8_t sim_gps_disable();
-
-
-/******************* GPRS functions ********************/
-
-/**
- * @brief enables GPRS connection. 
- * GPRS must be enabled before trying to establish TCP connection.
- * This function goes through a series of the tests below. action is taken depending on the test result
- * 1. Checks if the SIM card is detected
- * 2. Checks if the SIM card requires PIN code
- * 3. Checks the signal stregth. If it is very low, it returns an error value.
- * 4. Checks if the Mobile Equipement (ME) is registered to the Network. If not, it tries to register.
- * 5. Checks if ME is attached to GPRS service. if not it tries to attach.
- * 6. Checks if GPRS PDP context is defined, if not it tries to define it, enable it, and get IP address.
- * 
- * @return 1 if gprs is active, 2 if SIM card is not detected, 3 if SIM PIN is incorrect, 4 if the signal is weak, 0 otherwise
- */
-uint8_t sim_gprs_enable();
-
-
- /**
- * @brief disables the GPRS functionality and the whole radio module
- * @return 1 if the GPRS is successfully disabled, 0 otherwise
- */
-uint8_t sim_gprs_disable();
-
-/******************* Application layer functions ********************/
-
-/**
- * @brief sends raw data over a TCP connection. 
- * @param server_address is the remote TCP peer address. it can be an IP adress or DNS name
- * @param port is the remote TCP port
- * @param data is the data to be sent
- * @param length is the length of the data to be sent in bytes
- * @param keep_con_open if it is set to 1 then the connection will not be closed after sending the data. if it is set to 0, the connection will closed after sending the data. Other values are not defined.
- *        if the function is called when there is already an open TCP connection then it sends data over this connection, otherwise it creates a new connection. 
- * @return 1 if data is successfully sent, 0 otherwise
- */
-uint8_t sim_tcp_send(char * server_address, char * port, uint8_t * data, uint8_t length, uint8_t keep_con_open);
-
-
-/**
- * @brief publishes a message to an MQTT topic with QoS 1 by default.
- * @param server_address is the MQTT server IP address or DNS name.
- * @param port is the MQTT server port 
- * @param client_id is the MQTT client id
- * @param topic is the MQTT topic name
- * @param message is the message to be sent
- * @return 1 if the message is successfully delivered, 0 otherwise.
- */
-uint8_t sim_mqtt_publish(char * server_address, char * port, char * client_id, char * message);
 #endif

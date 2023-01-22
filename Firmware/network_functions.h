@@ -8,6 +8,16 @@
 #define NETWORK_FUNCTIONS_H
 #include "sim808.h"
 
+#define ERR_PHONE_FUNCTION 48
+#define ERR_SIM_PRESENCE 49
+#define ERR_PIN_WRONG 50
+#define ERR_WEAK_SIGNAL 51
+#define ERR_REGISTRATION 52
+#define ERR_GPRS_ATTACH 52
+#define ERR_PDP_DEACTIVATED 53
+#define ERR_PDP_DEFINE 54
+#define ERR_PDP_ACTIVATE 55
+#define ERR_GET_IP 56
 
 
 /**

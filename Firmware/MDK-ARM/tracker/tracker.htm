@@ -3,11 +3,11 @@
 <title>Static Call Graph - [tracker\tracker.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image tracker\tracker.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Fri Jan  6 04:06:59 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Sun Jan 22 13:58:41 2023
 <BR><P>
-<H3>Maximum Stack Usage =        280 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        664 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-main &rArr; sim_gps_get_location &rArr; sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+main &rArr; sim_tcp_send &rArr; sim_enable_gprs &rArr; sim_insert_PIN &rArr; sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 <P>
 <H3>
 Mutually Recursive functions
@@ -68,7 +68,7 @@ Global Symbols
 <P><STRONG><a name="[25]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f051x8.o(.text)
 </UL>
-<P><STRONG><a name="[60]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
+<P><STRONG><a name="[63]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
 
 <P><STRONG><a name="[2a]"></a>_main_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
@@ -78,15 +78,15 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[61]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[64]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
 
-<P><STRONG><a name="[62]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[65]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
 
-<P><STRONG><a name="[63]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[66]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
 
-<P><STRONG><a name="[64]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
+<P><STRONG><a name="[67]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
 
-<P><STRONG><a name="[65]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[68]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
 
 <P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f051x8.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f051x8.o(RESET)
@@ -176,51 +176,65 @@ Global Symbols
 <P><STRONG><a name="[6]"></a>WWDG_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f051x8.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f051x8.o(RESET)
 </UL>
-<P><STRONG><a name="[5d]"></a>__aeabi_memcpy</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<P><STRONG><a name="[5f]"></a>__aeabi_memcpy</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, memcpya.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
 </UL>
 
-<P><STRONG><a name="[66]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
+<P><STRONG><a name="[69]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
 
-<P><STRONG><a name="[67]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
+<P><STRONG><a name="[6a]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
 
 <P><STRONG><a name="[2d]"></a>__aeabi_memset</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 <BR><BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_memset$wrapper
 <LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
 
-<P><STRONG><a name="[68]"></a>__aeabi_memset4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[6b]"></a>__aeabi_memset4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
-<P><STRONG><a name="[69]"></a>__aeabi_memset8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[6c]"></a>__aeabi_memset8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
 <P><STRONG><a name="[2c]"></a>__aeabi_memclr</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 
 <P><STRONG><a name="[4a]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_get_location
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
 </UL>
 
-<P><STRONG><a name="[6a]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[6d]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
 <P><STRONG><a name="[2e]"></a>_memset$wrapper</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, memseta.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 
+<P><STRONG><a name="[62]"></a>strcat</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, strcat.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
+</UL>
+
 <P><STRONG><a name="[5b]"></a>strstr</STRONG> (Thumb, 40 bytes, Stack size 12 bytes, strstr.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = strstr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_get_location
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_get_location
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
 </UL>
 
 <P><STRONG><a name="[5a]"></a>strlen</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, strlen.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
 </UL>
 
@@ -232,7 +246,7 @@ Global Symbols
 <LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 </UL>
 
-<P><STRONG><a name="[6b]"></a>__aeabi_uidivmod</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, uidiv_div0.o(.text), UNUSED)
+<P><STRONG><a name="[6e]"></a>__aeabi_uidivmod</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, uidiv_div0.o(.text), UNUSED)
 
 <P><STRONG><a name="[2b]"></a>__scatterload</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, init.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main_after_scatterload
@@ -240,9 +254,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
 </UL>
 
-<P><STRONG><a name="[6c]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[6f]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
-<P><STRONG><a name="[5e]"></a>Error_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, main.o(.text.Error_Handler))
+<P><STRONG><a name="[60]"></a>Error_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, main.o(.text.Error_Handler))
 <BR><BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 
@@ -263,9 +277,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
+<LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
 </UL>
 
@@ -277,12 +293,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> sim808.o(.text.sim_init)
 </UL>
-<P><STRONG><a name="[5f]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_ReadPin))
+<P><STRONG><a name="[61]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_ReadPin))
 <BR><BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
-</UL>
-
-<P><STRONG><a name="[58]"></a>HAL_GPIO_TogglePin</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_TogglePin))
-<BR><BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[51]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_WritePin))
@@ -464,7 +476,7 @@ Global Symbols
 <LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
 <BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
 </UL>
 
@@ -565,14 +577,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f051x8.o(RESET)
 </UL>
-<P><STRONG><a name="[23]"></a>main</STRONG> (Thumb, 200 bytes, Stack size 32 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 280<LI>Call Chain = main &rArr; sim_gps_get_location &rArr; sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+<P><STRONG><a name="[23]"></a>main</STRONG> (Thumb, 188 bytes, Stack size 32 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 664<LI>Call Chain = main &rArr; sim_tcp_send &rArr; sim_enable_gprs &rArr; sim_insert_PIN &rArr; sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_TogglePin
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
-<LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_get_location
 <LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_enable
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 <LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
@@ -580,8 +592,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[59]"></a>send_cmd</STRONG> (Thumb, 84 bytes, Stack size 24 bytes, sim808.o(.text.send_cmd))
-<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = send_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+<P><STRONG><a name="[59]"></a>send_cmd</STRONG> (Thumb, 84 bytes, Stack size 32 bytes, sim808.o(.text.send_cmd))
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = send_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
@@ -589,11 +601,28 @@ Global Symbols
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_enable
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_enable
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 
-<P><STRONG><a name="[5c]"></a>sim_get_cmd_reply</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, sim808.o(.text.sim_get_cmd_reply))
+<P><STRONG><a name="[5c]"></a>sim_enable_gprs</STRONG> (Thumb, 648 bytes, Stack size 160 bytes, network_functions.o(.text.sim_enable_gprs))
+<BR><BR>[Stack]<UL><LI>Max Depth = 416<LI>Call Chain = sim_enable_gprs &rArr; sim_insert_PIN &rArr; sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+</UL>
+<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
+<LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
+<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
+</UL>
+
+<P><STRONG><a name="[5d]"></a>sim_get_cmd_reply</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, sim808.o(.text.sim_get_cmd_reply))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
@@ -601,23 +630,26 @@ Global Symbols
 <LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_get_location
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_tcp_send
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_gps_get_location
 </UL>
 
-<P><STRONG><a name="[56]"></a>sim_gps_enable</STRONG> (Thumb, 60 bytes, Stack size 48 bytes, sim808.o(.text.sim_gps_enable))
-<BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = sim_gps_enable &rArr; send_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+<P><STRONG><a name="[56]"></a>sim_gps_enable</STRONG> (Thumb, 64 bytes, Stack size 48 bytes, gps.o(.text.sim_gps_enable))
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = sim_gps_enable &rArr; send_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[57]"></a>sim_gps_get_location</STRONG> (Thumb, 64 bytes, Stack size 152 bytes, sim808.o(.text.sim_gps_get_location))
+<P><STRONG><a name="[57]"></a>sim_gps_get_location</STRONG> (Thumb, 68 bytes, Stack size 152 bytes, gps.o(.text.sim_gps_get_location))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = sim_gps_get_location &rArr; sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
@@ -625,25 +657,51 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[55]"></a>sim_init</STRONG> (Thumb, 308 bytes, Stack size 48 bytes, sim808.o(.text.sim_init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 156<LI>Call Chain = sim_init &rArr; HAL_UART_Init &rArr; HAL_UART_MspInit &rArr; HAL_GPIO_Init
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = sim_init &rArr; send_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 <LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 <LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_IT
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
 <LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[6d]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[5e]"></a>sim_insert_PIN</STRONG> (Thumb, 64 bytes, Stack size 160 bytes, network_functions.o(.text.sim_insert_PIN))
+<BR><BR>[Stack]<UL><LI>Max Depth = 256<LI>Call Chain = sim_insert_PIN &rArr; sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+</UL>
+<BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+</UL>
 
-<P><STRONG><a name="[6e]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[58]"></a>sim_tcp_send</STRONG> (Thumb, 188 bytes, Stack size 216 bytes, network_functions.o(.text.sim_tcp_send))
+<BR><BR>[Stack]<UL><LI>Max Depth = 632<LI>Call Chain = sim_tcp_send &rArr; sim_enable_gprs &rArr; sim_insert_PIN &rArr; sim_get_cmd_reply &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+</UL>
+<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_enable_gprs
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_get_cmd_reply
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cmd
+<LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcat
+<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
 
-<P><STRONG><a name="[6f]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[70]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+
+<P><STRONG><a name="[71]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+
+<P><STRONG><a name="[72]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 <P>
 <H3>
 Local Symbols
