@@ -5,7 +5,7 @@ The objective of this project is to deliever a GPS tracking system that can be u
 
 The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform are not mature. However, this work is mainly concerned with: designing a circuit, manufacturing the PCB, and developing firmware to power it, all while ensuring reliability. Below is a picture of the  produced PCB.
 
-![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/PCB.JPG)
+![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/PCB.JPG)
 *Figure 1. Produced PCB board*
 
 #### Table of Contents
@@ -71,7 +71,7 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
      * An SQL database which is PostgreSQL used to store the position data of the boards.
      * A web application utilizing Angular and Spring Boot, hosted on Apache HTTP Server, used to display the historical location of the device on a map.
      
-![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Architecture_overview.svg)
+![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/Architecture.png)
 
 *Figure 2. Architecture overview*
 
@@ -80,21 +80,21 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
 ## 2.3 Server design
 ## 2.4 Circuit design
 
-![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/circuit_diagram.jpg)
+![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/circuit_diagram.jpg)
 *Figure 2. Circuit Diagram*
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
 
-![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/Layout_FrontAndBack.png)
+![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/Layout_FrontAndBack.png)
 *Figure 3. Layout: front side on the left, back side on the right*
 
 
-![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/3D_FrontAndBack.png)
+![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/3D_FrontAndBack.png)
 *Figure 4. 3D Model of the PCB*
 
 # 4. Results and evaluation
 ## 4.1 Test Drive
 
-![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Media/test_drive_1.jpeg)
+![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/test_drive_1.jpeg)
 *Figure 5. Test Drive result in Grombalia, Tunisia*
