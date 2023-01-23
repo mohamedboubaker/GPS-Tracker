@@ -71,7 +71,7 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
      * An SQL database which is PostgreSQL used to store the position data of the boards.
      * A web application utilizing Angular and Spring Boot, hosted on Apache HTTP Server, used to display the historical location of the device on a map.
      
-![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/Architecture.png)
+![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/Architecture.svg)
 
 *Figure 2. Architecture overview*
 
