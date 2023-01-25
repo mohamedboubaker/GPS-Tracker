@@ -1,5 +1,0 @@
-Project includes most of the things I know
-How the information travel from the card to the firm
-How GPRS work
-How GPS work
-How overview of telecom
