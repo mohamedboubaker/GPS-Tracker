@@ -21,7 +21,7 @@
 #define ERR_GET_IP 56
 
 /* MQTT packet variable definitions*/
-#define MAX_LENGTH_CONNECT_PACKET 128
+#define MAX_LENGTH_MQTT_PACKET 128
 #define MQTT_KEEP_ALIVE 15
 
 /**

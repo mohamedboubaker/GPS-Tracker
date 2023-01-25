@@ -374,8 +374,12 @@ uint8_t publish_mqtt_msg(char * server_address, char * port, char * topic, char 
 	connect_packet_remaining_length = 13 + client_id_length;
 	
 
+uint8_t disconnect_packet[] = {
+	0xe0, // Packet type = DISCONNECT
+	0x00  // Remaining length = 0
+};
 
-	uint8_t connect_packet[MAX_LENGTH_CONNECT_PACKET]= {
+	uint8_t connect_packet[MAX_LENGTH_MQTT_PACKET]= {
 	0x10, // Packet type = CONNECT
 	0x10, // Remaining length = 16
 	0x00, 0x04, // Protocol name length  
@@ -400,31 +404,45 @@ uint8_t publish_mqtt_msg(char * server_address, char * port, char * topic, char 
 	/* Copy the client ID char by char into the connect packet */
 	for(uint8_t i = 0; i< client_id_length ; i++)
 		connect_packet[14+i]=(uint8_t)client_id[i];
-	connect_packet[1+connect_packet_remaining_length]=0xe0;
-		connect_packet[1+connect_packet_remaining_length+1]=0x00;
 
+	
 
-uint8_t disconnect_packet[] = {
-	0xe0, // Packet type = DISCONNECT
-	0x00  // Remaining length = 0
-};
 	uint16_t topic_length = strlen(topic);
 	uint8_t publish_packet_remaining_length=0;
 
-uint8_t publish_packet[] ={
+uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
 	0x30, // Packet type = Publish + DUP+QOS+retain=0
 	0x1d, // Remaining length = 29
 	0x00, 0x04, // Topic name length
 	0x46, 0x46, 0x46, 0x46, // Topic name = Client ID
 	0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46 // dummy payload
 };
+	
+	/*insert remaining length */
+	publish_packet_remaining_length = 3 + topic_length + strlen(message);
+publish_packet[1] = publish_packet_remaining_length;
+	/* Insert topic name length into the packet with same way used for keep_alive */ 
+		publish_packet[2]= (uint8_t) (topic_length>>8);
+		publish_packet[3]= (uint8_t) topic_length;
 
-/*change the dummy data with the payload*/
-for(uint8_t i=0;i<GPS_COORDINATES_LENGTH;i++){
-//publish_packet[i+8]=(uint8_t)payload[i];
-}
 
+	/* Copy the topic  name char by char into the publish packet */
+	for(uint8_t i = 0; i< topic_length ; i++)
+		publish_packet[4+i]=(uint8_t)client_id[i];
 
+	/* Copy the message   char by char into the publish packet */
+	for(uint8_t i = 0; i< strlen(message); i++)
+		publish_packet[3+topic_length+i]=(uint8_t)client_id[i];
+	
+	
+	if (open_tcp_connection(server_address,port)){
+			send_tcp_data(connect_packet,14+client_id_length);
+			send_tcp_data(publish_packet,publish_packet_remaining_length+1);
+			send_tcp_data(disconnect_packet,2);
+			close_tcp_connection();
+		}
+	
+		
 
 
 	return 0;
@@ -480,20 +498,22 @@ uint8_t open_tcp_connection(char * server_address, char * port){
 		
 	/*Send open connection command Wait for connection to establish or fail*/
 	sim_get_cmd_reply(tcp_connect_cmd,local_rx_buffer,5*RX_WAIT);
-		
+	send_debug(local_rx_buffer);	
 	
 	/* check the reply, if CONNECT FAIL or ERROR is returned, it means the connection failed to establish. 
 	 * If TCP CONNECTING is returned, it means the module initiated TCP handshake but still waiting for handshake acknoledgement
 	 * usuallly it means the peer server is offline, so in this case, close the connection and exit */
 
-	if ((strstr(local_rx_buffer,"CONNECT FAIL")==NULL?0:1) || (strstr(local_rx_buffer,"ERROR")==NULL?0:1))
+	if ((strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1))
+		return SUCCESS;
+	else if ((strstr(local_rx_buffer,"CONNECT FAIL")==NULL?0:1) || (strstr(local_rx_buffer,"ERROR")==NULL?0:1))
 		return FAIL;
-	else if ((strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) )	{
+	else 	{
 		send_cmd(tcp_disconnect_cmd,RX_WAIT);
 		return FAIL;
 	}
 	
-	return SUCCESS;
+	
 }
 
 

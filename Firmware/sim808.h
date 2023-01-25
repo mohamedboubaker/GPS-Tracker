@@ -20,7 +20,7 @@
 
 #define RX_WAIT 200 /*After sending AT command, wait RX_WAIT ms  to ensure that the reply is receeived in the buffer*/
 #define TX_TIMEOUT 100
-#define BAUD_RATE 38400 /*BAUD_RATE=38400 => it take 26 ms to send 100 bytes */
+#define BAUD_RATE 9600 /*BAUD_RATE=38400 => it take 26 ms to send 100 bytes */
 #define RX_BUFFER_LENGTH 256
 #define SIM_UART huart2
 #define DEBUG_UART huart1

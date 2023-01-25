@@ -72,13 +72,17 @@ while (1)
 		//sim_gps_get_location(position);
 	//	sim_gps_get_location(position);
 		// if (sim_tcp_send("3.125.116.37","1883",(uint8_t *)msg,strlen(msg)))
-			//	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
-			//publish_mqtt_msg("3.125.116.37","1883","Speed","1234","hello");
+			publish_mqtt_msg("18.184.83.22","1883","Speed","123456","hello");
 		
-		if (open_tcp_connection("3.125.116.37","1883")){
-			send_tcp_data((uint8_t*)msg,strlen(msg));
-			close_tcp_connection();
-		}
+//				if (open_tcp_connection("3.125.116.37","1883")){
+//					HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
+//					HAL_Delay(2000);
+//					send_tcp_data((uint8_t *)msg,strlen(msg));
+//					close_tcp_connection();
+//		}
+				
+		
+
   }
 
 }
