@@ -74,8 +74,8 @@ uint8_t sim_init(SIM808_typedef * sim);
  */
 uint8_t send_cmd(const char * cmd, uint32_t rx_wait);
 
-void send_debug(const char * debug_msg, uint32_t rx_wait);
-void send_serial(char * data, uint8_t length, uint32_t rx_wait);
+void send_debug(const char * debug_msg);
+void send_serial(uint8_t * data, uint8_t length, char * cmd_reply, uint32_t rx_wait);
 
 	
 /**

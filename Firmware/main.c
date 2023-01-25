@@ -17,6 +17,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
+#include <string.h>
 #include "main.h"
 #include "sim808.h"
 #include "gps.h"
@@ -63,14 +64,21 @@ int main(void)
 	sim_gps_enable();
 	
 	char position[23];
-  
+	char msg[]="hello\n";
+	
 int i=0;
-while (i<100)
+while (1)
   {
 		//sim_gps_get_location(position);
-		//sim_gps_get_location(position);
-		sim_tcp_send("3.122.114.120","1883","hello\n","6");
-		i++;
+	//	sim_gps_get_location(position);
+		// if (sim_tcp_send("3.125.116.37","1883",(uint8_t *)msg,strlen(msg)))
+			//	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
+			//publish_mqtt_msg("3.125.116.37","1883","Speed","1234","hello");
+		
+		if (open_tcp_connection("3.125.116.37","1883")){
+			send_tcp_data((uint8_t*)msg,strlen(msg));
+			close_tcp_connection();
+		}
   }
 
 }

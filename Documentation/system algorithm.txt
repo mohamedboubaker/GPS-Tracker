@@ -1,0 +1,4 @@
+
+sim_power_on()
+sim_gps_enable()
+sim_gprs_enable()

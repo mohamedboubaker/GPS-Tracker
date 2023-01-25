@@ -8,6 +8,7 @@
 #define NETWORK_FUNCTIONS_H
 #include "sim808.h"
 
+/* TCP/GPRS error code*/
 #define ERR_PHONE_FUNCTION 48
 #define ERR_SIM_PRESENCE 49
 #define ERR_PIN_WRONG 50
@@ -19,9 +20,12 @@
 #define ERR_PDP_ACTIVATE 55
 #define ERR_GET_IP 56
 
+/* MQTT packet variable definitions*/
+#define MAX_LENGTH_CONNECT_PACKET 128
+#define MQTT_KEEP_ALIVE 15
 
 /**
- * @brief sim_enable_gprs() enables the GPRS connection. 
+ * @brief enable_gprs() enables the GPRS connection. 
  * GPRS must be enabled before trying to establish TCP connection.
  * This function goes through a series of the tests below. action is taken depending on the test result
  * 1. Checks if the SIM card is detected
@@ -33,14 +37,14 @@
  * 
  * @return 1 if gprs is active, 2 if SIM card is not detected, 3 if SIM PIN is incorrect, 4 if the signal is weak, 0 otherwise
  */
-uint8_t sim_enable_gprs();
+uint8_t enable_gprs();
 
 
  /**
- * @brief sim_gprs_disable () disables the GPRS functionality and the whole radio module.
+ * @brief disable_gprs() disables the GPRS functionality and the whole radio module.
  * @return 1 if the GPRS is successfully disabled, 0 otherwise
  */
-uint8_t sim_gprs_disable();
+uint8_t disable_gprs();
 
 
 
@@ -54,7 +58,10 @@ uint8_t sim_gprs_disable();
  * @param length is the length of the data to be sent in bytes
  * @return 1 if data is successfully sent, 0 otherwise
  */
-uint8_t sim_tcp_send(char * server_address, char * port, char * data, char * length);
+
+uint8_t open_tcp_connection(char * server_address, char * port);
+uint8_t send_tcp_data(uint8_t * data, uint8_t length);
+uint8_t close_tcp_connection();
 
 
 /**
@@ -66,7 +73,7 @@ uint8_t sim_tcp_send(char * server_address, char * port, char * data, char * len
  * @param message is the message to be sent
  * @return 1 if the message is successfully delivered, 0 otherwise.
  */
-uint8_t sim_mqtt_publish(char * server_address, char * port, char * client_id, char * message);
+uint8_t publish_mqtt_msg(char * server_address, char * port, char * topic, char * client_id, char * message);
 
 
 #endif

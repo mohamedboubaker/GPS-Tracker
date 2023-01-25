@@ -1,0 +1,25 @@
+Register to network AT+CREG=1
+Attach to GPRS AT+CGATT=1
+Deactivate default PDP context AT+CIPSHUT
+disable multi TCP AT+CIPMUX=0
+define PDP context AT+CSTT="TM","",""
+Activate PDP context AT+CIICR
+Get IP address AT+CIFSR
+Open TCP connection AT+CIPSTART="TCP,"IP","PORT" /AT+CIPSTART="TCP","18.197.145.205","1883"
+AT+CIPSEND=N send N bytes
+check IP stack status AT+CIPSTATUS
+close TCP connection AT+CIPCLOSE
+
+
+Initial state after power on
+=> GPRS attached
+=> PDP context = APN set to CMNET, NO IP address
+=> IP STATUS = IP INITIAL
+
+Establish GPRS connection
+[PDP DEACT] => AT+CIPSHUT => [IP INITIAL] => AT+CSTT="TM","","" => [IP START] => AT+CIICR => [IP GPRSACT] =>
+AT+CIFSR => [IP STATUS] 
+
+
+Establish TCP connection
+=> AT+CIPSTART="TCP","18.197.145.205","1883" => [CONNECT OK] => AT+CIPSEND=n => [CONNECT OK] => AT+CIPCLOSE => [TCP CLOSED]

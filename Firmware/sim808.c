@@ -20,14 +20,12 @@ static volatile uint8_t rx_byte; /* The receive interupt routine uses rx_byte to
 static volatile uint8_t rx_index=0; /*track the number of received bytes.*/
 static volatile char sim_rx_buffer[RX_BUFFER_LENGTH];
 
-void  send_debug(const char * debug_msg, uint32_t rx_wait)
+void  send_debug(const char * debug_msg)
 {
-	
+	char debug_prompt[]="Debug > ";
+	HAL_UART_Transmit(&debug_uart,(uint8_t*)debug_prompt,strlen(debug_prompt),TX_TIMEOUT);
 	HAL_UART_Transmit(&debug_uart,(uint8_t*)debug_msg,strlen(debug_msg),TX_TIMEOUT);
-	
-	/* Wait for command to be processed */
-	HAL_Delay(rx_wait);
-	
+	HAL_UART_Transmit(&debug_uart,(uint8_t*)"\r\n",2,TX_TIMEOUT);
 }
 
 /**
@@ -36,15 +34,16 @@ void  send_debug(const char * debug_msg, uint32_t rx_wait)
  * @param uint32_t rx_wait waiting time before exit. To make sure the reply is received.
  * @returns void
  */
-void send_serial(char * data, uint8_t length, uint32_t rx_wait){
+void send_serial(uint8_t * data, uint8_t length,  char * cmd_reply, uint32_t rx_wait){
 	HAL_UART_Transmit(&AT_uart,(uint8_t *)data,length,TX_TIMEOUT);
 	
 	/* Wait for command to be processed */
 	HAL_Delay(rx_wait);
 	
-	/* Clear the sim_rx_buffer, reset the receive counter rx_index 
+	/* copy buffer into local parameter and clear the sim_rx_buffer, reset the receive counter rx_index 
 	 * and then return 1 to acknowledge the success of the command
 	 */
+	memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
 	memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
 	rx_index=0;
 }
@@ -126,6 +125,8 @@ uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait){
 	 * and stored in the global array sim_rx_buffer[RX_BUFFER_LENGTH];
 	 */	
 
+	/*copy the reply from the global buffer to the buffer passed into the parameter cmd_reply*/
+	memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
 
 	/* Check if the reply contains the word "OK"*/
 	if (strstr((const char *)sim_rx_buffer,"OK")!=NULL){ 
@@ -133,7 +134,6 @@ uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait){
 		/* Copy buffer, clear the sim_rx_buffer, reset the receive counter rx_index 
 		 * and then return 1 to acknowledge the success of the command		 
 		 */
-		memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
 		memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		rx_index=0;
 		return 1; 

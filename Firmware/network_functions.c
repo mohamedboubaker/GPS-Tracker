@@ -31,7 +31,7 @@ uint8_t sim_insert_PIN(char * pin){
 }
 
 /**
- * @brief sim_gprs_enable() enables GPRS connection. 
+ * @brief gprs_enable() enables GPRS connection. 
  * GPRS must be enabled before trying to establish TCP connection.
  * This function goes through a series of the tests below. action is taken depending on the test result
  * 1. Checks if the SIM card is detected
@@ -43,7 +43,7 @@ uint8_t sim_insert_PIN(char * pin){
  * 
  * @return 1 if gprs is active, 2 if SIM card is not detected, 3 if SIM PIN is incorrect, 4 if the signal is weak, 0 otherwise
  */
-uint8_t sim_enable_gprs(){
+uint8_t enable_gprs(){
 	
 	/* Make sure to clear the buffer after every use */
 	char local_rx_buffer[RX_BUFFER_LENGTH]; 
@@ -349,18 +349,89 @@ uint8_t sim_enable_gprs(){
 }
 
 
-/**
- * @brief sends raw data over a TCP connection. 
- * if the function is called when there is already an open TCP connection (for some reason)
- * then it closes it and opens a new connection. 
- * @param server_address is the remote TCP peer address. it can be an IP adress or DNS name
- * @param port is the remote TCP port
- * @param data is the data to be sent
- * @param length is the length of the data to be sent in bytes
- * @return 1 if data is successfully sent, 0 otherwise
- */
-uint8_t sim_tcp_send(char * host, char * port, char * data, char * length){
+
+uint8_t publish_mqtt_msg(char * server_address, char * port, char * topic, char * client_id, char * message){
 	
+	/*** Construct the Connect packet ***/
+
+	/* Connect Packet structure:  
+	 * 1 byte          : [Packet type] = 0x10
+	 * 1 byte          : [Remaining length] 
+	 * 2 byte          : [Protocol name length] = 0x00, 0x04 (4 in decimal)
+	 * 4 byte          : [Protocol name] = 0x4d, 0x51, 0x54, 0x54 (MQTT is ASCII)
+	 * 1 byte          : [Protocol Version] = 0x04 (4 in decimal) 
+	 * 1 byte          : [Connect flags] 
+	 * 2 bytes         : [Keep alive timeout]
+	 * 2 bytes         : [Client ID length]
+	 * remaining bytes : [Client ID]
+	 */
+	
+	uint8_t connect_packet_remaining_length = 0;
+	uint16_t client_id_length = 0;
+	uint16_t keep_alive = MQTT_KEEP_ALIVE;
+	
+	client_id_length = strlen(client_id);
+	connect_packet_remaining_length = 13 + client_id_length;
+	
+
+
+	uint8_t connect_packet[MAX_LENGTH_CONNECT_PACKET]= {
+	0x10, // Packet type = CONNECT
+	0x10, // Remaining length = 16
+	0x00, 0x04, // Protocol name length  
+	0x4d, 0x51, 0x54, 0x54, // Protocol name = MQTT
+	0x04, // Protocol Version 
+	0x02 // Connect flags
+	};
+
+
+
+	connect_packet[1]=connect_packet_remaining_length;
+	/* Insert Keep alive time most signinficant byte in the packet by shifting keep_alive 8 bits to the right and casting into uint8_t */
+	connect_packet[10]= (uint8_t) (keep_alive>>8);
+
+	/* Insert Keep alive time least significant byte in the packet by directly casting the uint16_t variable to uint8_t which will will clamp the left 8 bits */
+	connect_packet[11]= (uint8_t) keep_alive;
+
+	/* Insert client ID length into the packet with same way used for keep_alive */ 
+		connect_packet[12]= (uint8_t) (client_id_length>>8);
+		connect_packet[13]= (uint8_t) client_id_length;
+	
+	/* Copy the client ID char by char into the connect packet */
+	for(uint8_t i = 0; i< client_id_length ; i++)
+		connect_packet[14+i]=(uint8_t)client_id[i];
+	connect_packet[1+connect_packet_remaining_length]=0xe0;
+		connect_packet[1+connect_packet_remaining_length+1]=0x00;
+
+
+uint8_t disconnect_packet[] = {
+	0xe0, // Packet type = DISCONNECT
+	0x00  // Remaining length = 0
+};
+	uint16_t topic_length = strlen(topic);
+	uint8_t publish_packet_remaining_length=0;
+
+uint8_t publish_packet[] ={
+	0x30, // Packet type = Publish + DUP+QOS+retain=0
+	0x1d, // Remaining length = 29
+	0x00, 0x04, // Topic name length
+	0x46, 0x46, 0x46, 0x46, // Topic name = Client ID
+	0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46 // dummy payload
+};
+
+/*change the dummy data with the payload*/
+for(uint8_t i=0;i<GPS_COORDINATES_LENGTH;i++){
+//publish_packet[i+8]=(uint8_t)payload[i];
+}
+
+
+
+
+	return 0;
+}
+
+
+uint8_t open_tcp_connection(char * server_address, char * port){
 	static const char get_tcp_status_cmd[]="AT+CIPSTATUS\r";
 	char tcp_connect_cmd[128]= "AT+CIPSTART=\"TCP\",\"";
 	char send_tcp_data_cmd[24]= "AT+CIPSEND=";
@@ -389,9 +460,8 @@ uint8_t sim_tcp_send(char * host, char * port, char * data, char * length){
 	 * else if there is an open TCP connection then close it.
 	 */
 	 
-
 	if ( (strstr(local_rx_buffer,"IP INITIAL")==NULL?0:1) || (strstr(local_rx_buffer,"IP START")==NULL?0:1) || (strstr(local_rx_buffer,"IP CONFIG")==NULL?0:1)  || (strstr(local_rx_buffer,"IP GPRSACT")==NULL?0:1) || (strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1) ) 
-		sim_enable_gprs();
+		enable_gprs();
 		
 	else if ( (strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) || (strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1)   || (strstr(local_rx_buffer,"ALREADY CONNECT")==NULL?0:1)  )
 		send_cmd(tcp_disconnect_cmd,RX_WAIT);
@@ -399,52 +469,77 @@ uint8_t sim_tcp_send(char * host, char * port, char * data, char * length){
 	/*clear receive buffer */
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 
-
-
 	
 	/*** Open TCP connection ***/
 	
 	/* build the connect command by adding address and port */
-	strcat(tcp_connect_cmd,host);    /* AT+CIPSTART=\"TCP\","host.com           */
+	strcat(tcp_connect_cmd,server_address);    /* AT+CIPSTART=\"TCP\","host.com           */
 	strcat(tcp_connect_cmd,"\",\""); /* AT+CIPSTART=\"TCP\","host.com","        */
 	strcat(tcp_connect_cmd,port);    /* AT+CIPSTART=\"TCP\","host.com","port    */
 	strcat(tcp_connect_cmd,"\"\r");  /* AT+CIPSTART=\"TCP\","host.com","port"\r */
 		
-		/*Send open connection command */
-		sim_get_cmd_reply(tcp_connect_cmd,local_rx_buffer,RX_WAIT);
+	/*Send open connection command Wait for connection to establish or fail*/
+	sim_get_cmd_reply(tcp_connect_cmd,local_rx_buffer,5*RX_WAIT);
 		
-		/* Wait for connection to establish or fail*/
-	HAL_Delay(1000);
 	
-	/*clear buffer*/
-	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-		
-	/*check if the connection was established or failed */	
-	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer,RX_WAIT);
+	/* check the reply, if CONNECT FAIL or ERROR is returned, it means the connection failed to establish. 
+	 * If TCP CONNECTING is returned, it means the module initiated TCP handshake but still waiting for handshake acknoledgement
+	 * usuallly it means the peer server is offline, so in this case, close the connection and exit */
 
-	uint8_t tcp_fail_to_open = 0;
-
-	tcp_fail_to_open = (strstr(local_rx_buffer,"FAIL")==NULL?0:1);
-	send_debug(local_rx_buffer,RX_WAIT);
-
-	if (tcp_fail_to_open==1){
+	if ((strstr(local_rx_buffer,"CONNECT FAIL")==NULL?0:1) || (strstr(local_rx_buffer,"ERROR")==NULL?0:1))
+		return FAIL;
+	else if ((strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) )	{
+		send_cmd(tcp_disconnect_cmd,RX_WAIT);
 		return FAIL;
 	}
-	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-	
-	/*Construct the command that sends N bytes */
-	strcat(send_tcp_data_cmd,length);
-	strcat(send_tcp_data_cmd,"\r");
-	
-	/*Send open TCP connection command */
-	sim_get_cmd_reply(send_tcp_data_cmd,local_rx_buffer,RX_WAIT);
-	
-	/*Send the data */
-	send_serial(data,(uint8_t)atoi(length),RX_WAIT);
-	HAL_Delay(1000);
-
-	/*** close TCP connections ***/
-	send_cmd(tcp_disconnect_cmd,RX_WAIT);
 	
 	return SUCCESS;
+}
+
+
+uint8_t close_tcp_connection(){
+	
+		char local_rx_buffer[RX_BUFFER_LENGTH]; 
+		static const char tcp_disconnect_cmd[]= "AT+CIPCLOSE\r";
+
+
+		/* send Close TCP connection command */
+		sim_get_cmd_reply(tcp_disconnect_cmd,local_rx_buffer,RX_WAIT);
+
+	
+	/* check if TCP connection was closed correctly */	
+	
+	if ((strstr(local_rx_buffer,"CLOSE OK")==NULL?0:1) )
+		return SUCCESS;
+	else 
+		return FAIL;
+	
+}
+
+
+uint8_t send_tcp_data(uint8_t * data, uint8_t data_length){
+
+	static const char get_tcp_status_cmd[]="AT+CIPSTATUS\r";
+	char send_tcp_data_cmd[24]= "AT+CIPSEND=";
+	char local_rx_buffer[RX_BUFFER_LENGTH]; 
+	
+
+	/*Construct the command that sends "data_length" bytes */
+	sprintf(send_tcp_data_cmd,"AT+CIPSEND=%d\r",(int)data_length); 
+	
+	/* tell the module how many bytes to expect */
+	sim_get_cmd_reply(send_tcp_data_cmd,local_rx_buffer,RX_WAIT);
+
+	/* clear local receive buffer */
+	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+
+	/*Send the actual data bytes and wait*/
+	send_serial(data,data_length,local_rx_buffer,5*RX_WAIT); 
+	
+
+	/* check if the data was successfully sent */	
+	if ((strstr(local_rx_buffer,"SEND OK")==NULL?0:1) )
+		return SUCCESS;
+	else 
+		return FAIL;
 }
