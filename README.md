@@ -16,6 +16,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 - [2. System design](#2-System-design)
   * [2.1 System architecture](#21-System-architecture)
   * [2.2 Firmware design](#22-Firmware-design)
+     + [2.2.1 Code documentation](#221-Code-documentation) 
   * [2.3 Server design](#23-Server-design)
   * [2.4 Circuit design](#24-Circuit-design)
   * [2.5 PCB design](#25-PCB-design)
@@ -77,6 +78,12 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
 
 
 ## 2.2 Firmware design
+### 2.2.1 Code documentation
+
+All the functions developed in this project have doxygen style documentation to explain how they work. 
+This documentation is compiled and can be checked in the following link:
+http://gps-tracker-doxygen-docs.s3-website.eu-central-1.amazonaws.com/files.html
+
 ## 2.3 Server design
 ## 2.4 Circuit design
 
