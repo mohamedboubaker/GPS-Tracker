@@ -81,8 +81,8 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
 ### 2.2.1 Code documentation
 
 All the functions developed in this project have doxygen style documentation to explain how they work. 
-This documentation is compiled and can be checked in the following link:
-https://mohamedboubaker.github.io/GPS-Tracker/files.html
+This documentation is compiled and can be checked in the following link:  <a href="https://mohamedboubaker.github.io/GPS-Tracker/files.html" target="_blank">Code documentation</a> 
+
 
 ## 2.3 Server design
 ## 2.4 Circuit design
