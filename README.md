@@ -80,6 +80,9 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
 ## 2.2 Firmware design
 ### 2.2.1 Code documentation
 
+All the functions developed in this project have documentation to explain how they work. This documentation is compiled and can be checked in the link below
+http://gps-tracker-doxygen-docs.s3-website.eu-central-1.amazonaws.com/files.html
+
 ## 2.3 Server design
 ## 2.4 Circuit design
 
