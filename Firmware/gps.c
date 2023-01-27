@@ -1,5 +1,5 @@
 /** @file gps.c
-*  @brief This file contains GPS function implementations
+*  @brief GPS functions implementations
 *
 *  @author Mohamed Boubaker
 *  
@@ -9,14 +9,7 @@
 #include "gps.h"
 
 
-/*******************************************************/
-/*                     GPS functions                   */
-/*******************************************************/
 
-/**
- * @brief sim_gps_enable() enables the GPS functionality of the SIM808 module.
- * @return 1 if the GPS is successfully enabled, 0 otherwise
- */
 uint8_t sim_gps_enable(){
 	const char gps_power_on_cmd[]= "AT+CGPSPWR=1\r";
 	const char gps_set_mode_cold_cmd[]= "AT+CGPSRST=0\r";
@@ -29,19 +22,16 @@ uint8_t sim_gps_enable(){
 	return (power_on_status && set_mode_status);
 }
 
-/**
-* @brief sim_gps_get_location() checks if the module has a GPS fix and querries the GPS module for the current position.
-* The modules reply inculde: 
-* -GPS time
-* -latitue and longitute in DMM.MM (Degrees Minutes.Minutes)
-* -the prefered format used on the server is the decimal degrees dd. The transformation dd = d + mm.mm/60 
-* needs to be done on the server
-* @param char * coordinates is an array that will store the GPS position
-* @return 1 if the GPS position is calculated correctly, 0 if the module doesn't have a fix or an error occurs.
-*/
+
 uint8_t sim_gps_get_location(char * coordinates){
 
-	/* GPS Status can be:
+	/* 
+	 * The modules reply inculde: 
+	 * -GPS time
+	 * -latitue and longitute in DMM.MM (Degrees Minutes.Minutes)
+	 * -the prefered format used on the server is the decimal degrees dd. The transformation dd = d + mm.mm/60 
+	 * needs to be done on the server
+	 * GPS Status can be:
 	 * "Location Unknown" if GPS is not enabled
 	 * "Location not Fix" 
 	 * "Location 2D Fix"

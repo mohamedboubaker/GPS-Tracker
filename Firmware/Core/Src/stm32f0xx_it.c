@@ -84,12 +84,20 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
+	int i,j;
   /* USER CODE BEGIN HardFault_IRQn 0 */
-HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
+		for(i = 0; i< 30000 ; i++)
+			for(j = 0; j< 30000 ; j++);
+		i=0;
+		j=0;
+		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_12);
+
+		
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }

@@ -1,5 +1,5 @@
 /** @file network_functions.c
-*  @brief this file include the implementation of functions related to GPRS, TCP and MQTT
+*  @brief GPRS, TCP and MQTT functions implementation.
 *
 *  @author Mohamed Boubaker
 *  @bug issue #9
@@ -350,7 +350,7 @@ uint8_t enable_gprs(){
 
 
 
-uint8_t publish_mqtt_msg(char * server_address, char * port, char * topic, char * client_id, char * message){
+uint8_t publish_mqtt_msg(char * ip_address, char *  tcp_port, char * topic, char * client_id, char * message){
 	
 	/*** Construct the Connect packet ***/
 
@@ -366,12 +366,11 @@ uint8_t publish_mqtt_msg(char * server_address, char * port, char * topic, char 
 	 * remaining bytes : [Client ID]
 	 */
 	
-	uint8_t connect_packet_remaining_length = 0;
-	uint16_t client_id_length = 0;
+	
+	uint16_t client_id_length = strlen(client_id);
+	uint8_t connect_packet_remaining_length = 12 + client_id_length;;
 	uint16_t keep_alive = MQTT_KEEP_ALIVE;
 	
-	client_id_length = strlen(client_id);
-	connect_packet_remaining_length = 13 + client_id_length;
 	
 
 uint8_t disconnect_packet[] = {
@@ -391,6 +390,7 @@ uint8_t disconnect_packet[] = {
 
 
 	connect_packet[1]=connect_packet_remaining_length;
+	
 	/* Insert Keep alive time most signinficant byte in the packet by shifting keep_alive 8 bits to the right and casting into uint8_t */
 	connect_packet[10]= (uint8_t) (keep_alive>>8);
 
@@ -419,34 +419,36 @@ uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
 };
 	
 	/*insert remaining length */
-	publish_packet_remaining_length = 3 + topic_length + strlen(message);
-publish_packet[1] = publish_packet_remaining_length;
+	publish_packet_remaining_length = 2 + topic_length + strlen(message);
+	publish_packet[1] = publish_packet_remaining_length;
+	
 	/* Insert topic name length into the packet with same way used for keep_alive */ 
-		publish_packet[2]= (uint8_t) (topic_length>>8);
-		publish_packet[3]= (uint8_t) topic_length;
+	publish_packet[2]= (uint8_t) (topic_length>>8);
+	publish_packet[3]= (uint8_t) topic_length;
 
 
 	/* Copy the topic  name char by char into the publish packet */
 	for(uint8_t i = 0; i< topic_length ; i++)
-		publish_packet[4+i]=(uint8_t)client_id[i];
+		publish_packet[4+i]=(uint8_t)topic[i];
 
 	/* Copy the message   char by char into the publish packet */
 	for(uint8_t i = 0; i< strlen(message); i++)
-		publish_packet[3+topic_length+i]=(uint8_t)client_id[i];
+		publish_packet[4+topic_length+i]=(uint8_t)message[i];
 	
 	
-	if (open_tcp_connection(server_address,port)){
+	/*** Sending Data ***/
+	
+		if (open_tcp_connection(ip_address,tcp_port)){
 			send_tcp_data(connect_packet,14+client_id_length);
-			send_tcp_data(publish_packet,publish_packet_remaining_length+1);
+			send_tcp_data(publish_packet,publish_packet_remaining_length+2);
 			send_tcp_data(disconnect_packet,2);
 			close_tcp_connection();
+			return SUCCESS;
 		}
-	
-		
-
-
-	return 0;
+			
+	return FAIL;
 }
+
 
 
 uint8_t open_tcp_connection(char * server_address, char * port){

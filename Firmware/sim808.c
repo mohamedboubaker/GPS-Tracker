@@ -1,5 +1,5 @@
 /** @file sim808.c
-*  @brief Function implementation for the SIM808 STM32 driver.
+*  @brief Implementations of functions that communicate directly with the SIM808 module and control it.
 *
 *  @author Mohamed Boubaker
 *  @bug issue #9
@@ -28,12 +28,7 @@ void  send_debug(const char * debug_msg)
 	HAL_UART_Transmit(&debug_uart,(uint8_t*)"\r\n",2,TX_TIMEOUT);
 }
 
-/**
- * @brief send_serial() sends raw serial data to the SIM808 module through the AT_uart peripheral. Then it deletes the receive buffer.
- * @param const char * cmd contains the command 
- * @param uint32_t rx_wait waiting time before exit. To make sure the reply is received.
- * @returns void
- */
+
 void send_serial(uint8_t * data, uint8_t length,  char * cmd_reply, uint32_t rx_wait){
 	HAL_UART_Transmit(&AT_uart,(uint8_t *)data,length,TX_TIMEOUT);
 	
@@ -49,14 +44,7 @@ void send_serial(uint8_t * data, uint8_t length,  char * cmd_reply, uint32_t rx_
 }
 
 
-/**
- * @brief send_cmd() sends AT commands to the SIM808 module through the AT_uart peripheral.
- * in case the module replies with an error, or doesn't reply anything, it will try to send the command 2 more times
- * after a timeout period.
- * @param const char * cmd contains the command 
- * @param uint32_t rx_wait waiting time before checking the receive buffer.
- * @returns 1 if the module replies with OK, 0 otherwise
- */
+
 uint8_t send_cmd(const char * cmd, uint32_t rx_wait){
 
 	/* Variable used to count how many times the command is sent*/
@@ -102,12 +90,7 @@ uint8_t send_cmd(const char * cmd, uint32_t rx_wait){
 }
 
 
-/**
- * @brief sim_get_cmd_reply() sends a cmd to the module and copies the reply into the parameter char * cmd_reply
- * @param char * cmd is the command
- * @param char * cmd_reply is an array where to modules reply will be copied. 
- * @returns 1 if the module replies with OK, 0 otherwise
- */
+
 uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait){
 
 	/* the implementation of this function is very similar to send_cmd. The difference is
@@ -149,11 +132,10 @@ uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait){
 }
 
 /**
- * @brief HAL_UART_RxCpltCallback() is called when the receive buffer of any UART has received 1 byte.
+ * @brief is called when the receive buffer of any UART has received 1 byte.
  * it copies the received byte into the receive buffer which is a global variable: sim_rx_buffer. 
  * it also increases by one the counter of received bytes: rx_index. Which points to the next free index in the receive buffer.
  * usart1 is always used to communicate with SIM module therefore AT_uart is defined as usart1.
- * @returns void
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if (huart->Instance==USART1){
@@ -165,13 +147,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 }	
 
 
-/**
- * @brief sim_init()  it initialises the SIM808_typedef struct members and powers on the module.
- * initializes the UARTs and the GPIOs used to power on, reset and check the status of the module.
- * Which UART peripheral is used for what is specified in the parameter SIM808_typedef members: AT_uart and debug_uart.
- * @param SIM808_typedef sim is the definition of the sim808 hardware
- * @return 1 if module is ready for use, 0 otherwise
- */			 
+		 
 uint8_t sim_init(SIM808_typedef * sim){
 
 	/*Initialize UART peripherals*/

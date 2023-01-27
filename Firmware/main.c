@@ -63,26 +63,21 @@ int main(void)
   //;
 	sim_gps_enable();
 	
-	char position[23];
+	char position[23];;
 	char msg[]="hello\n";
-	
+	char ip_address[]="35.158.168.34";
+	char tcp_port[] = "80";
 int i=0;
 while (1)
   {
-		//sim_gps_get_location(position);
-	//	sim_gps_get_location(position);
-		// if (sim_tcp_send("3.125.116.37","1883",(uint8_t *)msg,strlen(msg)))
-			publish_mqtt_msg("18.184.83.22","1883","Speed","123456","hello");
-		
-//				if (open_tcp_connection("3.125.116.37","1883")){
-//					HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
-//					HAL_Delay(2000);
-//					send_tcp_data((uint8_t *)msg,strlen(msg));
-//					close_tcp_connection();
-//		}
-				
-		
-
+	    sim_gps_get_location(position);
+		send_debug(position);
+		//	publish_mqtt_msg(ip_address,tcp_port,"Pos","GPS_1",position);
+		//	if (open_tcp_connection(ip_address,tcp_port)){
+		//	send_tcp_data((uint8_t*)"hello",5);
+		//	close_tcp_connection();
+			//}
+		HAL_Delay(1000);
   }
 
 }
