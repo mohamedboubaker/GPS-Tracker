@@ -16,7 +16,6 @@
   ******************************************************************************
   */
 
-/* Includes ------------------------------------------------------------------*/
 #include <string.h>
 #include "main.h"
 #include "sim808.h"
@@ -24,28 +23,22 @@
 #include "network_functions.h"
 
 
-	SIM808_typedef sim;
 
 
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
 
-/* Private user code ---------------------------------------------------------*/
 int main(void)
 {
+	
+	/* Initialize HAL, GPIO and clocks */
   HAL_Init();
   SystemClock_Config();
   MX_GPIO_Init();
 	
+	/* Define the SIM808_typedef */
+	SIM808_typedef sim;
 	sim.AT_uart_instance=USART1;
 	sim.debug_uart_instance=USART2;
 	sim.power_on_gpio=GPIOB; 
@@ -56,28 +49,22 @@ int main(void)
 	sim.status_pin=GPIO_PIN_14;
 	
 
-
+	/*initialize the SIM808 module */
 	sim_init(&sim);
-	//if (sim_enable_gprs()) 
-		//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);;
-  //;
+	
+	/*enable GPS */
 	sim_gps_enable();
 	
-	char position[23];;
-	char msg[]="hello\n";
+	char gps_position[23];
 	char ip_address[]="35.158.168.34";
 	char tcp_port[] = "80";
-int i=0;
+
 while (1)
   {
-	    sim_gps_get_location(position);
-		send_debug(position);
-		//	publish_mqtt_msg(ip_address,tcp_port,"Pos","GPS_1",position);
-		//	if (open_tcp_connection(ip_address,tcp_port)){
-		//	send_tcp_data((uint8_t*)"hello",5);
-		//	close_tcp_connection();
-			//}
-		HAL_Delay(1000);
+			/* send the position  to the server every 10 seconds */
+	    if (sim_gps_get_location(gps_position))
+				publish_mqtt_msg(ip_address,tcp_port,"Position","GPS_1",gps_position);
+		HAL_Delay(10000);
   }
 
 }
