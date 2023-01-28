@@ -5,8 +5,9 @@ The objective of this project is to deliever a GPS tracking system that can be u
 
 The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform are not mature. However, this work is mainly concerned with: designing a circuit, manufacturing the PCB, and developing firmware to power it, all while ensuring reliability. Below is a picture of the  produced PCB.
 
+<p style="color:red;"
 <b>Note:</b> Click here to go directlty to the <a href="https://mohamedboubaker.github.io/GPS-Tracker/files.html">code documentation</a> 
-
+</p>
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/PCB.JPG)
 *Figure 1. Produced PCB board*
 
