@@ -8,6 +8,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 <p style="color:red;"
 <b>Note:</b> Click here to go directlty to the <a href="https://mohamedboubaker.github.io/GPS-Tracker/files.html">code documentation</a> 
 </p>
+
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/PCB.JPG)
 *Figure 1. Produced PCB board*
 
