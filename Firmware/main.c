@@ -53,21 +53,32 @@ int main(void)
 	sim_init(&sim);
 	
 	/*enable GPS */
-	sim_gps_enable();
+	//sim_gps_enable();
 	
-	char gps_position[23];
-	char ip_address[]="35.158.168.34";
-	char tcp_port[] = "80";
+	/*enable gprs */
+	//enable_gprs();
+	
+	char gps_position[24]="0,0";
+	char ip_address[]="18.195.228.39";
+	char tcp_port[] = "1883";
 
 while (1)
   {
 			/* send the position  to the server every 10 seconds */
-	    if (sim_gps_get_location(gps_position))
-				publish_mqtt_msg(ip_address,tcp_port,"Position","GPS_1",gps_position);
-		HAL_Delay(10000);
-  }
+	    
+//			if (sim_gps_get_location(gps_position)){
+//				HAL_GPIO_TogglePin(GPIOB,GREEN_LED);
+//				publish_mqtt_msg(ip_address,tcp_port,"P","1",gps_position);
+//								//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_12);
+//			} else 
+//			HAL_Delay(10000);
+//		if (send_AT_cmd("AT\r","OK",0,NULL,50))
+//			HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
+//		else 
+//			HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_12);
 
 }
+	}
 
 /**
   * @brief System Clock Configuration

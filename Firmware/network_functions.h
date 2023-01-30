@@ -21,6 +21,9 @@
 #define ERR_PDP_ACTIVATE 55
 #define ERR_GET_IP 56
 
+/* MQTT error code*/
+#define ERR_MQTT_EMPTY_PARAM 100
+
 /*GPRS definitions*/
 #define APN "TM"
 #define APN_LENGTH 2 /* Length of the APN string */

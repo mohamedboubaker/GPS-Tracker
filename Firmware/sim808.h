@@ -16,9 +16,11 @@
 #define TRUE 1
 #define FALSE 0
 
+#define GREEN_LED GPIO_PIN_13
 
 
 #define RX_WAIT 200 /* After sending AT command, wait RX_WAIT ms  to ensure that the reply is receeived in the buffer */
+#define RX_TIMEOUT 200
 #define TX_TIMEOUT 100
 #define BAUD_RATE 38400 /* BAUD_RATE=38400 => it take 26 ms to send 100 bytes */
 #define RX_BUFFER_LENGTH 256
@@ -89,6 +91,15 @@ void send_serial(uint8_t * data, uint8_t length, char * cmd_reply, uint32_t rx_w
  */
 uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait);
 
-/******************* GPS functions ********************/
 
+ /**
+ * @brief sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the parameter cmd_reply.
+ * @param cmd is the AT command to be sent
+ * @param expected_reply is used to determine if the outcome of the function is SUCCESS or FAIL.
+ * @param save_reply if set to 1, then the reply from the module gets copied into cmd_reply.
+ * @param cmd_reply is an array where to modules reply is copied.
+ * @param rx_timeout the maximum amount of time the function will wait for the module to receive a reply.  
+ * @returns SUCCESS if the module replies withing timeout and the reply includes the expected_reply, FAIL otherwise.
+ */
+uint8_t send_AT_cmd(const char * cmd, const char * expected_reply, uint8_t save_reply, char * cmd_reply, uint32_t rx_timeout);
 #endif

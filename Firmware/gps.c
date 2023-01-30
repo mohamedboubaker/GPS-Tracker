@@ -12,7 +12,7 @@
 
 uint8_t sim_gps_enable(){
 	const char gps_power_on_cmd[]= "AT+CGPSPWR=1\r";
-	const char gps_set_mode_cold_cmd[]= "AT+CGPSRST=0\r";
+	const char gps_set_mode_cold_cmd[]= "AT+CGPSRST=2\r";
 	uint8_t power_on_status=0;
 	uint8_t set_mode_status=0;
 
@@ -46,7 +46,7 @@ uint8_t sim_gps_get_location(char * coordinates){
 	/*Check GPS Fix status*/
 	sim_get_cmd_reply(gps_get_status_cmd,local_rx_buffer,RX_WAIT);
 
-	if (strstr(local_rx_buffer,"Location 3D Fix")!=NULL){
+	if (strstr(local_rx_buffer,"Location 3D Fix")){
 		
 		/*clear local buffer*/
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
@@ -61,7 +61,7 @@ uint8_t sim_gps_get_location(char * coordinates){
 		/* Extract the coordinates from the cmd reply and copy only 
 		*	the coordinates into function parameter char * coordinates
 		*/
-		memcpy(local_rx_buffer+27,coordinates,GPS_COORDINATES_LENGTH);
+		memcpy(coordinates,local_rx_buffer+27,GPS_COORDINATES_LENGTH);
 		
 		return err_status;
 	}

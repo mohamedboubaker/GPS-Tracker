@@ -221,10 +221,10 @@ uint8_t sim_init(SIM808_typedef * sim){
 
 	while(!HAL_GPIO_ReadPin(sim->status_gpio,sim->status_pin) && trials<3){
 		HAL_GPIO_WritePin(sim->power_on_gpio,sim->power_on_pin,GPIO_PIN_RESET);
-		/* Keep pin down for 1.5 s */
-		HAL_Delay(1500);
+		/* Keep pin down for 1.2 s */
+		HAL_Delay(1200);
 		HAL_GPIO_WritePin(sim->power_on_gpio,sim->power_on_pin,GPIO_PIN_SET);
-		HAL_Delay(500);
+		HAL_Delay(100);
 		trials++;
 	}
 	
@@ -245,8 +245,44 @@ uint8_t sim_init(SIM808_typedef * sim){
 	}
 
 	/*Send the First AT Command to check if the module is responding*/
-	return send_cmd("AT\r",RX_WAIT);
+	return send_AT_cmd("AT\r","OK",0,NULL,RX_TIMEOUT);
 }
 
 
+uint8_t send_AT_cmd(const char * cmd, const char * expected_reply, uint8_t save_reply, char * cmd_reply, uint32_t rx_timeout){
+	
+	uint8_t is_expected_reply_received=0;
+	uint32_t timer=0;
+	char  debug_msg[128];
+	/* send the AT command via AT_uart */
+	HAL_UART_Transmit(&AT_uart,(uint8_t *)cmd,strlen(cmd),TX_TIMEOUT);
+
+	/* Wait for the module until the expected reply is received or if the timeout is breached */
+	while ( (is_expected_reply_received==0) && (timer < rx_timeout)) {
+		is_expected_reply_received=strstr((const char *)sim_rx_buffer,expected_reply)==NULL?0:1;
+		timer++;
+		HAL_Delay(1);
+	}
+
+	sprintf(debug_msg,"%d",timer);
+	send_debug(debug_msg);
+		
+	/* Note: 
+	 * The reply from the module will be captured by the UART receive interrupt callback routine HAL_UART_RxCpltCallback() 
+	 * and stored in the global array sim_rx_buffer[RX_BUFFER_LENGTH];
+	 */	
+
+	/* if save_reply is set to 1 then copy the reply from the global buffer to the parameter cmd_reply*/
+	if (save_reply == 1)
+		memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
+
+	/* clear the sim_rx_buffer, reset the receive counter rx_index 
+	 * and then return 1 to acknowledge the success of the command		 
+	 */
+	memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	rx_index=0;
+	
+	return is_expected_reply_received;
+	
+}
 

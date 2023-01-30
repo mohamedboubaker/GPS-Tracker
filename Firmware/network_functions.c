@@ -352,6 +352,11 @@ uint8_t enable_gprs(){
 
 uint8_t publish_mqtt_msg(char * ip_address, char *  tcp_port, char * topic, char * client_id, char * message){
 	
+	/* sanity check */
+	/* if topic or client_id or message is an empty string , return an error */
+	if ((sizeof(topic)==0) || (sizeof(client_id)==0) ||  (sizeof(message)==0))
+			return ERR_MQTT_EMPTY_PARAM;
+	
 	/*** Construct the Connect packet ***/
 
 	/* Connect Packet structure:  
