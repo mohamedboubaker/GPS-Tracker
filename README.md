@@ -105,7 +105,7 @@ So as a solution, we can put 2 resistors in series to achive the required ratio.
 
 To achieve a ratio of 1.95, i.e. and output voltage of 3.6V the following values can be used. R9=8.2kΩ, R10=1.5kΩ and R11=2.7kΩ. Below is the equation to demonstrate this:
 
-<p align="center" > $\frac{R9}{R10+R11}=\frac{8.2}{1.5+2.7}=1.95& </p>
+<p align="center" > $\frac{R9}{R10+R11}=\frac{8.2}{1.5+2.7}=1.95$ </p>
 
 
 
