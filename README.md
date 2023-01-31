@@ -94,7 +94,7 @@ The code features Doxygen-style documentation for all functions, providing clear
 *Figure 2. Circuit Diagram*
 
 ### Power regulation circuit
-It is based on the Texas Instruments TPS5430DDA DC-DC down converter. The surrounding circuit is designed according to the recommendations of the <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">datasheet</a>.
+It is based on the Texas Instruments TPS5430DDA DC-DC down converter. The surrounding circuit is designed according to the recommendations of the datasheet<a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">[1]</a>.
 
 The output voltage is governed by the values of the resistors that are connected above and below the feedback point. In datasheet, the resistor above the feedback point is denoted as R1, whereas that below the feedback point is denoted as R2. According to equation 12 in the datasheet we can derive  the following formula:
 <p align="center" > $\frac{R1}{R2}=0.819V_{out}-1$ </p>
@@ -124,3 +124,8 @@ Below is a 3D picture of the manufactured PCB. The front side is on the left and
 
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/test_drive_1.jpeg)
 *Figure 5. Test Drive result in Grombalia, Tunisia*
+
+# 5. Conclusion
+## 5.1 Summary
+## 5.2 Reference and bibliography
+- Texas Instruments TPS5430DDA datasheet: https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf
