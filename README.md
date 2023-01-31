@@ -96,9 +96,16 @@ The code features Doxygen-style documentation for all functions, providing clear
 ### Power regulation circuit
 It is based on the Texas Instruments TPS5430DDA DC-DC down converter. The surrounding circuit is designed according to the recommendations of the <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">datasheet</a>.
 
-The voltage conversion ratio is governed by the values of the Resistors that are connected above and below the feedback point. According to the datasheet, the resistor above the feedback point is denoted as R1, whereas that below the feedback point is denoted as R2. According to equation 12 in the datasheet we can derive  the following formula:
+The output voltage is governed by the values of the resistors that are connected above and below the feedback point. In datasheet, the resistor above the feedback point is denoted as R1, whereas that below the feedback point is denoted as R2. According to equation 12 in the datasheet we can derive  the following formula:
 <p align="center" > $\frac{R1}{R2}=0.819V_{out}-1$ </p>
 Therefor, to achieve a regulated voltage of 3.6V, the ratio between the resistors should be as follows: <p align="center" > $\frac{R1}{R2}=1.95$ </p>
+
+It is difficult to achieve that ratio using standard resistor values, for example, 220Ω, 1kΩ or 2.2kΩ, and using only 2 resistors at the same time.
+So as a solution, we can put 2 resistors in series to achive the required ratio. Hence the introduction of 2 resistors below the feedback point in the circuit design, which are R10 and R11 which are equivalent to R2 in the datasheet. R9 is equivaelent to R1 in the datasheet.
+
+To achieve a ratio of 1.95, i.e. and output voltage of 3.6V the following values can be used. R9=8.2kΩ, R10=1.5kΩ and R11=2.7kΩ. Below is the equation to demonstrate this:
+
+<p align="center" > $\frac{R9}{R10+R11}=\frac{8.2}{1.5+2.7}=1.95& </p>
 
 
 
