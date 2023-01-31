@@ -103,7 +103,7 @@ Therefor, to achieve a regulated voltage of 3.6V, the ratio between the resistor
 It is difficult to achieve that ratio using standard resistor values, for example, 220Ω, 1kΩ or 2.2kΩ, and using only 2 resistors at the same time.
 So as a solution, we can put 2 resistors in series to achive the required ratio. Hence the introduction of 2 resistors below the feedback point in the circuit design, which are R10 and R11 which are equivalent to R2 in the datasheet. R9 is equivaelent to R1 in the datasheet.
 
-To achieve a ratio of 1.95, i.e. and output voltage of 3.6V the following values can be used. R9=8.2kΩ, R10=1.5kΩ and R11=2.7kΩ. Below is the equation to demonstrate this:
+To achieve a ratio of 1.95, i.e. an output voltage of 3.6V the following values can be used. R9=8.2kΩ, R10=1.5kΩ and R11=2.7kΩ. Below is the equation to demonstrate this:
 
 <p align="center" > $\frac{R9}{R10+R11}=\frac{8.2}{1.5+2.7}=1.95$ </p>
 
