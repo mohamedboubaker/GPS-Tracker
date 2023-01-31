@@ -128,4 +128,4 @@ Below is a 3D picture of the manufactured PCB. The front side is on the left and
 # 5. Conclusion
 ## 5.1 Summary
 ## 5.2 Reference and bibliography
-- Texas Instruments TPS5430DDA datasheet: https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf
+- [1] Texas Instruments TPS5430DDA datasheet: https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf
