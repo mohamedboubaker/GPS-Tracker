@@ -93,10 +93,12 @@ The code features Doxygen-style documentation for all functions, providing clear
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/circuit_diagram.jpg)
 *Figure 2. Circuit Diagram*
 
-* Power regulation circuit
+### Power regulation circuit
 It is based on the Texas Instruments TPS5430DDA DC-DC down converter. The surrounding circuit is designed according to the recommendations of the <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">datasheet</a>.
-The voltage conversion ratio is governed by the values of Resistors R9,R10 and R11. According to equation 12 in the datasheet:
-<p align="center" > $R2=(R1*1.221)/(Vout-1.221)$ </p>
+The voltage conversion ratio is governed by the values of Resistors R9,R10 and R11 in the circuit design above. According to equation 12 in the datasheet we can derive  the following formula:
+<p align="center" > $\frac{R1}{R2}=0.819V_{out}-1$ </p>
+which means, to get a  $V_{out}=3.6$ then $\frac{R1}{R2}=1.95$
+
 
 
 ## 2.5 PCB design
