@@ -15,7 +15,7 @@
  * @brief enables the GPS functionality of the SIM808 module
  * @return 1 if the GPS is successfully enabled, 0 otherwise
  */
-uint8_t sim_gps_enable();
+uint8_t enable_gps();
 
 
 
@@ -25,7 +25,7 @@ uint8_t sim_gps_enable();
 * @param coordinates is an array that will store the GPS position.
 * @return 1 if the GPS position is calculated correctly, 0 if the module doesn't have a fix or an error occurs.
 */
-uint8_t sim_gps_get_location(char* position);
+uint8_t get_gps_location(char* position);
 
 
 

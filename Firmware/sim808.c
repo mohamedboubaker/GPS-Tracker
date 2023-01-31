@@ -29,11 +29,22 @@ void  send_debug(const char * debug_msg)
 }
 
 
-void send_serial(uint8_t * data, uint8_t length,  char * cmd_reply, uint32_t rx_wait){
+uint8_t send_serial_data(uint8_t * data, uint8_t length,  char * cmd_reply, uint32_t rx_timeout){
+	
 	HAL_UART_Transmit(&AT_uart,(uint8_t *)data,length,TX_TIMEOUT);
 	
 	/* Wait for command to be processed */
-	HAL_Delay(rx_wait);
+	uint8_t is_expected_reply_received=0;
+	uint32_t timer=0;
+
+
+	/* Wait for the module until the expected reply is received or if the timeout is breached */
+	while ( (is_expected_reply_received==0) && (timer < rx_timeout)) {
+		is_expected_reply_received=strstr((const char *)sim_rx_buffer,"SEND OK")==NULL?0:1;
+		timer++;
+		HAL_Delay(1);
+	}
+
 	
 	/* copy buffer into local parameter and clear the sim_rx_buffer, reset the receive counter rx_index 
 	 * and then return 1 to acknowledge the success of the command
@@ -41,6 +52,8 @@ void send_serial(uint8_t * data, uint8_t length,  char * cmd_reply, uint32_t rx_
 	memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
 	memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
 	rx_index=0;
+	
+	return 	is_expected_reply_received;
 }
 
 
@@ -273,7 +286,7 @@ uint8_t send_AT_cmd(const char * cmd, const char * expected_reply, uint8_t save_
 	 */	
 
 	/* if save_reply is set to 1 then copy the reply from the global buffer to the parameter cmd_reply*/
-	if (save_reply == 1)
+	if (save_reply == 1 && cmd_reply!=NULL)
 		memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
 
 	/* clear the sim_rx_buffer, reset the receive counter rx_index 

@@ -80,7 +80,7 @@ void send_debug(const char * debug_msg);
  * @param cmd contains the command 
  * @param rx_wait waiting time before exit. To make sure the reply is received.
  */
-void send_serial(uint8_t * data, uint8_t length, char * cmd_reply, uint32_t rx_wait);
+uint8_t send_serial_data(uint8_t * data, uint8_t length, char * cmd_reply, uint32_t rx_wait);
 
 	
  /**

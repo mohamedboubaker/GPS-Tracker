@@ -10,20 +10,20 @@
 
 
 
-uint8_t sim_gps_enable(){
+uint8_t enable_gps(){
 	const char gps_power_on_cmd[]= "AT+CGPSPWR=1\r";
 	const char gps_set_mode_cold_cmd[]= "AT+CGPSRST=2\r";
 	uint8_t power_on_status=0;
 	uint8_t set_mode_status=0;
 
-	power_on_status=send_cmd(gps_power_on_cmd,RX_WAIT); 
-	set_mode_status=send_cmd(gps_set_mode_cold_cmd,RX_WAIT); 
+	power_on_status=send_AT_cmd(gps_power_on_cmd,"OK",0,NULL,RX_WAIT); 
+	set_mode_status=send_AT_cmd(gps_set_mode_cold_cmd,"OK",0,NULL,RX_WAIT); 
 
 	return (power_on_status && set_mode_status);
 }
 
 
-uint8_t sim_gps_get_location(char * coordinates){
+uint8_t get_gps_location(char * coordinates){
 
 	/* 
 	 * The modules reply inculde: 
@@ -44,14 +44,9 @@ uint8_t sim_gps_get_location(char * coordinates){
 
 
 	/*Check GPS Fix status*/
-	sim_get_cmd_reply(gps_get_status_cmd,local_rx_buffer,RX_WAIT);
+	if (send_AT_cmd(gps_get_status_cmd,"Location 3D Fix",0,NULL,RX_WAIT)){
 
-	if (strstr(local_rx_buffer,"Location 3D Fix")){
-		
-		/*clear local buffer*/
-		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-
-		err_status=sim_get_cmd_reply(gps_get_location_cmd,local_rx_buffer,RX_WAIT);
+		err_status=send_AT_cmd(gps_get_location_cmd,"OK",1,local_rx_buffer,RX_WAIT);
 		
 		/* Example reply 
 		* AT+CGPSINF=0 +CGPSINF: 0,4927.656000,1106.059700,319.200000,20220816200132.000,0,12,1.592720,351
@@ -67,7 +62,7 @@ uint8_t sim_gps_get_location(char * coordinates){
 	}
 	else
 		/* GPS has no fix, return 0 to indicate failure*/
-		return 0;
+		return FAIL;
 }
 
 

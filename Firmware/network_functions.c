@@ -60,12 +60,13 @@ uint8_t enable_gprs(){
 	uint8_t phone_status=0;
 	
 	while(trials_counter <3){
-		sim_get_cmd_reply(phone_status_check_cmd,local_rx_buffer,RX_WAIT); 
+		
 		/* Check the reply of the module in local_rx_buffer to see if the phone is enabled.
 		 * Save the status in phone_status
 		 */
-		phone_status = (strstr(local_rx_buffer,"+CFUN: 1")==NULL?0:1);
-			
+		phone_status= send_AT_cmd(phone_status_check_cmd,"+CFUN: 1",1,local_rx_buffer,RX_WAIT); 
+
+	
 		/* Clear receive buffer*/
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
@@ -75,7 +76,7 @@ uint8_t enable_gprs(){
 				if (trials_counter>=3)
 					return ERR_PHONE_FUNCTION;
 				else
-					send_cmd(enable_phone_function_cmd,3*RX_WAIT);
+					send_AT_cmd(enable_phone_function_cmd,"OK",FALSE,NULL,3*RX_WAIT);
 				trials_counter++;
 		}
 		trials_counter=0;
@@ -86,7 +87,7 @@ uint8_t enable_gprs(){
 	/*** Detect if SIM card is present ***/
 		
 	static const char SIM_detect_cmd[]= "AT+CSMINS?\r";
-	sim_get_cmd_reply(SIM_detect_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(SIM_detect_cmd,"OK",1,local_rx_buffer,RX_WAIT);
 	if (!strstr(local_rx_buffer,"+CSMINS: 0,1")) 
 		return ERR_SIM_PRESENCE;
 	/*clear buffer for next use*/
@@ -100,7 +101,7 @@ uint8_t enable_gprs(){
 	static char PIN_insert_cmd[13]= "AT+CPIN=";
 	uint8_t pin_status=0;
 	/* send command to Check if PIN is required*/
-	sim_get_cmd_reply(PIN_status_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(PIN_status_cmd,"OK",1,local_rx_buffer,RX_WAIT);
 	
 	/* Note: the module replies READY if the PIN is not required*/
 	/* If the PIN is required, then insert PIN, if the PIN is wrong then exit*/
@@ -138,7 +139,7 @@ uint8_t enable_gprs(){
 	uint8_t signal_status=0;
 
 		while(trials_counter <3){
-			sim_get_cmd_reply(check_signal_cmd,local_rx_buffer,RX_WAIT);
+			send_AT_cmd(check_signal_cmd,"OK",1,local_rx_buffer,RX_WAIT);
 			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
 			* Save the status in signal_status
 			*/
@@ -179,7 +180,7 @@ uint8_t enable_gprs(){
 		
 	while(trials_counter<3){
 	/*Send command to check registration status*/
-	sim_get_cmd_reply(check_registration_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(check_registration_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
 	
 	/*check the reply to determine if ME is registered at home network or roaming */
 		registration_status= (strstr(local_rx_buffer,",1")==NULL?0:1) || (strstr(local_rx_buffer,",5")==NULL?0:1);
@@ -193,7 +194,7 @@ uint8_t enable_gprs(){
 		if (trials_counter >= 3)
 			return ERR_REGISTRATION;
 		/* send command to register ME to network */
-		send_cmd(register_ME_cmd,5*RX_WAIT);
+		send_AT_cmd(register_ME_cmd,"OK",0,NULL,5*RX_WAIT);
 	}
 	trials_counter++;
 	}
@@ -208,7 +209,7 @@ uint8_t enable_gprs(){
 	uint8_t attach_status=0;
 	
 			while(trials_counter <3){
-				sim_get_cmd_reply(check_grps_attach_cmd,local_rx_buffer,RX_WAIT);
+				send_AT_cmd(check_grps_attach_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
 
 			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
 			* Save the status in signal_status
@@ -225,7 +226,7 @@ uint8_t enable_gprs(){
 					return ERR_GPRS_ATTACH;
 				/* if the signal is weak, wait 1 second before measuring again */
 				else
-					send_cmd(grps_attach_cmd,4*RX_WAIT);
+					send_AT_cmd(grps_attach_cmd,"OK",FALSE,NULL,4*RX_WAIT);
 				trials_counter++;
 		}
 		trials_counter=0;
@@ -245,12 +246,12 @@ uint8_t enable_gprs(){
 		
 	uint8_t pdp_deactivated=0;
 	
-	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
 		
 	/*When PDP is deactivated it is necessary to run  AT+CIPSHUT to bring the status to [IP INITIAL] */
 	pdp_deactivated = strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1;
 	if ( pdp_deactivated ) 
-		if(!send_cmd(reset_PDP_cmd,RX_WAIT)) 
+		if(!send_AT_cmd(reset_PDP_cmd,"OK",FALSE,NULL,RX_WAIT)) 
 			return ERR_PDP_DEACTIVATED;
 	
 	/*clear receive buffer*/
@@ -265,7 +266,7 @@ uint8_t enable_gprs(){
 	*/
 	uint8_t pdp_defined=0;
 	static const char check_PDP_context_cmd[]= "AT+CSTT?\r";
-	sim_get_cmd_reply(check_PDP_context_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(check_PDP_context_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
 		
 	pdp_defined = strstr(local_rx_buffer,"CMNET")==NULL?1:0;
 		
@@ -278,7 +279,7 @@ uint8_t enable_gprs(){
 		static char define_PDP_context_cmd[APN_LENGTH+18]= "AT+CSTT=\"";
 		strcat(define_PDP_context_cmd,APN); /* AT+CSTT="APN */
 		strcat(define_PDP_context_cmd,"\",\"\",\"\"\r"); /* AT+CSTT="APN","","" */
-		if(!send_cmd(define_PDP_context_cmd,RX_WAIT)) 
+		if(!send_AT_cmd(define_PDP_context_cmd,"OK",FALSE,NULL,RX_WAIT)) 
 			return ERR_PDP_DEFINE;
 	}
 	/*Clear receive buffer*/
@@ -293,7 +294,7 @@ uint8_t enable_gprs(){
 	uint8_t pdp_ready=0;
 	static const char activate_PDP_context_cmd[]= "AT+CIICR\r";
 	
-	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer,RX_WAIT); 
+	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT); 
 	
 	/* Check if PDP context is defined and ready to be activated == [IP START] */
 	pdp_ready = strstr(local_rx_buffer,"IP START")==NULL?0:1;
@@ -305,7 +306,7 @@ uint8_t enable_gprs(){
 	if ( pdp_ready==1 ){
 		
 		/* This command takes around 1 second to finish hence 1s wait time */
-		if (!send_cmd(activate_PDP_context_cmd,1000)) 
+		if (!send_AT_cmd(activate_PDP_context_cmd,"OK",FALSE,NULL,1000)) 
 			return ERR_PDP_ACTIVATE; 	
 	}	
 	
@@ -319,12 +320,12 @@ uint8_t enable_gprs(){
 	uint8_t error=0;
 	static const char get_IP_address_cmd[]= "AT+CIFSR\r";
 	
-	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
 	
 	if ( strstr(local_rx_buffer,"IP GPRSACT") ){
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
-		sim_get_cmd_reply(get_IP_address_cmd,local_rx_buffer,5*RX_WAIT);
+		send_AT_cmd(get_IP_address_cmd,"OK",TRUE,local_rx_buffer,5*RX_WAIT);
 		
 		error=strstr(local_rx_buffer,"ERROR")==NULL?0:1;
 		if ( error ) 
@@ -338,7 +339,7 @@ uint8_t enable_gprs(){
 	
 	uint8_t gprs_ready=0;
 	
-	sim_get_cmd_reply(check_gprs_state_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
 	
 	gprs_ready=strstr(local_rx_buffer,"IP STATUS")==NULL?0:1;
 	
@@ -479,7 +480,7 @@ uint8_t open_tcp_connection(char * server_address, char * port){
 	
 	
 	/*** Check TCP/GPRS Status ***/
-	sim_get_cmd_reply(get_tcp_status_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(get_tcp_status_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
 	
 	/* If the TCP/GPRS stack is not in usable status, then enable GPRS 
 	 * else if there is an open TCP connection then close it.
@@ -489,7 +490,7 @@ uint8_t open_tcp_connection(char * server_address, char * port){
 		enable_gprs();
 		
 	else if ( (strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) || (strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1)   || (strstr(local_rx_buffer,"ALREADY CONNECT")==NULL?0:1)  )
-		send_cmd(tcp_disconnect_cmd,RX_WAIT);
+		send_AT_cmd(tcp_disconnect_cmd,"OK",FALSE,NULL,RX_WAIT);
 	
 	/*clear receive buffer */
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
@@ -504,7 +505,7 @@ uint8_t open_tcp_connection(char * server_address, char * port){
 	strcat(tcp_connect_cmd,"\"\r");  /* AT+CIPSTART=\"TCP\","host.com","port"\r */
 		
 	/*Send open connection command Wait for connection to establish or fail*/
-	sim_get_cmd_reply(tcp_connect_cmd,local_rx_buffer,5*RX_WAIT);
+	send_AT_cmd(tcp_connect_cmd,"CONNECT OK",1,local_rx_buffer,5*RX_WAIT);
 	send_debug(local_rx_buffer);	
 	
 	/* check the reply, if CONNECT FAIL or ERROR is returned, it means the connection failed to establish. 
@@ -531,12 +532,9 @@ uint8_t close_tcp_connection(){
 
 
 		/* send Close TCP connection command */
-		sim_get_cmd_reply(tcp_disconnect_cmd,local_rx_buffer,RX_WAIT);
-
+		/* and return if TCP connection was closed correctly */	
 	
-	/* check if TCP connection was closed correctly */	
-	
-	if ((strstr(local_rx_buffer,"CLOSE OK")==NULL?0:1) )
+	if ((send_AT_cmd(tcp_disconnect_cmd,"CLOSE OK",FALSE,NULL,RX_WAIT)) )
 		return SUCCESS;
 	else 
 		return FAIL;
@@ -555,18 +553,10 @@ uint8_t send_tcp_data(uint8_t * data, uint8_t data_length){
 	sprintf(send_tcp_data_cmd,"AT+CIPSEND=%d\r",(int)data_length); 
 	
 	/* tell the module how many bytes to expect */
-	sim_get_cmd_reply(send_tcp_data_cmd,local_rx_buffer,RX_WAIT);
+	send_AT_cmd(send_tcp_data_cmd,"OK",FALSE,NULL,RX_WAIT);
 
-	/* clear local receive buffer */
-	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-
-	/*Send the actual data bytes and wait*/
-	send_serial(data,data_length,local_rx_buffer,5*RX_WAIT); 
+	/*Send the actual data and return the status of transmission*/
+	return send_serial_data(data,data_length,local_rx_buffer,5*RX_WAIT); 
 	
 
-	/* check if the data was successfully sent */	
-	if ((strstr(local_rx_buffer,"SEND OK")==NULL?0:1) )
-		return SUCCESS;
-	else 
-		return FAIL;
 }
