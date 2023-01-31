@@ -97,7 +97,7 @@ The code features Doxygen-style documentation for all functions, providing clear
 It is based on the Texas Instruments TPS5430DDA DC-DC down converter. The surrounding circuit is designed according to the recommendations of the <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">datasheet</a>.
 The voltage conversion ratio is governed by the values of Resistors R9,R10 and R11 in the circuit design above. According to equation 12 in the datasheet we can derive  the following formula:
 <p align="center" > $\frac{R1}{R2}=0.819V_{out}-1$ </p>
-which means, to get a  <p align="center" > $V_{out}=3.6$ then $\frac{R1}{R2}=1.95$ </p>
+Therefor, to achieve a regulated voltage of 3.6V, the ratio between the resistors should be as follows: <p align="center" > $\frac{R1}{R2}=1.95$ </p>
 
 
 
