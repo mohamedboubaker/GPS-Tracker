@@ -93,6 +93,12 @@ The code features Doxygen-style documentation for all functions, providing clear
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/circuit_diagram.jpg)
 *Figure 2. Circuit Diagram*
 
+* Power regulation circuit
+It is based on the Texas Instruments TPS5430DDA DC-DC down converter. The surrounding circuit is designed according to the recommendations of the <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">datasheet</a>.
+The voltage conversion ratio is governed by the values of Resistors R9,R10 and R11. According to equation 12 in the datasheet:
+$(R2=(R1*1.221)/(Vout-1.221))
+
+
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
 
