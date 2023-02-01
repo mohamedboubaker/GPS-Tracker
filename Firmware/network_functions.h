@@ -7,8 +7,9 @@
 */
 #ifndef NETWORK_FUNCTIONS_H
 #define NETWORK_FUNCTIONS_H
-#include "sim808.h"
 
+
+#define DEBUG_MODE 1
 /* TCP/GPRS error code*/
 #define ERR_PHONE_FUNCTION 48
 #define ERR_SIM_PRESENCE 49

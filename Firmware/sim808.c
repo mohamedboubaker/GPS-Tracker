@@ -11,8 +11,7 @@
 
 UART_HandleTypeDef huart1; 
 UART_HandleTypeDef huart2;
-#define AT_uart huart1
-#define debug_uart huart2
+
 
 
 /* These Global variables should only be touched by sim_send_cmd, get_cmd_reply, UART_receive_IT,*/
@@ -28,121 +27,15 @@ void  send_debug(const char * debug_msg)
 	HAL_UART_Transmit(&debug_uart,(uint8_t*)"\r\n",2,TX_TIMEOUT);
 }
 
-
-uint8_t send_serial_data(uint8_t * data, uint8_t length,  char * cmd_reply, uint32_t rx_timeout){
-	
-	HAL_UART_Transmit(&AT_uart,(uint8_t *)data,length,TX_TIMEOUT);
-	
-	/* Wait for command to be processed */
-	uint8_t is_expected_reply_received=0;
-	uint32_t timer=0;
-
-
-	/* Wait for the module until the expected reply is received or if the timeout is breached */
-	while ( (is_expected_reply_received==0) && (timer < rx_timeout)) {
-		is_expected_reply_received=strstr((const char *)sim_rx_buffer,"SEND OK")==NULL?0:1;
-		timer++;
-		HAL_Delay(1);
-	}
-
-	
-	/* copy buffer into local parameter and clear the sim_rx_buffer, reset the receive counter rx_index 
-	 * and then return 1 to acknowledge the success of the command
-	 */
-	memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
-	memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
-	rx_index=0;
-	
-	return 	is_expected_reply_received;
+void  send_raw_debug(uint8_t * debug_dump,uint8_t length)
+{
+	char debug_prompt[]="Debug > ";
+	HAL_UART_Transmit(&debug_uart,(uint8_t*)debug_prompt,strlen(debug_prompt),TX_TIMEOUT);
+	HAL_UART_Transmit(&debug_uart,debug_dump,length,TX_TIMEOUT);
+	HAL_UART_Transmit(&debug_uart,(uint8_t*)"\r\n",2,TX_TIMEOUT);
 }
 
 
-
-uint8_t send_cmd(const char * cmd, uint32_t rx_wait){
-
-	/* Variable used to count how many times the command is sent*/
-	uint8_t trials=0;
-
-	while(trials < 3){
-
-		HAL_UART_Transmit(&AT_uart,(uint8_t *)cmd,strlen(cmd),TX_TIMEOUT);
-
-		/* Wait for the module to finish transmitting the reply.
-		 * in the first try, wait RX_WAIT, second try, wait more: 2*RX_WAIT, 3rd try, wait even more: 3*RX_WAIT
-		 */
-		HAL_Delay((1+trials)*rx_wait);
-
-		/* Note: 
-		 * The reply from the module will be captured by the UART receive interrupt callback routine HAL_UART_RxCpltCallback() 
-		 * and stored in the global array sim_rx_buffer[RX_BUFFER_LENGTH];
-		 */	
-
-
-		/* Check if the reply contains the word "OK"*/
-		if (strstr((const char *)sim_rx_buffer,"OK")!=NULL){ 
-		
-			/* Clear the sim_rx_buffer, reset the receive counter rx_index 
-			 * and then return 1 to acknowledge the success of the command
-			 */
-			memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
-			rx_index=0;
-			return 1; 
-		}
-		/* If the reply did not include the word OK, clear the buffer then try again*/
-		else {
-			memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
-			rx_index=0;
-			trials++;
-		}
-}
-
-	/* This line is reached if the command was sent 3 times and the module never replied with OK.
-	 * return 0 to indicate failure
-	 */
-	return 0;
-}
-
-
-
-uint8_t sim_get_cmd_reply(const char * cmd, char * cmd_reply,uint32_t rx_wait){
-
-	/* the implementation of this function is very similar to send_cmd. The difference is
-	 * that this function sends the command only 1 time and copies the reply from the receive buffer 
-	 * to the array parameter cmd_reply before clearing the receive buffer sim_rx_buffer. 
-	 */
-
-	HAL_UART_Transmit(&AT_uart,(uint8_t *)cmd,strlen(cmd),TX_TIMEOUT);
-
-	/* Wait for the module to finish transmitting the reply.*/
-	HAL_Delay(rx_wait);
-
-	/* Note: 
-	 * The reply from the module will be captured by the UART receive interrupt callback routine HAL_UART_RxCpltCallback() 
-	 * and stored in the global array sim_rx_buffer[RX_BUFFER_LENGTH];
-	 */	
-
-	/*copy the reply from the global buffer to the buffer passed into the parameter cmd_reply*/
-	memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
-
-	/* Check if the reply contains the word "OK"*/
-	if (strstr((const char *)sim_rx_buffer,"OK")!=NULL){ 
-
-		/* Copy buffer, clear the sim_rx_buffer, reset the receive counter rx_index 
-		 * and then return 1 to acknowledge the success of the command		 
-		 */
-		memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
-		rx_index=0;
-		return 1; 
-	}
-	/* If the reply did not include the word OK, clear the buffer then clear buffer, reset counter, return 0 */
-	else {
-		memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
-		rx_index=0;
-		return 0;
-	}
-
-
-}
 
 /**
  * @brief is called when the receive buffer of any UART has received 1 byte.
@@ -241,6 +134,9 @@ uint8_t sim_init(SIM808_typedef * sim){
 		trials++;
 	}
 	
+	#ifdef DEBUG_MODE
+		send_debug("System initialization: Started");
+	#endif
 	/* Read STATUS pin of the SIM808 to check the power on status. if the module is ON then power on indicator LED*/
 	if (HAL_GPIO_ReadPin(sim->status_gpio,sim->status_pin)){
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
@@ -252,13 +148,72 @@ uint8_t sim_init(SIM808_typedef * sim){
 	HAL_Delay(3000);	
 	} 
 	else{
-		/*Turn down the indicator LED and return FAIL */
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
-		return FAIL;
+				#ifdef DEBUG_MODE
+					send_debug("System initialization: FAILED");
+					send_debug("Reason: SIM808 cannot be powered on");
+				#endif
+				/*Turn down the indicator LED and return FAIL */
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
+				return FAIL;
 	}
 
 	/*Send the First AT Command to check if the module is responding*/
-	return send_AT_cmd("AT\r","OK",0,NULL,RX_TIMEOUT);
+	uint8_t is_module_replying=0;
+	is_module_replying=send_AT_cmd("AT\r","OK",0,NULL,RX_TIMEOUT);
+	if (is_module_replying==1){
+			#ifdef DEBUG_MODE
+				send_debug("System initialization: SUCCESS");
+				send_debug("SIM808 module is responsive");
+			#endif
+		return SUCCESS;
+	}
+	else
+	{
+		#ifdef DEBUG_MODE
+			send_debug("System initialization: FAILED");
+			send_debug("Reason: SIM808 is not responding");
+		#endif
+		return FAIL;
+	}
+}
+
+uint8_t sim_power_off(SIM808_typedef * sim){
+			#ifdef DEBUG_MODE
+				send_debug("Power off Module initiated");
+			#endif
+	
+		uint8_t trials=0;  
+
+		while(HAL_GPIO_ReadPin(sim->status_gpio,sim->status_pin) && trials<3){
+		HAL_GPIO_WritePin(sim->power_on_gpio,sim->power_on_pin,GPIO_PIN_RESET);
+		/* Keep pin down for 1.2 s */
+		HAL_Delay(1200);
+		HAL_GPIO_WritePin(sim->power_on_gpio,sim->power_on_pin,GPIO_PIN_SET);
+		HAL_Delay(100);
+		trials++;
+	}
+		
+		if (HAL_GPIO_ReadPin(sim->status_gpio,sim->status_pin)==0){
+			#ifdef DEBUG_MODE
+			send_debug("Power off Module: SUCCESS");
+			#endif
+			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
+			return SUCCESS;
+		}
+		else
+		{
+		#ifdef DEBUG_MODE
+			send_debug("Power off Module: FAIL");
+			#endif
+			return FAIL;
+		}
+		
+}
+
+void system_reset(SIM808_typedef * sim){
+	
+	sim_power_off(sim);
+	HAL_NVIC_SystemReset();
 }
 
 
@@ -272,21 +227,24 @@ uint8_t send_AT_cmd(const char * cmd, const char * expected_reply, uint8_t save_
 
 	/* Wait for the module until the expected reply is received or if the timeout is breached */
 	while ( (is_expected_reply_received==0) && (timer < rx_timeout)) {
-		is_expected_reply_received=strstr((const char *)sim_rx_buffer,expected_reply)==NULL?0:1;
+		//is_expected_reply_received=strstr((const char *)sim_rx_buffer,expected_reply)==NULL?0:1;
+		is_expected_reply_received=is_subarray_present((const uint8_t *)sim_rx_buffer,RX_BUFFER_LENGTH,(uint8_t *)expected_reply,strlen(expected_reply));
 		timer++;
 		HAL_Delay(1);
 	}
-
-	sprintf(debug_msg,"%d",timer);
+	
+	#ifdef DEBUG_MODE
+	sprintf(debug_msg,"Finished in %d ms: ",timer);
+	strcat(debug_msg,cmd);
 	send_debug(debug_msg);
-		
+	#endif
 	/* Note: 
 	 * The reply from the module will be captured by the UART receive interrupt callback routine HAL_UART_RxCpltCallback() 
 	 * and stored in the global array sim_rx_buffer[RX_BUFFER_LENGTH];
 	 */	
 
 	/* if save_reply is set to 1 then copy the reply from the global buffer to the parameter cmd_reply*/
-	if (save_reply == 1 && cmd_reply!=NULL)
+	if (save_reply == 1 )
 		memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
 
 	/* clear the sim_rx_buffer, reset the receive counter rx_index 
@@ -298,4 +256,66 @@ uint8_t send_AT_cmd(const char * cmd, const char * expected_reply, uint8_t save_
 	return is_expected_reply_received;
 	
 }
+
+
+
+uint8_t is_subarray_present(const uint8_t *array, size_t array_len, const uint8_t *subarray, size_t subarray_len)
+{
+    if (array_len < subarray_len) {
+        return FALSE;
+    }
+
+    for (size_t i = 0; i <= array_len - subarray_len; ++i) {
+        int match = TRUE;
+        for (size_t j = 0; j < subarray_len; ++j) {
+            if (array[i + j] != subarray[j]) {
+                match = FALSE;
+                break;
+            }
+        }
+        if (match) {
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+
+
+uint8_t send_serial_data(uint8_t * data, uint8_t length,  char * cmd_reply, uint32_t rx_timeout){
+	
+	
+	
+	HAL_UART_Transmit(&AT_uart,data,length,TX_TIMEOUT);
+	
+	
+	uint8_t is_expected_reply_received=0;
+	uint32_t timer=0;
+	uint8_t expected_reply[]={0x53,0x45,0x4E,0x44,0x20,0x4F,0x4B}; /*SEND OK in HEX"*/
+
+	/* Wait for the module until the expected reply is received or if the timeout is breached */
+	/*strstr will not work here, because the buffer might contain raw hex data */
+	while ( (is_expected_reply_received==0) && (timer < rx_timeout)) {
+		is_expected_reply_received=is_subarray_present((uint8_t*)sim_rx_buffer,RX_BUFFER_LENGTH,expected_reply,7);
+		timer++;
+		HAL_Delay(1);
+	}
+	char  debug_msg[128];
+	#ifdef DEBUG_MODE
+		sprintf(debug_msg,"Finished in %d ms: ",timer);
+		send_debug(debug_msg);
+		send_debug(sim_rx_buffer);
+	#endif
+	
+	/* copy buffer into local parameter and clear the sim_rx_buffer, reset the receive counter rx_index 
+	 * and then return 1 to acknowledge the success of the command
+	 */
+	memcpy(cmd_reply,(const char *)sim_rx_buffer,RX_BUFFER_LENGTH);
+	memset((void *)sim_rx_buffer,NULL,RX_BUFFER_LENGTH);
+	rx_index=0;
+	
+	return 	is_expected_reply_received;
+}
+
 

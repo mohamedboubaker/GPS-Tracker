@@ -50,7 +50,9 @@ int main(void)
 	
 
 	/*initialize the SIM808 module */
+	sim_power_off(&sim);
 	sim_init(&sim);
+
 	
 	/*enable GPS */
 	//if (enable_gps())
@@ -59,10 +61,10 @@ int main(void)
 	/*enable gprs */
 	enable_gprs();
 	
-	char gps_position[24]="0,0";
+	char gps_position[24]="MQTT";
 	char ip_address[]="18.195.228.39";
 	char tcp_port[] = "1883";
-	char msg[]="hello\n";
+	char msg[]="TCP";
 while (1)
   {
 			/* send the position  to the server every 10 seconds */
@@ -70,7 +72,9 @@ while (1)
 		
 //			if (sim_gps_get_location(gps_position)){
 //				HAL_GPIO_TogglePin(GPIOB,GREEN_LED);
-//				publish_mqtt_msg(ip_address,tcp_port,"P","1",gps_position);
+				publish_mqtt_msg(ip_address,tcp_port,"Po","Client_12",gps_position);
+				//system_reset(&sim);
+				
 //								//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_12);
 //			} else 
 //			HAL_Delay(10000);
@@ -80,13 +84,14 @@ while (1)
 //			HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_12);
 		
 		
-		/* TCP test */
-		if (open_tcp_connection(ip_address,tcp_port)) {
-			send_tcp_data(msg,strlen(msg));
-			close_tcp_connection();
-		}
+//		/* TCP test */
+//		if (open_tcp_connection(ip_address,tcp_port)) {
+//			send_tcp_data(msg,strlen(msg));
+//			close_tcp_connection();
+//		}
 	}
-	}
+}
+	
 
 /**
   * @brief System Clock Configuration

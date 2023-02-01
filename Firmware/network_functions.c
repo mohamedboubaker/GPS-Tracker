@@ -7,8 +7,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "network_functions.h"
 
+#include "sim808.h"
+#include "network_functions.h"
 
 uint8_t sim_insert_PIN(char * pin){
 	
@@ -23,11 +24,10 @@ uint8_t sim_insert_PIN(char * pin){
 	strcat(PIN_insert_cmd,"\r");      
 	
 
-	sim_get_cmd_reply(PIN_insert_cmd,local_rx_buffer,RX_WAIT);
-	if (!strstr(local_rx_buffer,"OK")) 
-		return FAIL;
-
-	return SUCCESS;
+	if (send_AT_cmd(PIN_insert_cmd,"OK",0,NULL,RX_TIMEOUT))
+		return SUCCESS;
+	else
+		return SUCCESS;
 }
 
 /**
@@ -45,6 +45,9 @@ uint8_t sim_insert_PIN(char * pin){
  */
 uint8_t enable_gprs(){
 	
+	#ifdef DEBUG_MODE
+	send_debug("Enable GPRS: Start");
+	#endif
 	/* Make sure to clear the buffer after every use */
 	char local_rx_buffer[RX_BUFFER_LENGTH]; 
 
@@ -55,29 +58,39 @@ uint8_t enable_gprs(){
 	
 	/*** Check if phone functionality of the module is enabled ***/
 	
+
 	static const char phone_status_check_cmd[]= "AT+CFUN?\r";
 	static const char enable_phone_function_cmd[]= "AT+CFUN=1\r";
-	uint8_t phone_status=0;
+	uint8_t is_phone_enabled=0;
 	
 	while(trials_counter <3){
 		
 		/* Check the reply of the module in local_rx_buffer to see if the phone is enabled.
 		 * Save the status in phone_status
 		 */
-		phone_status= send_AT_cmd(phone_status_check_cmd,"+CFUN: 1",1,local_rx_buffer,RX_WAIT); 
+	
+		#ifdef DEBUG_MODE
+			send_debug("Check if phone functionality of the module is enabled: send AT+CFUN?");
+		#endif
+		is_phone_enabled= send_AT_cmd(phone_status_check_cmd,"+CFUN: 1",1,local_rx_buffer,RX_TIMEOUT); 
 
 	
 		/* Clear receive buffer*/
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
-			if (phone_status)
+			if (is_phone_enabled==1)
 				break;
 			else
 				if (trials_counter>=3)
 					return ERR_PHONE_FUNCTION;
 				else
-					send_AT_cmd(enable_phone_function_cmd,"OK",FALSE,NULL,3*RX_WAIT);
-				trials_counter++;
+					{
+						#ifdef DEBUG_MODE
+							send_debug("Enable phone functionality: send AT+CFUN=1");
+						#endif
+						send_AT_cmd(enable_phone_function_cmd,"OK",FALSE,NULL,3*RX_TIMEOUT);
+					}
+					trials_counter++;
 		}
 		trials_counter=0;
 		
@@ -86,8 +99,14 @@ uint8_t enable_gprs(){
 	
 	/*** Detect if SIM card is present ***/
 		
+	
 	static const char SIM_detect_cmd[]= "AT+CSMINS?\r";
-	send_AT_cmd(SIM_detect_cmd,"OK",1,local_rx_buffer,RX_WAIT);
+
+	#ifdef DEBUG_MODE
+		send_debug("Detect if SIM card is present: send AT+CSMINS?");
+	#endif
+	send_AT_cmd(SIM_detect_cmd,"OK",1,local_rx_buffer,RX_TIMEOUT);
+	
 	if (!strstr(local_rx_buffer,"+CSMINS: 0,1")) 
 		return ERR_SIM_PRESENCE;
 	/*clear buffer for next use*/
@@ -97,11 +116,16 @@ uint8_t enable_gprs(){
 	
 	/*** Check if PIN code is required ***/
 	
+
 	static const char PIN_status_cmd[]= "AT+CPIN?\r";
 	static char PIN_insert_cmd[13]= "AT+CPIN=";
 	uint8_t pin_status=0;
+	
 	/* send command to Check if PIN is required*/
-	send_AT_cmd(PIN_status_cmd,"OK",1,local_rx_buffer,RX_WAIT);
+	#ifdef DEBUG_MODE
+		send_debug("Check if PIN code is required: send AT+CPIN?");
+	#endif
+	send_AT_cmd(PIN_status_cmd,"OK",1,local_rx_buffer,RX_TIMEOUT);
 	
 	/* Note: the module replies READY if the PIN is not required*/
 	/* If the PIN is required, then insert PIN, if the PIN is wrong then exit*/
@@ -116,6 +140,7 @@ uint8_t enable_gprs(){
 	
 	
 	/*** Check GPRS signal quality ***/
+
 	
 	/* Note
    * command = AT+CSQ
@@ -139,7 +164,10 @@ uint8_t enable_gprs(){
 	uint8_t signal_status=0;
 
 		while(trials_counter <3){
-			send_AT_cmd(check_signal_cmd,"OK",1,local_rx_buffer,RX_WAIT);
+			#ifdef DEBUG_MODE
+			send_debug("Check GPRS signal uqality: send AT+CSQ");
+			#endif
+			send_AT_cmd(check_signal_cmd,"OK",1,local_rx_buffer,RX_TIMEOUT);
 			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
 			* Save the status in signal_status
 			*/
@@ -161,7 +189,7 @@ uint8_t enable_gprs(){
 		
 		
 	/*** Check Network Registration Status ***/
-	
+
 	/* Note 
 	 * Command = AT+CREG?
 	 * the reply is +CREG: 0,5
@@ -180,7 +208,10 @@ uint8_t enable_gprs(){
 		
 	while(trials_counter<3){
 	/*Send command to check registration status*/
-	send_AT_cmd(check_registration_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
+	#ifdef DEBUG_MODE
+		send_debug("Check Network Registration Status: send AT+CREG?");
+	#endif
+	send_AT_cmd(check_registration_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 	
 	/*check the reply to determine if ME is registered at home network or roaming */
 		registration_status= (strstr(local_rx_buffer,",1")==NULL?0:1) || (strstr(local_rx_buffer,",5")==NULL?0:1);
@@ -194,7 +225,10 @@ uint8_t enable_gprs(){
 		if (trials_counter >= 3)
 			return ERR_REGISTRATION;
 		/* send command to register ME to network */
-		send_AT_cmd(register_ME_cmd,"OK",0,NULL,5*RX_WAIT);
+			#ifdef DEBUG_MODE
+				send_debug("Register to network: send AT+CREG=1");
+			#endif
+		send_AT_cmd(register_ME_cmd,"OK",0,NULL,5*RX_TIMEOUT);
 	}
 	trials_counter++;
 	}
@@ -203,31 +237,39 @@ uint8_t enable_gprs(){
 	
 	
 	/*** Check if GPRS is attached ***/
+
 	
 	static const char check_grps_attach_cmd[]= "AT+CGATT?\r";
 	static const char grps_attach_cmd[]= "AT+CGATT=1\r";
-	uint8_t attach_status=0;
+	uint8_t is_pdp_attached=0;
 	
 			while(trials_counter <3){
-				send_AT_cmd(check_grps_attach_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
+				#ifdef DEBUG_MODE
+					send_debug("Check if GPRS is attached: AT+CGATT?");
+				#endif
+				send_AT_cmd(check_grps_attach_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 
 			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
 			* Save the status in signal_status
 			*/
-			attach_status = !(strstr(local_rx_buffer,"CGATT: 0")==NULL?0:1);
+			is_pdp_attached = !(strstr(local_rx_buffer,"CGATT: 0")==NULL?0:1);
 			
 				/* Clear receive buffer*/
 			memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
-			if (attach_status)
+			if (is_pdp_attached)
 				break;
 			else
 				if (trials_counter>=3)
 					return ERR_GPRS_ATTACH;
 				/* if the signal is weak, wait 1 second before measuring again */
-				else
-					send_AT_cmd(grps_attach_cmd,"OK",FALSE,NULL,4*RX_WAIT);
-				trials_counter++;
+				else{
+					#ifdef DEBUG_MODE
+					send_debug("Attach PDP: send AT+CGATT=1");
+					#endif
+					send_AT_cmd(grps_attach_cmd,"OK",FALSE,NULL,3*RX_TIMEOUT);
+					}
+					trials_counter++;
 		}
 		trials_counter=0;
 		
@@ -240,33 +282,49 @@ uint8_t enable_gprs(){
 		
 	/*** Check if PDP context is deactivated [PDP DEACT] ***/
 		
+
+		
 	/* This command can be used to check gprs or TCP state */
 	static const char check_gprs_state_cmd[]= "AT+CIPSTATUS\r"; 
 	static const char reset_PDP_cmd[]= "AT+CIPSHUT\r";
 		
 	uint8_t pdp_deactivated=0;
 	
-	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
+	#ifdef DEBUG_MODE
+		send_debug("Check if PDP context is deactivated [PDP DEACT]: send  AT+CIPSTATUS");
+	#endif
+	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
+
 		
 	/*When PDP is deactivated it is necessary to run  AT+CIPSHUT to bring the status to [IP INITIAL] */
 	pdp_deactivated = strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1;
-	if ( pdp_deactivated ) 
-		if(!send_AT_cmd(reset_PDP_cmd,"OK",FALSE,NULL,RX_WAIT)) 
+	if ( pdp_deactivated ) {
+		#ifdef DEBUG_MODE
+		send_debug("[PDP DEACT] send  AT+CIPSHUT");
+		#endif
+		if(!send_AT_cmd(reset_PDP_cmd,"OK",FALSE,NULL,RX_TIMEOUT)) 
 			return ERR_PDP_DEACTIVATED;
-	
+	}
 	/*clear receive buffer*/
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 	
 		
 		
 	/*** Check if PDP context is correctly defined ***/
+		
+
+		
 	/* Note: 
 	* command = AT+CSTT?
 	* When no PDP context is not defined the reply is the default PDP: +CSTT: "CMNET","",""
 	*/
 	uint8_t pdp_defined=0;
 	static const char check_PDP_context_cmd[]= "AT+CSTT?\r";
-	send_AT_cmd(check_PDP_context_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
+	
+	#ifdef DEBUG_MODE
+		send_debug("Check if PDP context is correctly defined: send AT+CSTT?");
+	#endif
+	send_AT_cmd(check_PDP_context_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 		
 	pdp_defined = strstr(local_rx_buffer,"CMNET")==NULL?1:0;
 		
@@ -279,13 +337,21 @@ uint8_t enable_gprs(){
 		static char define_PDP_context_cmd[APN_LENGTH+18]= "AT+CSTT=\"";
 		strcat(define_PDP_context_cmd,APN); /* AT+CSTT="APN */
 		strcat(define_PDP_context_cmd,"\",\"\",\"\"\r"); /* AT+CSTT="APN","","" */
-		if(!send_AT_cmd(define_PDP_context_cmd,"OK",FALSE,NULL,RX_WAIT)) 
+		
+		#ifdef DEBUG_MODE
+			send_debug("define PDP context: send AT+CSTT=\"APN\",\"\",\"\"");
+		#endif
+		if(!send_AT_cmd(define_PDP_context_cmd,"OK",FALSE,NULL,RX_TIMEOUT)) 
 			return ERR_PDP_DEFINE;
 	}
 	/*Clear receive buffer*/
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 	
+
+
 	/*** Check if PDP context is active ***/ 
+	
+
 	
 	/* Note:
 	 * Check the GPRS status, if it is IP START, then activate PDP context
@@ -293,8 +359,11 @@ uint8_t enable_gprs(){
 	
 	uint8_t pdp_ready=0;
 	static const char activate_PDP_context_cmd[]= "AT+CIICR\r";
-	
-	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT); 
+		
+	#ifdef DEBUG_MODE
+	send_debug("Check if PDP context is active: send AT+CIPSTATUS");
+	#endif
+	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT); 
 	
 	/* Check if PDP context is defined and ready to be activated == [IP START] */
 	pdp_ready = strstr(local_rx_buffer,"IP START")==NULL?0:1;
@@ -304,10 +373,18 @@ uint8_t enable_gprs(){
 
 	/*if PDP context is correctly defined then activate it */
 	if ( pdp_ready==1 ){
+			
+	#ifdef DEBUG_MODE
+		send_debug("Activate PDP:send AT+CIIR");
+	#endif
 		
 		/* This command takes around 1 second to finish hence 1s wait time */
-		if (!send_AT_cmd(activate_PDP_context_cmd,"OK",FALSE,NULL,1000)) 
+		if (!send_AT_cmd(activate_PDP_context_cmd,"",FALSE,NULL,1000)) {
+			#ifdef DEBUG_MODE
+			send_debug("Activate PDP: FAIL");
+			#endif
 			return ERR_PDP_ACTIVATE; 	
+		}
 	}	
 	
 	/*** Get IP address ***/ 
@@ -320,16 +397,26 @@ uint8_t enable_gprs(){
 	uint8_t error=0;
 	static const char get_IP_address_cmd[]= "AT+CIFSR\r";
 	
-	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
+	#ifdef DEBUG_MODE
+		send_debug("Check IP status: send AT+CIPSTATUS");
+	#endif
+	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 	
 	if ( strstr(local_rx_buffer,"IP GPRSACT") ){
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
-		send_AT_cmd(get_IP_address_cmd,"OK",TRUE,local_rx_buffer,5*RX_WAIT);
+		#ifdef DEBUG_MODE
+			send_debug("Get IP address: send AT+CIFSR");
+		#endif
+		send_AT_cmd(get_IP_address_cmd,"OK",TRUE,local_rx_buffer,5*RX_TIMEOUT);
 		
 		error=strstr(local_rx_buffer,"ERROR")==NULL?0:1;
-		if ( error ) 
+		if ( error ) {
+			#ifdef DEBUG_MODE
+				send_debug("Get IP address: FAIL");
+			#endif
 			return ERR_GET_IP;
+		}
 	}
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 	
@@ -339,24 +426,188 @@ uint8_t enable_gprs(){
 	
 	uint8_t gprs_ready=0;
 	
-	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
+	#ifdef DEBUG_MODE
+		send_debug(" Check if GPRS connection is ready: Send AT+CIPSTATUS");
+	#endif
 	
-	gprs_ready=strstr(local_rx_buffer,"IP STATUS")==NULL?0:1;
+	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 	
-	if (gprs_ready)
+	gprs_ready=((strstr(local_rx_buffer,"IP STATUS")==NULL?0:1) || (strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) || (strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1)   || (strstr(local_rx_buffer,"ALREADY CONNECT")==NULL?0:1) || (strstr(local_rx_buffer,"TCP CLOSED")==NULL?0:1));
+	
+	if (gprs_ready){
+		#ifdef DEBUG_MODE
+		send_debug("Internet Connection: Ready");
+		#endif
 		return SUCCESS;
-	else 
+	}
+	else{ 
+		#ifdef DEBUG_MODE
+		
+		send_debug("Internet Connection: FAIL");
+		send_debug(local_rx_buffer);
+		#endif
 		return FAIL;
+	}
 }
 
 
 
+
+
+
+uint8_t open_tcp_connection(char * server_address, char * port){
+	static const char get_tcp_status_cmd[]="AT+CIPSTATUS\r";
+	char tcp_connect_cmd[128]= "AT+CIPSTART=\"TCP\",\"";
+	char send_tcp_data_cmd[24]= "AT+CIPSEND=";
+	static const char tcp_disconnect_cmd[]= "AT+CIPCLOSE\r";
+	
+	uint8_t tcp_ready=0;
+	
+	/* make sure to clear the buffer after every use */
+	char local_rx_buffer[RX_BUFFER_LENGTH]; 
+
+	/* Note 
+	 * At this point, all TCP connections should be closed. but in case of imporpper termination TCP connection
+	 * There is a chance that the connection is still open on the client's side or server's side
+	 * There is a chance that the connection from the client is closed, but on the server it is open 
+	 * In this case, if the client tries to reopen a new connection using the same source TCP port, maybe the server will deny
+	 * To avoid this case, it is recommended that the TCP keepalive timeout is should be decreased to 10 seconds on the server
+	 * Which means, if the server doesn't receive any data through a tcp connection in 10 seconds, then it is closed.
+	 */
+	
+		#ifdef DEBUG_MODE
+			send_debug("Open TCP connection: START");
+		#endif
+	
+	
+	/*** Check TCP/GPRS Status ***/
+		#ifdef DEBUG_MODE
+			send_debug("Check current TCP status: send AT+CIPSTATUS");
+		#endif
+	send_AT_cmd(get_tcp_status_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
+	
+	/* If the TCP/GPRS stack is not in usable status, then enable GPRS 
+	 * else if there is an open TCP connection then close it.
+	 */
+	 
+	 send_debug(local_rx_buffer);
+	if ( (strstr(local_rx_buffer,"IP INITIAL")==NULL?0:1) || (strstr(local_rx_buffer,"IP START")==NULL?0:1) || (strstr(local_rx_buffer,"IP CONFIG")==NULL?0:1)  || (strstr(local_rx_buffer,"IP GPRSACT")==NULL?0:1) || (strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1) ) 
+	{	
+		#ifdef DEBUG_MODE
+		send_debug("TCP cannot begin because GPRS is not ready: call enable_gprs();");
+		#endif	
+		enable_gprs();
+	}
+	else if ( (strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) || (strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1)   || (strstr(local_rx_buffer,"ALREADY CONNECT")==NULL?0:1)  )
+	{
+		#ifdef DEBUG_MODE
+			send_debug("Open TCP connection detected, terminating it. send: AT+CIPCLOSE");
+		#endif	
+		send_AT_cmd(tcp_disconnect_cmd,"OK",FALSE,NULL,RX_TIMEOUT);
+	}
+	/*clear receive buffer */
+		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
+
+	
+	/*** Open TCP connection ***/
+	
+	/* build the connect command by adding address and port */
+	strcat(tcp_connect_cmd,server_address);    /* AT+CIPSTART=\"TCP\","host.com           */
+	strcat(tcp_connect_cmd,"\",\""); /* AT+CIPSTART=\"TCP\","host.com","        */
+	strcat(tcp_connect_cmd,port);    /* AT+CIPSTART=\"TCP\","host.com","port    */
+	strcat(tcp_connect_cmd,"\"\r");  /* AT+CIPSTART=\"TCP\","host.com","port"\r */
+		
+	/*Send open connection command Wait for connection to establish or fail*/
+		#ifdef DEBUG_MODE
+			send_debug("Attempt to open TCP connection");
+		#endif	
+	if (send_AT_cmd(tcp_connect_cmd,"CONNECT OK",1,local_rx_buffer,RX_TIMEOUT)){
+		#ifdef DEBUG_MODE
+			send_debug("Open TCP connection : OK");
+		#endif
+		return SUCCESS;
+	}
+		else{
+			#ifdef DEBUG_MODE
+				send_debug("Open TCP connection : FAIL ");
+				send_debug("Buffer content below:");
+				send_debug(local_rx_buffer);	
+			#endif
+		}
+	/* check the reply, if CONNECT FAIL or ERROR is returned, it means the connection failed to establish. 
+	 * If TCP CONNECTING is returned, it means the module initiated TCP handshake but still waiting for handshake acknoledgement
+	 * usuallly it means the peer server is offline, so in this case, close the connection and exit */
+
+
+	if ((strstr(local_rx_buffer,"CONNECT FAIL")==NULL?0:1) || (strstr(local_rx_buffer,"ERROR")==NULL?0:1)){
+		return FAIL;
+	}
+	else 	{
+		#ifdef DEBUG_MODE
+		send_debug("Open TCP connection timeout. disconnecting. send: AT+CIPCLOSE");
+		#endif
+		send_AT_cmd(tcp_disconnect_cmd,"CLOSED OK",0,NULL,RX_TIMEOUT);{
+		return FAIL;
+		}
+	}
+	
+	
+}
+
+
+uint8_t close_tcp_connection(){
+	
+		char local_rx_buffer[RX_BUFFER_LENGTH]; 
+		static const char tcp_disconnect_cmd[]= "AT+CIPCLOSE\r";
+
+
+		/* send Close TCP connection command */
+		/* and return if TCP connection was closed correctly */	
+		#ifdef DEBUG_MODE
+			send_debug("Close TCP connection: send AT+CIPCLOSE");
+		#endif
+	if ((send_AT_cmd(tcp_disconnect_cmd,"CLOSE OK",FALSE,NULL,RX_TIMEOUT)) )
+		return SUCCESS;
+	else 
+		return FAIL;
+	
+}
+
+
+uint8_t send_tcp_data(uint8_t * data, uint8_t data_length){
+
+	static const char get_tcp_status_cmd[]="AT+CIPSTATUS\r";
+	char send_tcp_data_cmd[24]= "AT+CIPSEND=";
+	char local_rx_buffer[RX_BUFFER_LENGTH]; 
+	
+
+	/*Construct the command that sends "data_length" bytes */
+	sprintf(send_tcp_data_cmd,"AT+CIPSEND=%d\r",(int)data_length); 
+	
+	
+	#ifdef DEBUG_MODE
+	send_debug("Initiate TCP transmission: send AT+CIPSEND=");
+	#endif
+	
+	/* tell the module how many bytes to expect */
+	send_AT_cmd(send_tcp_data_cmd,">",FALSE,NULL,RX_TIMEOUT);
+
+	#ifdef DEBUG_MODE
+	send_debug("Sending TCP load");
+	#endif
+	
+	/*Send the actual data and return the status of transmission*/
+	return send_serial_data(data,data_length,local_rx_buffer,RX_TIMEOUT); 
+	
+
+}
+
+
 uint8_t publish_mqtt_msg(char * ip_address, char *  tcp_port, char * topic, char * client_id, char * message){
 	
-	/* sanity check */
-	/* if topic or client_id or message is an empty string , return an error */
-	if ((sizeof(topic)==0) || (sizeof(client_id)==0) ||  (sizeof(message)==0))
-			return ERR_MQTT_EMPTY_PARAM;
+	#ifdef DEBUG_MODE
+		send_debug("MQTT protocol: START");
+	#endif
 	
 	/*** Construct the Connect packet ***/
 
@@ -381,7 +632,7 @@ uint8_t publish_mqtt_msg(char * ip_address, char *  tcp_port, char * topic, char
 
 uint8_t disconnect_packet[] = {
 	0xe0, // Packet type = DISCONNECT
-	0x00  // Remaining length = 0
+	0x00 // Remaining length = 0
 };
 
 	uint8_t connect_packet[MAX_LENGTH_MQTT_PACKET]= {
@@ -415,13 +666,17 @@ uint8_t disconnect_packet[] = {
 
 	uint16_t topic_length = strlen(topic);
 	uint8_t publish_packet_remaining_length=0;
+/*
+	0x30, //Packet type = Publish + DUP+QOS+retain=0
+	0x1d, // Remaining length = 29
+	0x00, 0x04, // Topic name length
+	 // Topic name = Client ID
+*/
 
 uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
 	0x30, // Packet type = Publish + DUP+QOS+retain=0
 	0x1d, // Remaining length = 29
 	0x00, 0x04, // Topic name length
-	0x46, 0x46, 0x46, 0x46, // Topic name = Client ID
-	0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46, 0x46 // dummy payload
 };
 	
 	/*insert remaining length */
@@ -441,122 +696,46 @@ uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
 	for(uint8_t i = 0; i< strlen(message); i++)
 		publish_packet[4+topic_length+i]=(uint8_t)message[i];
 	
+	#ifdef DEBUG_MODE
+		send_debug("CONNECT packet content:");
+		send_raw_debug(connect_packet,14+client_id_length);	
+		send_debug("PUBLISH packet content:");
+		//send_raw_debug(publish_packet,publish_packet_remaining_length+2);
+	#endif
+	
+		#ifdef DEBUG_MODE
+	//	send_debug("PUBLLISH packet content:");
+	//	send_debug(publish_packet);
+	#endif
+	
+		#ifdef DEBUG_MODE
+	//	send_debug("DISCONNECT packet content:");
+		//send_debug(disconnect_packet);
+	#endif
 	
 	/*** Sending Data ***/
-	
 		if (open_tcp_connection(ip_address,tcp_port)){
-			send_tcp_data(connect_packet,14+client_id_length);
-			send_tcp_data(publish_packet,publish_packet_remaining_length+2);
-			send_tcp_data(disconnect_packet,2);
+			
+		//	send_tcp_data((uint8_t *)"hello",5);
+			#ifdef DEBUG_MODE
+				//send_debug("Sending MQTT CONNECT Packet");
+			#endif
+			//send_tcp_data(connect_packet,14+client_id_length);
+			
+			#ifdef DEBUG_MODE
+				send_debug("Sending MQTT PUBLISH Packet");
+			#endif
+			//send_tcp_data(publish_packet,publish_packet_remaining_length+2);
+			//send_raw_debug(publish_packet,publish_packet_remaining_length+2);
+			send_tcp_data((uint8_t *)"hello",5);
+			#ifdef DEBUG_MODE
+				send_debug("Sending MQTT DISCONNECT Packet");
+			#endif
+			//send_tcp_data(disconnect_packet,2);
+			
 			close_tcp_connection();
 			return SUCCESS;
 		}
 			
 	return FAIL;
-}
-
-
-
-uint8_t open_tcp_connection(char * server_address, char * port){
-	static const char get_tcp_status_cmd[]="AT+CIPSTATUS\r";
-	char tcp_connect_cmd[128]= "AT+CIPSTART=\"TCP\",\"";
-	char send_tcp_data_cmd[24]= "AT+CIPSEND=";
-	static const char tcp_disconnect_cmd[]= "AT+CIPCLOSE\r";
-	
-	uint8_t tcp_ready=0;
-	
-	/* make sure to clear the buffer after every use */
-	char local_rx_buffer[RX_BUFFER_LENGTH]; 
-
-	/* Note 
-	 * At this point, all TCP connections should be closed. but in case of imporpper termination TCP connection
-	 * There is a chance that the connection is still open on the client's side or server's side
-	 * There is a chance that the connection from the client is closed, but on the server it is open 
-	 * In this case, if the client tries to reopen a new connection using the same source TCP port, maybe the server will deny
-	 * To avoid this case, it is recommended that the TCP keepalive timeout is should be decreased to 10 seconds on the server
-	 * Which means, if the server doesn't receive any data through a tcp connection in 10 seconds, then it is closed.
-	 */
-	
-	
-	
-	/*** Check TCP/GPRS Status ***/
-	send_AT_cmd(get_tcp_status_cmd,"OK",TRUE,local_rx_buffer,RX_WAIT);
-	
-	/* If the TCP/GPRS stack is not in usable status, then enable GPRS 
-	 * else if there is an open TCP connection then close it.
-	 */
-	 
-	if ( (strstr(local_rx_buffer,"IP INITIAL")==NULL?0:1) || (strstr(local_rx_buffer,"IP START")==NULL?0:1) || (strstr(local_rx_buffer,"IP CONFIG")==NULL?0:1)  || (strstr(local_rx_buffer,"IP GPRSACT")==NULL?0:1) || (strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1) ) 
-		enable_gprs();
-		
-	else if ( (strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) || (strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1)   || (strstr(local_rx_buffer,"ALREADY CONNECT")==NULL?0:1)  )
-		send_AT_cmd(tcp_disconnect_cmd,"OK",FALSE,NULL,RX_WAIT);
-	
-	/*clear receive buffer */
-		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
-
-	
-	/*** Open TCP connection ***/
-	
-	/* build the connect command by adding address and port */
-	strcat(tcp_connect_cmd,server_address);    /* AT+CIPSTART=\"TCP\","host.com           */
-	strcat(tcp_connect_cmd,"\",\""); /* AT+CIPSTART=\"TCP\","host.com","        */
-	strcat(tcp_connect_cmd,port);    /* AT+CIPSTART=\"TCP\","host.com","port    */
-	strcat(tcp_connect_cmd,"\"\r");  /* AT+CIPSTART=\"TCP\","host.com","port"\r */
-		
-	/*Send open connection command Wait for connection to establish or fail*/
-	send_AT_cmd(tcp_connect_cmd,"CONNECT OK",1,local_rx_buffer,5*RX_WAIT);
-	send_debug(local_rx_buffer);	
-	
-	/* check the reply, if CONNECT FAIL or ERROR is returned, it means the connection failed to establish. 
-	 * If TCP CONNECTING is returned, it means the module initiated TCP handshake but still waiting for handshake acknoledgement
-	 * usuallly it means the peer server is offline, so in this case, close the connection and exit */
-
-	if ((strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1))
-		return SUCCESS;
-	else if ((strstr(local_rx_buffer,"CONNECT FAIL")==NULL?0:1) || (strstr(local_rx_buffer,"ERROR")==NULL?0:1))
-		return FAIL;
-	else 	{
-		send_cmd(tcp_disconnect_cmd,RX_WAIT);
-		return FAIL;
-	}
-	
-	
-}
-
-
-uint8_t close_tcp_connection(){
-	
-		char local_rx_buffer[RX_BUFFER_LENGTH]; 
-		static const char tcp_disconnect_cmd[]= "AT+CIPCLOSE\r";
-
-
-		/* send Close TCP connection command */
-		/* and return if TCP connection was closed correctly */	
-	
-	if ((send_AT_cmd(tcp_disconnect_cmd,"CLOSE OK",FALSE,NULL,RX_WAIT)) )
-		return SUCCESS;
-	else 
-		return FAIL;
-	
-}
-
-
-uint8_t send_tcp_data(uint8_t * data, uint8_t data_length){
-
-	static const char get_tcp_status_cmd[]="AT+CIPSTATUS\r";
-	char send_tcp_data_cmd[24]= "AT+CIPSEND=";
-	char local_rx_buffer[RX_BUFFER_LENGTH]; 
-	
-
-	/*Construct the command that sends "data_length" bytes */
-	sprintf(send_tcp_data_cmd,"AT+CIPSEND=%d\r",(int)data_length); 
-	
-	/* tell the module how many bytes to expect */
-	send_AT_cmd(send_tcp_data_cmd,"OK",FALSE,NULL,RX_WAIT);
-
-	/*Send the actual data and return the status of transmission*/
-	return send_serial_data(data,data_length,local_rx_buffer,5*RX_WAIT); 
-	
-
 }
