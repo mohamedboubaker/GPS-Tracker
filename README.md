@@ -25,7 +25,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [2.4 Circuit design](#24-Circuit-design)
      + [2.4.1 Power regulation](#241-Power-regulation)
      + [2.4.2 MCU](#242-MCU)
-     + [2.4.3 GPS/GPRS module](#243-GPS-/-GPRS-module)
+     + [2.4.3 GPS/GPRS module](#243-GPS-GPRS-module)
   * [2.5 PCB layout design](#25-PCB-layout-design)
 - [3. Implementation](#3-Implementation)
   * [3.1 Manufacturing](#31-Manufacturing)
@@ -123,7 +123,7 @@ To achieve a ratio of 1.95, i.e. an output voltage of 3.6V the following values 
 
 
 ### 2.4.2 MCU
-### 2.4.3 GPS/GPRS module 
+### 2.4.3 GPS GPRS module 
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
