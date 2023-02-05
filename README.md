@@ -26,7 +26,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
      + [2.4.1 Power regulation](#241-Power-regulation)
      + [2.4.2 MCU](#242-MCU)
      + [2.4.3 GPS/GPRS module](#243-GPS/GPRS-module)
-  * [2.5 PCB design](#25-PCB-design)
+  * [2.5 PCB layout design](#25-PCB-layout-design)
 - [3. Implementation](#3-Implementation)
   * [3.1 Manufacturing](#31-Manufacturing)
   * [3.2 Testing and debugging](#32-Testing-and-debugging)
