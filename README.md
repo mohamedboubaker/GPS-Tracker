@@ -96,13 +96,17 @@ The code features Doxygen-style documentation for all functions, providing clear
 ### Power regulation circuit
 
 The power regulation circuit is designed to achieve the following goals:
-- Be able to withstand input voltages that are typical of a car battery. i.e. 12V~20V.
 - Be tolerant to reverse polarity.
 - Protect the circuit in case of a short circuit.
+- Be able to withstand input voltages that are typical of a car battery. i.e. 12V~20V.
 - provide peak currents of up to 2A. This is required by the SIM808 module. <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2]. </a> 
 - Provide a stable output voltage of 3.6V because the operating voltage range of the STM32F0 MCU is 1.8V-3.6V <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a> and that of the SIM808 module is 3.4V-4.4V <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2]. </a>. 
 
-The Texas Instruments TPS5430DDA DC-DC down converter meets all those requirements. So it is used in this circuit design. The circuit surrounding TPS5430DDA is designed according to the recommendations of the datasheet <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">[1]</a>.
+Reverse polarity protection is achieved through the MOSFET transistor denoted as Q1 in the schematic which has a Gate-Source voltage rating of 20V. This limits the maximum input voltage of the circuit to 20V. 
+
+Protection against short circuits is provided through the Fuse denoted as F1 with a rating of 2.5A. (In practice, 2.5 A is a very high current for such a circuit. If a short circuit happens, many components would fail before the fuse will break the current. This value needs to be reconsidered.)
+
+The rest of the requirements are met using the Texas Instruments TPS5430DDA DC-DC down converter. The components on the right side of TPS5430DDA in the schematic are designed according to the recommendations of the datasheet <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">[1]</a>. 
 
 The output voltage is determined by the values of the resistors that are connected above and below the feedback point (see the schematic above). In the datasheet, the resistor above the feedback point is denoted as R1, whereas that below the feedback point is denoted as R2. According to equation (12) in the datasheet the following formula can be derived:
 <p align="center" > $\frac{R1}{R2}=0.819V_{out}-1$ </p>
