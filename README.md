@@ -99,12 +99,8 @@ The power regulation circuit is designed to achieve the following goals:
 - Be able to withstand input voltages that are typical of a car battery. i.e. 12V~20V.
 - Be tolerant to reverse polarity.
 - Protect the circuit in case of a short circuit.
-- Provide stable input voltage for the STM32 MCU and the SIM808 module.
-- provide peak currents of up to 2A. This is required by the SIM808 module. <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2]. </a>  
-
-The operating voltage range of the STM32F0 MCU is 1.8V-3.6V <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a> and the operating rage of the SIM808 module is 3.4V-4.4V <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2]. </a>.
-
-So the power regulation circuit output must be 3.6V in order to meet the needs of both circuits. 
+- provide peak currents of up to 2A. This is required by the SIM808 module. <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2]. </a> 
+- Provide a stable output voltage of 3.6V because the operating voltage range of the STM32F0 MCU is 1.8V-3.6V <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a> and that of the SIM808 module is 3.4V-4.4V <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2]. </a>. 
 
 The Texas Instruments TPS5430DDA DC-DC down converter meets all those requirements. So it is used in this circuit design. The circuit surrounding TPS5430DDA is designed according to the recommendations of the datasheet <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">[1]</a>.
 
