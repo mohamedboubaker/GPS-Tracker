@@ -124,9 +124,13 @@ To achieve a ratio of 1.95, i.e. an output voltage of 3.6V the following values 
 
 ### 2.4.2 MCU
 ### 2.4.3 GPS/GPRS module 
-"The circuit design for the SIM808 module followed the guidelines in the SIM808 hardware design guide <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2] </a>. Bypass capacitors U20, U21, and U22 were added as recommended. The guide also suggested using a 5.1V Zener diode (D5) to protect against voltage surges. Although the diode was added as per the guidelines, it caused the circuit to malfunction after power on, so it was manually desoldered. This is documented in issue <a href="https://github.com/mohamedboubaker/GPS-Tracker/issues/35">#35 </a>. 
+The circuit design for the SIM808 module followed the guidelines in the SIM808 hardware design guide <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2] </a>. Bypass capacitors U20, U21, and U22 were added as recommended. The guide also suggested using a 5.1V Zener diode (D5) to protect against voltage surges. Although the diode was added as per the guidelines, it caused the circuit to malfunction after power on, so it was manually desoldered. This is documented in issue <a href="https://github.com/mohamedboubaker/GPS-Tracker/issues/35">#35 </a>. 
 
+The SIM808 module is connected to a micro SIM card holder. The lines between the module and the holder are protected against voltage surges using Transient Voltage Surpression (TVS) diodes present in the integrated circuit U23. Capacitors U18, U19 and Resistors R4,R5 and R12 are recommended by the guide.
 
+The GPS and GPRS antenna outputs are connected to 2 U.FL connectors respectively.
+
+The SIM808 module and the STM32 MCU communicate through UART. The STM32 can also power on, reset and check the status of the module through its GPIO pins which are connected to the respective pins on the module which are named SIM_PWRKEY, SIM_RESET and STATUS.
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
