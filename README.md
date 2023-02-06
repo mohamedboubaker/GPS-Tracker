@@ -24,8 +24,8 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [2.3 Server design](#23-Server-design)
   * [2.4 Circuit design](#24-Circuit-design)
      + [2.4.1 Voltage regulation](#241-Voltage-regulation)
-     + [2.4.2 MCU](#242-MCU)
-     + [2.4.3 GPS/GPRS module](#243-gpsgprs-module)
+     + [2.4.2 GPS/GPRS module](#242-gpsgprs-module)
+     + [2.4.3 MCU](#242-MCU)
   * [2.5 PCB layout design](#25-PCB-layout-design)
 - [3. Implementation](#3-Implementation)
   * [3.1 Manufacturing](#31-Manufacturing)
@@ -122,8 +122,8 @@ To achieve a ratio of 1.95, i.e. an output voltage of 3.6V the following values 
 <p align="center" > $\frac{R9}{R10+R11}=\frac{8.2}{1.5+2.7}=1.95$ </p>
 
 
-### 2.4.2 MCU
-### 2.4.3 GPS/GPRS module 
+
+### 2.4.2 GPS/GPRS module 
 The circuit design for the SIM808 module followed the guidelines in the SIM808 hardware design guide <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2] </a>. Bypass capacitors U20, U21, and U22 were added as recommended. The guide also suggested using a 5.1V Zener diode (D5) to protect against voltage surges. Although the diode was added as per the guidelines, it caused the circuit to malfunction after power on, so it was manually desoldered. This is documented in issue <a href="https://github.com/mohamedboubaker/GPS-Tracker/issues/35">#35 </a>. 
 
 The SIM808 module is connected to a micro SIM card holder. The lines between the module and the holder are protected against voltage surges using Transient Voltage Surpression (TVS) diodes present in the integrated circuit U23. Capacitors U18, U19 and Resistors R4,R5 and R12 are recommended by the guide.
@@ -131,6 +131,11 @@ The SIM808 module is connected to a micro SIM card holder. The lines between the
 The GPS and GPRS antenna outputs are connected to 2 U.FL connectors respectively.
 
 The SIM808 module and the STM32 MCU communicate using UART. The STM32 can also power on, reset and check the status of the module through its GPIO pins which are connected SIM_PWRKEY, SIM_RESET and STATUS pins on the module.
+
+### 2.4.3 MCU
+The STM32 is connected to a Reset and a User button, and 2 LEDs: D1 and D2. The User button SW2 is surrounded by a typical debouncing circuit which is inspired from the debouncing circuit found on the STM32F4 Discovery board. The MCU clock is synchronized using an 8MHz Crystal. 
+
+U1, U2, U3, U4 and U5 are bypass capacitors added as per the recoomendations in the datasheet  <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a>. 
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
