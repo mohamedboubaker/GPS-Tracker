@@ -130,7 +130,7 @@ The SIM808 module is connected to a micro SIM card holder. The lines between the
 
 The GPS and GPRS antenna outputs are connected to 2 U.FL connectors respectively.
 
-The SIM808 module and the STM32 MCU communicate through UART. The STM32 can also power on, reset and check the status of the module through its GPIO pins which are connected to the respective pins on the module which are named SIM_PWRKEY, SIM_RESET and STATUS.
+The SIM808 module and the STM32 MCU communicate using UART. The STM32 can also power on, reset and check the status of the module through its GPIO pins which are connected SIM_PWRKEY, SIM_RESET and STATUS pins on the module.
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
