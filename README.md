@@ -135,7 +135,7 @@ The SIM808 module and the STM32 MCU communicate using UART. The STM32 can also p
 ### 2.4.3 MCU
 The STM32 is connected to a Reset and a User button, and 2 LEDs: D1 and D2. The User button SW2 is surrounded by a typical debouncing circuit which is inspired from the debouncing circuit found on the STM32F4 Discovery board.
 
-An 8MHz Crystal is used to syncronize the MCU's clock. U1, U2, U3, U4 and U5 are bypass capacitors added as per the recoomendations in the datasheet  <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a>. 
+An 8MHz Crystal is used to synchronize the MCU's clock. U1, U2, U3, U4 and U5 are bypass capacitors added as per the recoomendations in the datasheet  <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a>. 
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
