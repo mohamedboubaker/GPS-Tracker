@@ -80,6 +80,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">aes_encryption.c File Reference</div>  </div>
 </div><!--header-->
@@ -87,10 +89,257 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>AES-128 encryption algorithm implementation.  
 <a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &quot;<a class="el" href="aes__encryption_8h_source.html">aes_encryption.h</a>&quot;</code><br/>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ada2e96d64eb6609930d31647be7e4a9e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8c.html#ada2e96d64eb6609930d31647be7e4a9e">s</a> (uint8_t c)</td></tr>
+<tr class="memdesc:ada2e96d64eb6609930d31647be7e4a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">s is a transformation that maps an 8-bit input, c, to an 8-bit output according to the S-Box. the S-Box is a lookup table that represents the The Rijndael substitution box.  <a href="#ada2e96d64eb6609930d31647be7e4a9e">More...</a><br/></td></tr>
+<tr class="separator:ada2e96d64eb6609930d31647be7e4a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1b86ed03464083452d6d99a8343d1b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8c.html#ad1b86ed03464083452d6d99a8343d1b0">shift_rows</a> (uint8_t block[16])</td></tr>
+<tr class="memdesc:ad1b86ed03464083452d6d99a8343d1b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">does a circular left shift on the rows of the input 4x4 matrix. 1st row is not shifted, 2nd row is shifted 1 element, 3d row is shifted 2 elements, 4th row is shifted 3 elements.  <a href="#ad1b86ed03464083452d6d99a8343d1b0">More...</a><br/></td></tr>
+<tr class="separator:ad1b86ed03464083452d6d99a8343d1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ded4a1164ad66183c85839a8b6ff1a8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8c.html#a9ded4a1164ad66183c85839a8b6ff1a8">g</a> (uint32_t a, uint8_t round_nbr)</td></tr>
+<tr class="memdesc:a9ded4a1164ad66183c85839a8b6ff1a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">g is a transformation used in the calculation of the key schedule  <a href="#a9ded4a1164ad66183c85839a8b6ff1a8">More...</a><br/></td></tr>
+<tr class="separator:a9ded4a1164ad66183c85839a8b6ff1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebc276093cf7862e378c8ea767f63595"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8c.html#aebc276093cf7862e378c8ea767f63595">expand_key</a> (uint8_t key[16], uint8_t round_nbr)</td></tr>
+<tr class="memdesc:aebc276093cf7862e378c8ea767f63595"><td class="mdescLeft">&#160;</td><td class="mdescRight">expand_key generates the next key in the key schedule  <a href="#aebc276093cf7862e378c8ea767f63595">More...</a><br/></td></tr>
+<tr class="separator:aebc276093cf7862e378c8ea767f63595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2635f04794184af3a92609fa6974e31"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8c.html#ad2635f04794184af3a92609fa6974e31">_mult</a> (uint8_t a, uint8_t b)</td></tr>
+<tr class="memdesc:ad2635f04794184af3a92609fa6974e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">does the multiplication of 2 elements in Galois Field GF(2^8). it can do only multiplication of any element in 0-255 by 1,2 and 3.  <a href="#ad2635f04794184af3a92609fa6974e31">More...</a><br/></td></tr>
+<tr class="separator:ad2635f04794184af3a92609fa6974e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18ea81a17ecea88927833396266cf059"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8c.html#a18ea81a17ecea88927833396266cf059">mix_columns</a> (uint8_t B[16])</td></tr>
+<tr class="memdesc:a18ea81a17ecea88927833396266cf059"><td class="mdescLeft">&#160;</td><td class="mdescRight">performs a linear transformation on every column in the 4x4 input matrix. Every column is multiplied by the matrix below: 0x02, 0x03, 0x01, 0x01 0x01, 0x02, 0x03, 0x01 0x01, 0x01, 0x02, 0x03 0x03, 0x01, 0x01, 0x02 The multiplication is an operation in GF(2^8) which means it is not a simple multiplication of natural numbers. since there is only multiplication by 0x01, 0x02, and 0x03, a lookup table containing all the results of multiplying the values [0-256] by 0x02 and 0x03 is pre-calculated and initialized.. Multiplication by 0x01 results in the same value.  <a href="#a18ea81a17ecea88927833396266cf059">More...</a><br/></td></tr>
+<tr class="separator:a18ea81a17ecea88927833396266cf059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cf9189535ac6c78622bb5ed0d2567c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8c.html#a5cf9189535ac6c78622bb5ed0d2567c2">aes128_encrypt</a> (uint8_t txt[16], uint8_t key[16])</td></tr>
+<tr class="memdesc:a5cf9189535ac6c78622bb5ed0d2567c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">encrypts a block of 16 bytes (128 bits)  <a href="#a5cf9189535ac6c78622bb5ed0d2567c2">More...</a><br/></td></tr>
+<tr class="separator:a5cf9189535ac6c78622bb5ed0d2567c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>AES-128 encryption algorithm implementation. </p>
 <dl class="section author"><dt>Author</dt><dd>Mohamed Boubaker </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ad2635f04794184af3a92609fa6974e31"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _mult </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>does the multiplication of 2 elements in Galois Field GF(2^8). it can do only multiplication of any element in 0-255 by 1,2 and 3. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uint8_t</td><td>a a value in 0-255 </td></tr>
+    <tr><td class="paramname">uint8_t</td><td>b a value in {1,2,3} </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the multiplication result, which is a value in 0-256 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5cf9189535ac6c78622bb5ed0d2567c2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void aes128_encrypt </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>txt</em>[16], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[16]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>encrypts a block of 16 bytes (128 bits) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uint8_t</td><td>txt[16] is the input block to be encrypted </td></tr>
+    <tr><td class="paramname">uint8_t</td><td>key[16] is the encryption key. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aebc276093cf7862e378c8ea767f63595"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void expand_key </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>previous_key</em>[16], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>round</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>expand_key generates the next key in the key schedule </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uint8_t</td><td>previous_key[16] is the starting key </td></tr>
+    <tr><td class="paramname">uint8_t</td><td>next_key[16] is the newly generated key from the previous_key </td></tr>
+    <tr><td class="paramname">uint8_t</td><td>round is the round number in the AES algorithm. values = 1-10 </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>calculate and insert words in v. Every word represent 4 bytes from the key. every 4 bytes in the key are mapped to a 32 bit word in v</p>
+
+</div>
+</div>
+<a class="anchor" id="a9ded4a1164ad66183c85839a8b6ff1a8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t g </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>round_nbr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>g is a transformation used in the calculation of the key schedule </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uint32_t</td><td>is the input of the g transform </td></tr>
+    <tr><td class="paramname">uint8_t</td><td>round_nbd is the AES-128 round number. 1-10 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the transform of a </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a18ea81a17ecea88927833396266cf059"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mix_columns </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>block</em>[16]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>performs a linear transformation on every column in the 4x4 input matrix. Every column is multiplied by the matrix below: 0x02, 0x03, 0x01, 0x01 0x01, 0x02, 0x03, 0x01 0x01, 0x01, 0x02, 0x03 0x03, 0x01, 0x01, 0x02 The multiplication is an operation in GF(2^8) which means it is not a simple multiplication of natural numbers. since there is only multiplication by 0x01, 0x02, and 0x03, a lookup table containing all the results of multiplying the values [0-256] by 0x02 and 0x03 is pre-calculated and initialized.. Multiplication by 0x01 results in the same value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uint8_t</td><td>block[16] The 16 bytes length input is regarded as a 4x4 matrix. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ada2e96d64eb6609930d31647be7e4a9e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t s </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>s is a transformation that maps an 8-bit input, c, to an 8-bit output according to the S-Box. the S-Box is a lookup table that represents the The Rijndael substitution box. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>is the input </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>s returns the transformation value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad1b86ed03464083452d6d99a8343d1b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void shift_rows </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>block</em>[16]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>does a circular left shift on the rows of the input 4x4 matrix. 1st row is not shifted, 2nd row is shifted 1 element, 3d row is shifted 2 elements, 4th row is shifted 3 elements. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uint8_t</td><td>block[16] The 16 bytes length input is regarded as a 4x4 matrix. The rows of this matrix will be shifted as described in the brief section. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

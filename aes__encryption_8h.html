@@ -95,9 +95,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8ae399d7c243f4122d17a06eac6d3afc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8h.html#a8ae399d7c243f4122d17a06eac6d3afc">aes128</a> (uint8_t txt[16], uint8_t key[16])</td></tr>
-<tr class="memdesc:a8ae399d7c243f4122d17a06eac6d3afc"><td class="mdescLeft">&#160;</td><td class="mdescRight">aes128 encrypts a block of 16 bytes (128 bits)  <a href="#a8ae399d7c243f4122d17a06eac6d3afc">More...</a><br/></td></tr>
-<tr class="separator:a8ae399d7c243f4122d17a06eac6d3afc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cf9189535ac6c78622bb5ed0d2567c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8h.html#a5cf9189535ac6c78622bb5ed0d2567c2">aes128_encrypt</a> (uint8_t txt[16], uint8_t key[16])</td></tr>
+<tr class="memdesc:a5cf9189535ac6c78622bb5ed0d2567c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">encrypts a block of 16 bytes (128 bits)  <a href="#a5cf9189535ac6c78622bb5ed0d2567c2">More...</a><br/></td></tr>
+<tr class="separator:a5cf9189535ac6c78622bb5ed0d2567c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada2e96d64eb6609930d31647be7e4a9e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8h.html#ada2e96d64eb6609930d31647be7e4a9e">s</a> (uint8_t c)</td></tr>
 <tr class="memdesc:ada2e96d64eb6609930d31647be7e4a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">s is a transformation that maps an 8-bit input, c, to an 8-bit output according to the S-Box. the S-Box is a lookup table that represents the The Rijndael substitution box.  <a href="#ada2e96d64eb6609930d31647be7e4a9e">More...</a><br/></td></tr>
 <tr class="separator:ada2e96d64eb6609930d31647be7e4a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -105,15 +105,14 @@ Functions</h2></td></tr>
 <tr class="memdesc:a67439f8357eef160d8d59ad4bb80dc6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">expand_key generates the next key in the key schedule  <a href="#a67439f8357eef160d8d59ad4bb80dc6c">More...</a><br/></td></tr>
 <tr class="separator:a67439f8357eef160d8d59ad4bb80dc6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1b86ed03464083452d6d99a8343d1b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8h.html#ad1b86ed03464083452d6d99a8343d1b0">shift_rows</a> (uint8_t block[16])</td></tr>
-<tr class="memdesc:ad1b86ed03464083452d6d99a8343d1b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">shift_rows does a circular left shift on the rows of the input 4x4 matrix. 1st row is not shifted, 2nd row is shifted 1 element, 3d row is shifted 2 elements, 4th row is shifted 3 elements.  <a href="#ad1b86ed03464083452d6d99a8343d1b0">More...</a><br/></td></tr>
+<tr class="memdesc:ad1b86ed03464083452d6d99a8343d1b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">does a circular left shift on the rows of the input 4x4 matrix. 1st row is not shifted, 2nd row is shifted 1 element, 3d row is shifted 2 elements, 4th row is shifted 3 elements.  <a href="#ad1b86ed03464083452d6d99a8343d1b0">More...</a><br/></td></tr>
 <tr class="separator:ad1b86ed03464083452d6d99a8343d1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a948dad74929135e043baae6e92382496"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8h.html#a948dad74929135e043baae6e92382496">mix_columns</a> (uint8_t block[16])</td></tr>
-<tr class="memdesc:a948dad74929135e043baae6e92382496"><td class="mdescLeft">&#160;</td><td class="mdescRight">mix_column performs a linear transformation on every column in the 4x4 input matrix. Every column is multiplied by the matrix below: 0x02, 0x03, 0x01, 0x01 0x01, 0x02, 0x03, 0x01 0x01, 0x01, 0x02, 0x03 0x03, 0x01, 0x01, 0x02 The multiplication is an operation in GF(2^8) which means it is not a simple multiplication of natural numbers. since there is only multiplication by 0x01, 0x02, and 0x03, a lookup table containing all the results of multiplying the values [0-256] by 0x02 and 0x03 is pre-calculated and initialized.. Multiplication by 0x01 results in the same value.  <a href="#a948dad74929135e043baae6e92382496">More...</a><br/></td></tr>
+<tr class="memdesc:a948dad74929135e043baae6e92382496"><td class="mdescLeft">&#160;</td><td class="mdescRight">performs a linear transformation on every column in the 4x4 input matrix. Every column is multiplied by the matrix below: 0x02, 0x03, 0x01, 0x01 0x01, 0x02, 0x03, 0x01 0x01, 0x01, 0x02, 0x03 0x03, 0x01, 0x01, 0x02 The multiplication is an operation in GF(2^8) which means it is not a simple multiplication of natural numbers. since there is only multiplication by 0x01, 0x02, and 0x03, a lookup table containing all the results of multiplying the values [0-256] by 0x02 and 0x03 is pre-calculated and initialized.. Multiplication by 0x01 results in the same value.  <a href="#a948dad74929135e043baae6e92382496">More...</a><br/></td></tr>
 <tr class="separator:a948dad74929135e043baae6e92382496"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2635f04794184af3a92609fa6974e31"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8h.html#ad2635f04794184af3a92609fa6974e31">_mult</a> (uint8_t a, uint8_t b)</td></tr>
+<tr class="memdesc:ad2635f04794184af3a92609fa6974e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">does the multiplication of 2 elements in Galois Field GF(2^8). it can do only multiplication of any element in 0-255 by 1,2 and 3.  <a href="#ad2635f04794184af3a92609fa6974e31">More...</a><br/></td></tr>
 <tr class="separator:ad2635f04794184af3a92609fa6974e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af735cf1ecd3a009112352077b4ebfee6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="aes__encryption_8h.html#af735cf1ecd3a009112352077b4ebfee6">display_block</a> (uint8_t b[16])</td></tr>
-<tr class="separator:af735cf1ecd3a009112352077b4ebfee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>AES-128 functions' prototypes and definition of related parameter. </p>
@@ -143,14 +142,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>does the multiplication of 2 elements in Galois Field GF(2^8). it can do only multiplication of any element in 0-255 by 1,2 and 3. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uint8_t</td><td>a a value in 0-255 </td></tr>
+    <tr><td class="paramname">uint8_t</td><td>b a value in {1,2,3} </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the multiplication result, which is a value in 0-256 </dd></dl>
+
 </div>
 </div>
-<a class="anchor" id="a8ae399d7c243f4122d17a06eac6d3afc"></a>
+<a class="anchor" id="a5cf9189535ac6c78622bb5ed0d2567c2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void aes128 </td>
+          <td class="memname">void aes128_encrypt </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>txt</em>[16], </td>
@@ -169,7 +178,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>aes128 encrypts a block of 16 bytes (128 bits) </p>
+<p>encrypts a block of 16 bytes (128 bits) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">uint8_t</td><td>txt[16] is the input block to be encrypted </td></tr>
@@ -177,22 +186,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="af735cf1ecd3a009112352077b4ebfee6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void display_block </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>b</em>[16]</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -229,6 +222,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<p>calculate and insert words in v. Every word represent 4 bytes from the key. every 4 bytes in the key are mapped to a 32 bit word in v</p>
 
 </div>
 </div>
@@ -246,7 +240,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>mix_column performs a linear transformation on every column in the 4x4 input matrix. Every column is multiplied by the matrix below: 0x02, 0x03, 0x01, 0x01 0x01, 0x02, 0x03, 0x01 0x01, 0x01, 0x02, 0x03 0x03, 0x01, 0x01, 0x02 The multiplication is an operation in GF(2^8) which means it is not a simple multiplication of natural numbers. since there is only multiplication by 0x01, 0x02, and 0x03, a lookup table containing all the results of multiplying the values [0-256] by 0x02 and 0x03 is pre-calculated and initialized.. Multiplication by 0x01 results in the same value. </p>
+<p>performs a linear transformation on every column in the 4x4 input matrix. Every column is multiplied by the matrix below: 0x02, 0x03, 0x01, 0x01 0x01, 0x02, 0x03, 0x01 0x01, 0x01, 0x02, 0x03 0x03, 0x01, 0x01, 0x02 The multiplication is an operation in GF(2^8) which means it is not a simple multiplication of natural numbers. since there is only multiplication by 0x01, 0x02, and 0x03, a lookup table containing all the results of multiplying the values [0-256] by 0x02 and 0x03 is pre-calculated and initialized.. Multiplication by 0x01 results in the same value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">uint8_t</td><td>block[16] The 16 bytes length input is regarded as a 4x4 matrix. </td></tr>
@@ -295,7 +289,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>shift_rows does a circular left shift on the rows of the input 4x4 matrix. 1st row is not shifted, 2nd row is shifted 1 element, 3d row is shifted 2 elements, 4th row is shifted 3 elements. </p>
+<p>does a circular left shift on the rows of the input 4x4 matrix. 1st row is not shifted, 2nd row is shifted 1 element, 3d row is shifted 2 elements, 4th row is shifted 3 elements. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">uint8_t</td><td>block[16] The 16 bytes length input is regarded as a 4x4 matrix. The rows of this matrix will be shifted as described in the brief section. </td></tr>

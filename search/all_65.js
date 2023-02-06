@@ -11,5 +11,5 @@ var searchData=
   ['err_5fregistration',['ERR_REGISTRATION',['../network__functions_8h.html#a4f2a7979942d371d6db601ce39fe7adf',1,'network_functions.h']]],
   ['err_5fsim_5fpresence',['ERR_SIM_PRESENCE',['../network__functions_8h.html#aded72e365475fa31c0a12f3835575ed8',1,'network_functions.h']]],
   ['err_5fweak_5fsignal',['ERR_WEAK_SIGNAL',['../network__functions_8h.html#a34ec8b9fef0de2c97adb031a35a00deb',1,'network_functions.h']]],
-  ['expand_5fkey',['expand_key',['../aes__encryption_8h.html#a67439f8357eef160d8d59ad4bb80dc6c',1,'aes_encryption.h']]]
+  ['expand_5fkey',['expand_key',['../aes__encryption_8c.html#aebc276093cf7862e378c8ea767f63595',1,'expand_key(uint8_t key[16], uint8_t round_nbr):&#160;aes_encryption.c'],['../aes__encryption_8h.html#a67439f8357eef160d8d59ad4bb80dc6c',1,'expand_key(uint8_t previous_key[16], uint8_t round):&#160;aes_encryption.c']]]
 ];
