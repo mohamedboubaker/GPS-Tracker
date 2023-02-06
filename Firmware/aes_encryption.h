@@ -13,7 +13,7 @@
  * @param uint8_t txt[16] is the input block to be encrypted
  * @param uint8_t key[16] is the encryption key.
  */
-void aes128(uint8_t txt[16], uint8_t key[16]);
+void aes128_encrypt(uint8_t txt[16], uint8_t key[16]);
 
 /**
  * @brief s is a transformation that maps an 8-bit input, c, to an 8-bit output according to the S-Box.

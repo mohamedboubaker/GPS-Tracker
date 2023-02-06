@@ -30,4 +30,4 @@ tracker/main.o: ..\main.c C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr_ex.h \
   ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart.h \
   ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart_ex.h \
-  ..\sim808.h ..\gps.h ..\network_functions.h
+  ..\sim808.h ..\gps.h ..\network_functions.h ..\aes_encryption.h

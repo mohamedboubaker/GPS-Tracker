@@ -430,6 +430,16 @@
               <FileType>1</FileType>
               <FilePath>..\network_functions.c</FilePath>
             </File>
+            <File>
+              <FileName>aes_encryption.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\aes_encryption.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_encryption.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\aes_encryption.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -6,6 +6,7 @@
 "tracker\main.o"
 "tracker\gps.o"
 "tracker\network_functions.o"
+"tracker\aes_encryption.o"
 "tracker\stm32f0xx_hal_tim.o"
 "tracker\stm32f0xx_hal_tim_ex.o"
 "tracker\stm32f0xx_hal_uart.o"

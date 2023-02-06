@@ -21,7 +21,7 @@
 #include "sim808.h"
 #include "gps.h"
 #include "network_functions.h"
-
+#include "aes_encryption.h"
 
 
 
@@ -50,18 +50,21 @@ int main(void)
 	
 
 	/*initialize the SIM808 module */
-	sim_power_off(&sim);
-	sim_init(&sim);
+	//sim_power_off(&sim);
+	//sim_init(&sim);
 
-	
+	uint8_t key[]={0x2b,0x7e,0x15,0x16,0x28,0xae,0xd2,0xa6,0xab,0xf7,0x15,0x88,0x09,0xcf,0x4f,0x3c};
+	uint8_t txt[]={0x32,0x43,0xf6,0xa8,0x88,0x5a,0x30,0x8d,0x31,0x31,0x98,0xa2,0xe0,0x37,0x07,0x34};
+	aes128_encrypt(txt,key);
+
 	/*enable GPS */
 	//if (enable_gps())
 		//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
 	
 	/*enable gprs */
-	enable_gprs();
+	// enable_gprs();
 	
-	char gps_position[24]="MQTT";
+	char gps_position[24]="Lat,Lon";
 	char ip_address[]="18.195.228.39";
 	char tcp_port[] = "1883";
 	char msg[]="TCP";
@@ -72,7 +75,7 @@ while (1)
 		
 //			if (sim_gps_get_location(gps_position)){
 //				HAL_GPIO_TogglePin(GPIOB,GREEN_LED);
-				publish_mqtt_msg(ip_address,tcp_port,"Po","Client_12",gps_position);
+			//	publish_mqtt_msg(ip_address,tcp_port,"Po","Client_12",gps_position);
 				//system_reset(&sim);
 				
 //								//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_12);

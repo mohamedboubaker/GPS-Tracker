@@ -107,7 +107,7 @@ uint8_t enable_gprs(){
 	#endif
 	send_AT_cmd(SIM_detect_cmd,"OK",1,local_rx_buffer,RX_TIMEOUT);
 	
-	if (!strstr(local_rx_buffer,"+CSMINS: 0,1")) 
+	if (!is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"+CSMINS: 0,1",sizeof("+CSMINS: 0,1")-1)) 
 		return ERR_SIM_PRESENCE;
 	/*clear buffer for next use*/
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH); 
@@ -129,7 +129,7 @@ uint8_t enable_gprs(){
 	
 	/* Note: the module replies READY if the PIN is not required*/
 	/* If the PIN is required, then insert PIN, if the PIN is wrong then exit*/
-	pin_status=strstr(local_rx_buffer,"READY")==NULL?0:1;
+	pin_status=is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"READY",sizeof("READY")-1); 
 	if (pin_status==0){
 		if (!sim_insert_PIN(SIM_PIN))
 			return ERR_PIN_WRONG;
@@ -171,7 +171,8 @@ uint8_t enable_gprs(){
 			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
 			* Save the status in signal_status
 			*/
-			signal_status = !( (strstr(local_rx_buffer,"+CSQ: 0,")==NULL?0:1) || (strstr(local_rx_buffer,"99,")==NULL?0:1)) ;
+			signal_status = !( is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"+CSQ: 0,",sizeof("+CSQ: 0,")-1) ||
+				is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"99,",sizeof("99,")-1) );
 			/* Clear receive buffer*/
 			memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
@@ -214,7 +215,8 @@ uint8_t enable_gprs(){
 	send_AT_cmd(check_registration_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 	
 	/*check the reply to determine if ME is registered at home network or roaming */
-		registration_status= (strstr(local_rx_buffer,",1")==NULL?0:1) || (strstr(local_rx_buffer,",5")==NULL?0:1);
+		registration_status= is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)",1",sizeof(",1")-1) ||
+			is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)",5",sizeof(",5")-1);
 	
 	/*Clear receive buffer*/
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);	
@@ -252,7 +254,7 @@ uint8_t enable_gprs(){
 			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
 			* Save the status in signal_status
 			*/
-			is_pdp_attached = !(strstr(local_rx_buffer,"CGATT: 0")==NULL?0:1);
+			is_pdp_attached = !is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"CGATT: 0",sizeof("CGATT: 0")-1);
 			
 				/* Clear receive buffer*/
 			memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
@@ -297,7 +299,7 @@ uint8_t enable_gprs(){
 
 		
 	/*When PDP is deactivated it is necessary to run  AT+CIPSHUT to bring the status to [IP INITIAL] */
-	pdp_deactivated = strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1;
+	pdp_deactivated = is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"PDP DEACT",sizeof("PDP DEACT")-1);
 	if ( pdp_deactivated ) {
 		#ifdef DEBUG_MODE
 		send_debug("[PDP DEACT] send  AT+CIPSHUT");
@@ -326,7 +328,7 @@ uint8_t enable_gprs(){
 	#endif
 	send_AT_cmd(check_PDP_context_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 		
-	pdp_defined = strstr(local_rx_buffer,"CMNET")==NULL?1:0;
+	pdp_defined = is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"CMNET",sizeof("CMNET")-1);
 		
 	if(pdp_defined==0){
 		/* Build enable_PDP_context_cmd 
@@ -366,7 +368,7 @@ uint8_t enable_gprs(){
 	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT); 
 	
 	/* Check if PDP context is defined and ready to be activated == [IP START] */
-	pdp_ready = strstr(local_rx_buffer,"IP START")==NULL?0:1;
+	pdp_ready = is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"IP START",sizeof("IP START")-1) ;
 	
 	/* Clear receive buffer */
 	memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
@@ -378,7 +380,7 @@ uint8_t enable_gprs(){
 		send_debug("Activate PDP:send AT+CIIR");
 	#endif
 		
-		/* This command takes around 1 second to finish hence 1s wait time */
+		/* This command takes around 1 second to finish hence 1s wait time */ /*POSSIBLE BUG HERE*/
 		if (!send_AT_cmd(activate_PDP_context_cmd,"",FALSE,NULL,1000)) {
 			#ifdef DEBUG_MODE
 			send_debug("Activate PDP: FAIL");
@@ -402,7 +404,7 @@ uint8_t enable_gprs(){
 	#endif
 	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 	
-	if ( strstr(local_rx_buffer,"IP GPRSACT") ){
+	if ( is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"IP GPRSACT",sizeof("IP GPRSACT")-1) ){
 		memset(local_rx_buffer,NULL,RX_BUFFER_LENGTH);
 		
 		#ifdef DEBUG_MODE
@@ -410,7 +412,7 @@ uint8_t enable_gprs(){
 		#endif
 		send_AT_cmd(get_IP_address_cmd,"OK",TRUE,local_rx_buffer,5*RX_TIMEOUT);
 		
-		error=strstr(local_rx_buffer,"ERROR")==NULL?0:1;
+		error=is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"ERROR",sizeof("ERROR")-1);
 		if ( error ) {
 			#ifdef DEBUG_MODE
 				send_debug("Get IP address: FAIL");
@@ -432,7 +434,12 @@ uint8_t enable_gprs(){
 	
 	send_AT_cmd(check_gprs_state_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 	
-	gprs_ready=((strstr(local_rx_buffer,"IP STATUS")==NULL?0:1) || (strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) || (strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1)   || (strstr(local_rx_buffer,"ALREADY CONNECT")==NULL?0:1) || (strstr(local_rx_buffer,"TCP CLOSED")==NULL?0:1));
+	gprs_ready=(  
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"IP STATUS",sizeof("IP STATUS")-1)  || 
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"TCP CONNECTING",sizeof("TCP CONNECTING")-1) || 
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"CONNECT",sizeof("CONNECT OK")-1) ||
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"ALREADY CONNECT",sizeof("ALREADY CONNECT")-1)
+			);
 	
 	if (gprs_ready){
 		#ifdef DEBUG_MODE
@@ -491,14 +498,24 @@ uint8_t open_tcp_connection(char * server_address, char * port){
 	 */
 	 
 	 send_debug(local_rx_buffer);
-	if ( (strstr(local_rx_buffer,"IP INITIAL")==NULL?0:1) || (strstr(local_rx_buffer,"IP START")==NULL?0:1) || (strstr(local_rx_buffer,"IP CONFIG")==NULL?0:1)  || (strstr(local_rx_buffer,"IP GPRSACT")==NULL?0:1) || (strstr(local_rx_buffer,"PDP DEACT")==NULL?0:1) ) 
+	if ( 
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"IP INITIAL",sizeof("IP INITIAL")-1)	||
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"IP START",sizeof("IP START")-1)	||
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"IP CONFIG",sizeof("IP CONFIG")-1) || 
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"IP GPRSACT",sizeof("IP GPRSACT")-1)	|| 
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"PDP DEACT",sizeof("PDP DEACT")-1)
+		)			
 	{	
 		#ifdef DEBUG_MODE
 		send_debug("TCP cannot begin because GPRS is not ready: call enable_gprs();");
 		#endif	
 		enable_gprs();
 	}
-	else if ( (strstr(local_rx_buffer,"TCP CONNECTING")==NULL?0:1) || (strstr(local_rx_buffer,"CONNECT OK")==NULL?0:1)   || (strstr(local_rx_buffer,"ALREADY CONNECT")==NULL?0:1)  )
+	else if ( 
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"TCP CONNECTING",sizeof("TCP CONNECTING")-1)	||
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"CONNECT OK",sizeof("CONNECT OK")-1)	||
+		is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"ALREADY CONNECT",sizeof("ALREADY CONNECT")-1) 
+		)
 	{
 		#ifdef DEBUG_MODE
 			send_debug("Open TCP connection detected, terminating it. send: AT+CIPCLOSE");
@@ -539,7 +556,7 @@ uint8_t open_tcp_connection(char * server_address, char * port){
 	 * usuallly it means the peer server is offline, so in this case, close the connection and exit */
 
 
-	if ((strstr(local_rx_buffer,"CONNECT FAIL")==NULL?0:1) || (strstr(local_rx_buffer,"ERROR")==NULL?0:1)){
+	if ( is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"CONNECT FAIL",sizeof("CONNECT FAIL")-1) || is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"ERROR",sizeof("ERROR")-1)){
 		return FAIL;
 	}
 	else 	{
@@ -664,7 +681,7 @@ uint8_t disconnect_packet[] = {
 
 	
 
-	uint16_t topic_length = strlen(topic);
+	uint16_t topic_length = (uint16_t)strlen(topic);
 	uint8_t publish_packet_remaining_length=0;
 /*
 	0x30, //Packet type = Publish + DUP+QOS+retain=0
@@ -676,7 +693,7 @@ uint8_t disconnect_packet[] = {
 uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
 	0x30, // Packet type = Publish + DUP+QOS+retain=0
 	0x1d, // Remaining length = 29
-	0x00, 0x04, // Topic name length
+	0x00, 0x04 // Topic name length
 };
 	
 	/*insert remaining length */
@@ -718,20 +735,19 @@ uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
 			
 		//	send_tcp_data((uint8_t *)"hello",5);
 			#ifdef DEBUG_MODE
-				//send_debug("Sending MQTT CONNECT Packet");
+				send_debug("Sending MQTT CONNECT Packet");
 			#endif
 			//send_tcp_data(connect_packet,14+client_id_length);
 			
 			#ifdef DEBUG_MODE
 				send_debug("Sending MQTT PUBLISH Packet");
 			#endif
-			//send_tcp_data(publish_packet,publish_packet_remaining_length+2);
-			//send_raw_debug(publish_packet,publish_packet_remaining_length+2);
-			send_tcp_data((uint8_t *)"hello",5);
+			send_tcp_data(publish_packet,publish_packet_remaining_length+2);
+			//send_tcp_data((uint8_t *)"hello",5);
 			#ifdef DEBUG_MODE
 				send_debug("Sending MQTT DISCONNECT Packet");
 			#endif
-			//send_tcp_data(disconnect_packet,2);
+			send_tcp_data(disconnect_packet,2);
 			
 			close_tcp_connection();
 			return SUCCESS;
