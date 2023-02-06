@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 /**
- * @brief aes128 encrypts a block of 16 bytes (128 bits)
+ * @brief encrypts a block of 16 bytes (128 bits)
  * @param uint8_t txt[16] is the input block to be encrypted
  * @param uint8_t key[16] is the encryption key.
  */
@@ -34,14 +34,14 @@ void expand_key(uint8_t previous_key[16],uint8_t round);
 
 
 /**
- * @brief shift_rows does a circular left shift on the rows of the input 4x4 matrix.
+ * @brief does a circular left shift on the rows of the input 4x4 matrix.
  * 	1st row is not shifted, 2nd row is shifted 1 element, 3d row is shifted 2 elements, 4th row is shifted 3 elements.
  * @param uint8_t block[16] The 16 bytes length input is regarded as a 4x4 matrix. The rows of this matrix will be shifted as described in the brief section.
  */
 void shift_rows(uint8_t block[16]);
 
 /**
- * @brief mix_column performs a linear transformation on every column in the 4x4 input matrix. Every column is multiplied
+ * @brief  performs a linear transformation on every column in the 4x4 input matrix. Every column is multiplied
  * by the matrix below:
  * 	0x02, 0x03, 0x01, 0x01
  * 	0x01, 0x02, 0x03, 0x01
@@ -54,8 +54,15 @@ void shift_rows(uint8_t block[16]);
  */
 void mix_columns(uint8_t block[16]);
 
+/**
+ * @brief does the multiplication of 2 elements in Galois Field GF(2^8).
+ * it can do only multiplication of any element in 0-255 by 1,2 and 3.
+ * @param uint8_t a a value in 0-255
+ * @param uint8_t b a value in {1,2,3}
+ * @return the multiplication result, which is a value in 0-256
+ */
 uint8_t _mult(uint8_t a, uint8_t b);
 
-void display_block(uint8_t b[16]);
+
 
 #endif /* SRC_AES_H_ */

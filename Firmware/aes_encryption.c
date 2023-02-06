@@ -24,19 +24,6 @@ uint8_t s(uint8_t c){
 }
 
 
-void display_block(uint8_t b[16]){
-	uint8_t i,j;
-	for(i=0;i<4;i++){
-		for(j=0;j<4;j++){
-			printf("%02X ",b[i+4*j]);
-		}
-		printf("\n");
-	}
-printf("\n");
-}
-
-
-
 void shift_rows(uint8_t block[16]){
 	uint8_t tmp0,tmp1;
 	/* First row will be ignored, Second row will be shifted 1 element to the left */
@@ -124,13 +111,7 @@ void expand_key(uint8_t key[16],uint8_t round_nbr){
 	key[12]=(uint8_t)(w[3]>>24); key[13]=(uint8_t)(w[3]>>16);key[14]=(uint8_t)(w[3]>>8);key[15]=(uint8_t)w[3];
 }
 
-/*
- * @brief _mult does the multiplication of 2 elements in GF(2^8).
- * it can do only multiplication of any element in 0-255 by 1,2 and 3.
- * @param uint8_t a a value in 0-255
- * @param uint8_t b a value in {1,2,3}
- * @return the multiplication result, which is a value in 0-256
- */
+
 uint8_t _mult(uint8_t a, uint8_t b){
 
 	/* This lookup table is used to retrieve the multiplication of an element by 0x02 or by 0x03 in GF(2^8)
