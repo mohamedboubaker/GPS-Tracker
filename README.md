@@ -130,12 +130,14 @@ The SIM808 module is connected to a micro SIM card holder. The lines between the
 
 The GPS and GPRS antenna outputs are connected to 2 U.FL connectors respectively.
 
-The SIM808 module and the STM32 MCU communicate using UART. The STM32 can also power on, reset and check the status of the module through its GPIO pins which are connected SIM_PWRKEY, SIM_RESET and STATUS pins on the module.
+The SIM808 module and the STM32 MCU communicate using UART. The STM32 can also power on, reset and check the status of the module through its GPIO pins which are connected SIM_PWRKEY, SIM_RESET and STATUS pins on the module. These SIM808 pins including the UART are also exposed through the header pins connector on the PCB. Which enable controlling and communicating with the module from the outside, without having to write a program to do so on the STM32. 
 
 ### 2.4.3 MCU
 The STM32 is connected to a Reset and a User button, and 2 LEDs: D1 and D2. The User button SW2 is surrounded by a typical debouncing circuit which is inspired from the debouncing circuit found on the STM32F4 Discovery board.
 
 An 8MHz Crystal is used to synchronize the MCU's clock. U1, U2, U3, U4 and U5 are bypass capacitors added as per the recoomendations in the datasheet  <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a>. 
+
+SWD pins, required for programming the MCU, and several other GPIOs are exposed through header pins on the PCB. This enables the functionality of the board to be expanded. For example, it can be connected to external sensors and actuators.
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
