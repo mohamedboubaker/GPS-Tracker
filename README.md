@@ -23,7 +23,10 @@ The scope of the project is more focoused on the embedded side. In other words, 
      + [2.2.1 Code documentation](#221-Code-documentation) 
   * [2.3 Server design](#23-Server-design)
   * [2.4 Circuit design](#24-Circuit-design)
-  * [2.5 PCB design](#25-PCB-design)
+     + [2.4.1 Voltage regulation](#241-Voltage-regulation)
+     + [2.4.2 MCU](#242-MCU)
+     + [2.4.3 GPS/GPRS module](#243-gpsgprs-module)
+  * [2.5 PCB layout design](#25-PCB-layout-design)
 - [3. Implementation](#3-Implementation)
   * [3.1 Manufacturing](#31-Manufacturing)
   * [3.2 Testing and debugging](#32-Testing-and-debugging)
@@ -91,22 +94,24 @@ The code features Doxygen-style documentation for all functions, providing clear
 ## 2.4 Circuit design
 
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/circuit_diagram.jpg)
-*Figure 2. Circuit Diagram*
+*Figure 2. Circuit schematic*
 
-### Power regulation circuit
+### 2.4.1 Voltage regulation 
 
-The power regulation circuit is designed to achieve the following goals:
-- Be able to withstand input voltages that are typical of a car battery. i.e. 12V~20V.
+The voltage regulation circuit is designed to achieve the following goals:
 - Be tolerant to reverse polarity.
 - Protect the circuit in case of a short circuit.
-- Provide stable input voltage for the STM32 MCU and the SIM808 module.
-- provide peak currents of up to 2A. This is required by the SIM808 module. <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2]. </a>  
+- Be able to withstand input voltages that are typical of a car battery. i.e. 12V~20V.
+- Provide peak currents of up to 2A. This is required by the SIM808 module. <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2]. </a> 
+- Provide a stable output voltage of 3.6V because the operating voltage range of the STM32F0 MCU is 1.8V-3.6V <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a> and that of the SIM808 module is 3.4V-4.4V <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2] </a>. 
 
-The operating voltage range of the STM32F0 MCU is 1.8V-3.6V <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> [3] </a>
+Reverse polarity protection is achieved through the MOSFET transistor denoted as Q1 in the schematic above which has a Gate-Source voltage rating of 20V. This limits the maximum input voltage of the circuit to 20V. 
 
-The power regulation circuit is based on the Texas Instruments TPS5430DDA DC-DC down converter. The surrounding circuit is designed according to the recommendations of the datasheet <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">[1]</a>.
+Protection against short circuits is provided through the Fuse denoted as F1 with a rating of 2.5A. (In practice, 2.5 A is a very high current for such a circuit. If a short circuit happens, many components would fail before the fuse will break the current. This value needs to be reconsidered.)
 
-The output voltage is governed by the values of the resistors that are connected above and below the feedback point. In the datasheet, the resistor above the feedback point is denoted as R1, whereas that below the feedback point is denoted as R2. According to equation (12) in the datasheet the following formula can be derived:
+The rest of the requirements are met using the Texas Instruments TPS5430DDA DC-DC down converter. The components on the right side of TPS5430DDA in the schematic are designed according to the recommendations of the datasheet <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">[1]</a>. 
+
+The output voltage is determined by the values of the resistors that are connected above and below the feedback point (see the schematic above). In the datasheet, the resistor above the feedback point is denoted as R1, whereas that below the feedback point is denoted as R2. According to equation (12) in the datasheet the following formula can be derived:
 <p align="center" > $\frac{R1}{R2}=0.819V_{out}-1$ </p>
 Therefore, to achieve a regulated voltage of 3.6V, the ratio between the resistors should be as follows: <p align="center" > $\frac{R1}{R2}=1.95$ </p>
 
@@ -117,6 +122,8 @@ To achieve a ratio of 1.95, i.e. an output voltage of 3.6V the following values 
 <p align="center" > $\frac{R9}{R10+R11}=\frac{8.2}{1.5+2.7}=1.95$ </p>
 
 
+### 2.4.2 MCU
+### 2.4.3 GPS/GPRS module 
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
