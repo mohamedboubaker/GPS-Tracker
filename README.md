@@ -23,7 +23,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
      + [2.2.1 Code documentation](#221-Code-documentation) 
   * [2.3 Server design](#23-Server-design)
   * [2.4 Circuit design](#24-Circuit-design)
-     + [2.4.1 Power regulation](#241-Power-regulation)
+     + [2.4.1 Voltage regulation](#241-Voltage-regulation)
      + [2.4.2 MCU](#242-MCU)
      + [2.4.3 GPS/GPRS module](#243-gpsgprs-module)
   * [2.5 PCB layout design](#25-PCB-layout-design)
@@ -96,9 +96,9 @@ The code features Doxygen-style documentation for all functions, providing clear
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/circuit_diagram.jpg)
 *Figure 2. Circuit schematic*
 
-### 2.4.1 Power regulation 
+### 2.4.1 Voltage regulation 
 
-The power regulation circuit is designed to achieve the following goals:
+The voltage regulation circuit is designed to achieve the following goals:
 - Be tolerant to reverse polarity.
 - Protect the circuit in case of a short circuit.
 - Be able to withstand input voltages that are typical of a car battery. i.e. 12V~20V.
