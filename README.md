@@ -124,6 +124,9 @@ To achieve a ratio of 1.95, i.e. an output voltage of 3.6V the following values 
 
 ### 2.4.2 MCU
 ### 2.4.3 GPS/GPRS module 
+The desigign of the circuit surrounding the SIM808 module was carried out according to the recommendations of the SIM808 hardware design guide <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2] </a>. Capacitors U20, U21 and U22 are bypass capacitors recommended in the hardware design guide. The guide also recommends the use of 5.1V Zener diode D5 which is supposed to protect the circuit in case of a sudden voltage surge. This diode was added to the circuit as per the recommendations however in practice it this diode prevented the circuit from correctly coming up after power on. So it was manually desoldred. The details are documented in issue #35
+
+
 
 ## 2.5 PCB design
 Below is a 3D picture of the manufactured PCB. The front side is on the left and contains mainly the TPS5430DDA Power regulation circuit on top and the STM32F0 in the center. On the right you see the PCB's backside which contains the SIM808 and SIM card holder circuit.
