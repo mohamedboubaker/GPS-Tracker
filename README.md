@@ -124,7 +124,7 @@ To achieve a ratio of 1.95, i.e. an output voltage of 3.6V the following values 
 
 ### 2.4.2 MCU
 ### 2.4.3 GPS/GPRS module 
-The desigign of the circuit surrounding the SIM808 module was carried out according to the recommendations of the SIM808 hardware design guide <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2] </a>. Capacitors U20, U21 and U22 are bypass capacitors recommended in the hardware design guide. The guide also recommends the use of 5.1V Zener diode D5 which is supposed to protect the circuit in case of a sudden voltage surge. This diode was added to the circuit as per the recommendations however in practice it this diode prevented the circuit from correctly coming up after power on. So it was manually desoldred. The details are documented in issue #35
+"The circuit design for the SIM808 module followed the guidelines in the SIM808 hardware design guide <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> [2] </a>. Bypass capacitors U20, U21, and U22 were added as recommended. The guide also suggested using a 5.1V Zener diode (D5) to protect against voltage surges. Although the diode was added as per the guidelines, it caused the circuit to malfunction after power on, so it was manually desoldered. This is documented in issue <a href="https://github.com/mohamedboubaker/GPS-Tracker/issues/35"> PCB Power on failure 2 #35 </a>. 
 
 
 
