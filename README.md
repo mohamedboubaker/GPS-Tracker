@@ -152,8 +152,8 @@ Below is a 3D picture of the manufactured PCB. The front side is on the left and
 # 4. Results and evaluation
 ## 4.1 Test Drive
 
-![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/test_drive_nuremberg.png)
-*Figure 5. Test Drive result Nuremberg-Schwabach, Germany*
+![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/test_drive_nuremberg_munich.png)
+*Figure 5. Test Drive result from Nuremberg to Munich, Germany*
 
 # 5. Conclusion
 ## 5.1 Summary
