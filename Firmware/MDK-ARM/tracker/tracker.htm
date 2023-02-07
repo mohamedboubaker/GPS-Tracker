@@ -3,9 +3,9 @@
 <title>Static Call Graph - [tracker\tracker.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image tracker\tracker.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Mon Feb  6 15:58:09 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6180002: Last Updated: Tue Feb  7 14:48:45 2023
 <BR><P>
-<H3>Maximum Stack Usage =       1440 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =       1400 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; publish_mqtt_msg &rArr; open_tcp_connection &rArr; enable_gprs &rArr; sim_insert_PIN &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 <P>
@@ -72,7 +72,7 @@ Global Symbols
 <P><STRONG><a name="[25]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f051x8.o(.text)
 </UL>
-<P><STRONG><a name="[75]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
+<P><STRONG><a name="[6d]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
 
 <P><STRONG><a name="[2d]"></a>_main_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
@@ -82,15 +82,15 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[76]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[6e]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
 
-<P><STRONG><a name="[77]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[6f]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
 
-<P><STRONG><a name="[78]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[70]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
 
-<P><STRONG><a name="[79]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
+<P><STRONG><a name="[71]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
 
-<P><STRONG><a name="[7a]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[72]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
 
 <P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f051x8.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f051x8.o(RESET)
@@ -180,64 +180,60 @@ Global Symbols
 <P><STRONG><a name="[6]"></a>WWDG_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f051x8.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f051x8.o(RESET)
 </UL>
-<P><STRONG><a name="[61]"></a>__aeabi_memcpy</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mix_columns
-<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_tcp_data
-<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<P><STRONG><a name="[5d]"></a>__aeabi_memcpy</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, memcpya.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
 <LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_serial_data
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 </UL>
 
-<P><STRONG><a name="[6a]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
+<P><STRONG><a name="[64]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
 </UL>
 
-<P><STRONG><a name="[7b]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
+<P><STRONG><a name="[73]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
 
 <P><STRONG><a name="[30]"></a>__aeabi_memset</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 <BR><BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_memset$wrapper
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
 
-<P><STRONG><a name="[7c]"></a>__aeabi_memset4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[74]"></a>__aeabi_memset4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
-<P><STRONG><a name="[7d]"></a>__aeabi_memset8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[75]"></a>__aeabi_memset8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
 <P><STRONG><a name="[2f]"></a>__aeabi_memclr</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 
 <P><STRONG><a name="[4d]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_serial_data
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 <LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
 </UL>
 
-<P><STRONG><a name="[7e]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[76]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
 <P><STRONG><a name="[31]"></a>_memset$wrapper</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, memseta.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 
-<P><STRONG><a name="[6b]"></a>strcat</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, strcat.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<P><STRONG><a name="[65]"></a>strcat</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, strcat.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 </UL>
 
-<P><STRONG><a name="[60]"></a>strlen</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, strlen.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
-<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
-<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_raw_debug
+<P><STRONG><a name="[5c]"></a>strlen</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, strlen.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_raw_debug
 <LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
 </UL>
 
@@ -249,8 +245,8 @@ Global Symbols
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 </UL>
 
-<P><STRONG><a name="[74]"></a>__aeabi_uidivmod</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, uidiv_div0.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<P><STRONG><a name="[6c]"></a>__aeabi_uidivmod</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, uidiv_div0.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[2e]"></a>__scatterload</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, init.o(.text))
@@ -259,10 +255,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
 </UL>
 
-<P><STRONG><a name="[7f]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[77]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
-<P><STRONG><a name="[70]"></a>Error_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, main.o(.text.Error_Handler))
-<BR><BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<P><STRONG><a name="[68]"></a>Error_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, main.o(.text.Error_Handler))
+<BR><BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 
 <P><STRONG><a name="[46]"></a>HAL_DMA_Abort</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, stm32f0xx_hal_dma.o(.text.HAL_DMA_Abort))
@@ -282,11 +278,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_serial_data
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 
 <P><STRONG><a name="[2b]"></a>HAL_GPIO_Init</STRONG> (Thumb, 384 bytes, Stack size 52 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_Init))
@@ -297,20 +292,19 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> sim808.o(.text.sim_init)
 </UL>
-<P><STRONG><a name="[71]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_ReadPin))
-<BR><BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<P><STRONG><a name="[69]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_ReadPin))
+<BR><BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 
 <P><STRONG><a name="[53]"></a>HAL_GPIO_TogglePin</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_TogglePin))
-<BR><BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HardFault_Handler
+<BR><BR>[Called By]<UL><LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HardFault_Handler
 </UL>
 
-<P><STRONG><a name="[64]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_WritePin))
+<P><STRONG><a name="[5f]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(.text.HAL_GPIO_WritePin))
 <BR><BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 
 <P><STRONG><a name="[34]"></a>HAL_GetTick</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f0xx_hal.o(.text.HAL_GetTick))
@@ -447,7 +441,7 @@ Global Symbols
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 <LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 
 <P><STRONG><a name="[49]"></a>HAL_UART_MspInit</STRONG> (Thumb, 160 bytes, Stack size 40 bytes, stm32f0xx_hal_msp.o(.text.HAL_UART_MspInit))
@@ -466,7 +460,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Start_Receive_IT
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
 </UL>
 
@@ -485,9 +479,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_serial_data
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> sim808.o(.text.send_raw_debug)
 </UL>
@@ -588,220 +581,146 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f051x8.o(RESET)
 </UL>
-<P><STRONG><a name="[68]"></a>_mult</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, aes_encryption.o(.text._mult))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mix_columns
-</UL>
-
-<P><STRONG><a name="[57]"></a>aes128_encrypt</STRONG> (Thumb, 104 bytes, Stack size 24 bytes, aes_encryption.o(.text.aes128_encrypt))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = aes128_encrypt &rArr; mix_columns
-</UL>
-<BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mix_columns
-<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;expand_key
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;shift_rows
-</UL>
-<BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[5b]"></a>close_tcp_connection</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, network_functions.o(.text.close_tcp_connection))
+<P><STRONG><a name="[57]"></a>close_tcp_connection</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, network_functions.o(.text.close_tcp_connection))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = close_tcp_connection &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 <LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
 </UL>
-<BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
+<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
 </UL>
 
-<P><STRONG><a name="[5d]"></a>enable_gprs</STRONG> (Thumb, 1208 bytes, Stack size 304 bytes, network_functions.o(.text.enable_gprs))
+<P><STRONG><a name="[59]"></a>enable_gprs</STRONG> (Thumb, 1212 bytes, Stack size 304 bytes, network_functions.o(.text.enable_gprs))
 <BR><BR>[Stack]<UL><LI>Max Depth = 592<LI>Call Chain = enable_gprs &rArr; sim_insert_PIN &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_subarray_present
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_subarray_present
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
 <LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[62]"></a>enable_gps</STRONG> (Thumb, 80 bytes, Stack size 56 bytes, gps.o(.text.enable_gps))
+<P><STRONG><a name="[5e]"></a>enable_gps</STRONG> (Thumb, 80 bytes, Stack size 56 bytes, gps.o(.text.enable_gps))
 <BR><BR>[Stack]<UL><LI>Max Depth = 304<LI>Call Chain = enable_gps &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5a]"></a>expand_key</STRONG> (Thumb, 188 bytes, Stack size 48 bytes, aes_encryption.o(.text.expand_key))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = expand_key &rArr; g
-</UL>
-<BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;g
-</UL>
-<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aes128_encrypt
-</UL>
-
-<P><STRONG><a name="[63]"></a>g</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, aes_encryption.o(.text.g))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = g
-</UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;expand_key
-</UL>
-
-<P><STRONG><a name="[5e]"></a>is_subarray_present</STRONG> (Thumb, 72 bytes, Stack size 28 bytes, sim808.o(.text.is_subarray_present))
+<P><STRONG><a name="[5a]"></a>is_subarray_present</STRONG> (Thumb, 72 bytes, Stack size 28 bytes, sim808.o(.text.is_subarray_present))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = is_subarray_present
 </UL>
-<BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_serial_data
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 </UL>
 
-<P><STRONG><a name="[23]"></a>main</STRONG> (Thumb, 264 bytes, Stack size 128 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1440<LI>Call Chain = main &rArr; publish_mqtt_msg &rArr; open_tcp_connection &rArr; enable_gprs &rArr; sim_insert_PIN &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+<P><STRONG><a name="[23]"></a>main</STRONG> (Thumb, 220 bytes, Stack size 88 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1400<LI>Call Chain = main &rArr; publish_mqtt_msg &rArr; open_tcp_connection &rArr; enable_gprs &rArr; sim_insert_PIN &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gps
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aes128_encrypt
+<BR>[Calls]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gps
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 <LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_TogglePin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[59]"></a>mix_columns</STRONG> (Thumb, 92 bytes, Stack size 56 bytes, aes_encryption.o(.text.mix_columns))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = mix_columns
-</UL>
-<BR>[Calls]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mult
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-</UL>
-<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aes128_encrypt
-</UL>
-
-<P><STRONG><a name="[69]"></a>open_tcp_connection</STRONG> (Thumb, 404 bytes, Stack size 424 bytes, network_functions.o(.text.open_tcp_connection))
+<P><STRONG><a name="[63]"></a>open_tcp_connection</STRONG> (Thumb, 404 bytes, Stack size 424 bytes, network_functions.o(.text.open_tcp_connection))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1016<LI>Call Chain = open_tcp_connection &rArr; enable_gprs &rArr; sim_insert_PIN &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_subarray_present
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_subarray_present
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 <LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcat
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcat
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
+<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
 </UL>
 
-<P><STRONG><a name="[67]"></a>publish_mqtt_msg</STRONG> (Thumb, 260 bytes, Stack size 296 bytes, network_functions.o(.text.publish_mqtt_msg))
+<P><STRONG><a name="[62]"></a>publish_mqtt_msg</STRONG> (Thumb, 248 bytes, Stack size 296 bytes, network_functions.o(.text.publish_mqtt_msg))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1312<LI>Call Chain = publish_mqtt_msg &rArr; open_tcp_connection &rArr; enable_gprs &rArr; sim_insert_PIN &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_tcp_data
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;close_tcp_connection
-<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_raw_debug
+<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;close_tcp_connection
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_raw_debug
 <LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5c]"></a>send_AT_cmd</STRONG> (Thumb, 144 bytes, Stack size 168 bytes, sim808.o(.text.send_AT_cmd))
+<P><STRONG><a name="[58]"></a>send_AT_cmd</STRONG> (Thumb, 144 bytes, Stack size 168 bytes, sim808.o(.text.send_AT_cmd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_subarray_present
+<BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_subarray_present
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcat
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcat
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_tcp_data
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;close_tcp_connection
-<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
-<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gps
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;close_tcp_connection
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_insert_PIN
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gps
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 
 <P><STRONG><a name="[29]"></a>send_debug</STRONG> (Thumb, 68 bytes, Stack size 32 bytes, sim808.o(.text.send_debug))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = send_debug
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_tcp_data
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;close_tcp_connection
-<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
-<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_serial_data
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
+<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;close_tcp_connection
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_tcp_connection
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_power_off
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sim_init
 </UL>
 <BR>[Address Reference Count : 2]<UL><LI> network_functions.o(.text.open_tcp_connection)
 <LI> network_functions.o(.text.publish_mqtt_msg)
 </UL>
-<P><STRONG><a name="[6c]"></a>send_raw_debug</STRONG> (Thumb, 68 bytes, Stack size 40 bytes, sim808.o(.text.send_raw_debug))
+<P><STRONG><a name="[66]"></a>send_raw_debug</STRONG> (Thumb, 68 bytes, Stack size 40 bytes, sim808.o(.text.send_raw_debug))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = send_raw_debug
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
-</UL>
-
-<P><STRONG><a name="[6f]"></a>send_serial_data</STRONG> (Thumb, 120 bytes, Stack size 152 bytes, sim808.o(.text.send_serial_data))
-<BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = send_serial_data &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
-</UL>
-<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_subarray_present
-<LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-</UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_tcp_data
+<BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
 </UL>
 
-<P><STRONG><a name="[6d]"></a>send_tcp_data</STRONG> (Thumb, 76 bytes, Stack size 304 bytes, network_functions.o(.text.send_tcp_data))
-<BR><BR>[Stack]<UL><LI>Max Depth = 552<LI>Call Chain = send_tcp_data &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
-</UL>
-<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_serial_data
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
-<LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-</UL>
-<BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;publish_mqtt_msg
-</UL>
-
-<P><STRONG><a name="[58]"></a>shift_rows</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, aes_encryption.o(.text.shift_rows))
-<BR><BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aes128_encrypt
-</UL>
-
-<P><STRONG><a name="[66]"></a>sim_init</STRONG> (Thumb, 372 bytes, Stack size 56 bytes, sim808.o(.text.sim_init))
+<P><STRONG><a name="[61]"></a>sim_init</STRONG> (Thumb, 372 bytes, Stack size 56 bytes, sim808.o(.text.sim_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 304<LI>Call Chain = sim_init &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
+<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 <LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_IT
 <LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
@@ -810,46 +729,44 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5f]"></a>sim_insert_PIN</STRONG> (Thumb, 56 bytes, Stack size 40 bytes, network_functions.o(.text.sim_insert_PIN))
+<P><STRONG><a name="[5b]"></a>sim_insert_PIN</STRONG> (Thumb, 56 bytes, Stack size 40 bytes, network_functions.o(.text.sim_insert_PIN))
 <BR><BR>[Stack]<UL><LI>Max Depth = 288<LI>Call Chain = sim_insert_PIN &rArr; send_AT_cmd &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
+<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_gprs
 </UL>
 
-<P><STRONG><a name="[65]"></a>sim_power_off</STRONG> (Thumb, 112 bytes, Stack size 16 bytes, sim808.o(.text.sim_power_off))
+<P><STRONG><a name="[60]"></a>sim_power_off</STRONG> (Thumb, 112 bytes, Stack size 16 bytes, sim808.o(.text.sim_power_off))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = sim_power_off &rArr; send_debug
 </UL>
 <BR>[Calls]<UL><LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug
 </UL>
 <BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[72]"></a>__0sprintf$1</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1), UNUSED)
+<P><STRONG><a name="[6a]"></a>__0sprintf$1</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
-<P><STRONG><a name="[80]"></a>__1sprintf$1</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1), UNUSED)
+<P><STRONG><a name="[78]"></a>__1sprintf$1</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1), UNUSED)
 
-<P><STRONG><a name="[6e]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1))
+<P><STRONG><a name="[67]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_tcp_data
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_serial_data
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_AT_cmd
 </UL>
 
-<P><STRONG><a name="[81]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[79]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
 
-<P><STRONG><a name="[82]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[7a]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
 
-<P><STRONG><a name="[83]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[7b]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 <P>
 <H3>
 Local Symbols
@@ -887,14 +804,14 @@ Local Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
 </UL>
 
-<P><STRONG><a name="[73]"></a>_printf_core</STRONG> (Thumb, 332 bytes, Stack size 88 bytes, printf1.o(i._printf_core), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<P><STRONG><a name="[6b]"></a>_printf_core</STRONG> (Thumb, 332 bytes, Stack size 88 bytes, printf1.o(i._printf_core), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf$1
+<BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf$1
 </UL>
 
 <P><STRONG><a name="[2c]"></a>_sputc</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, printf1.o(i._sputc))
-<BR><BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf$1
+<BR><BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf$1
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> printf1.o(i.__0sprintf$1)
 </UL><P>

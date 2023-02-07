@@ -165,7 +165,7 @@ uint8_t enable_gprs(){
 
 		while(trials_counter <3){
 			#ifdef DEBUG_MODE
-			send_debug("Check GPRS signal uqality: send AT+CSQ");
+			send_debug("Check GPRS signal quqality: send AT+CSQ");
 			#endif
 			send_AT_cmd(check_signal_cmd,"OK",1,local_rx_buffer,RX_TIMEOUT);
 			/* Check the reply of the module in local_rx_buffer to see if the signal is weak.
@@ -328,7 +328,7 @@ uint8_t enable_gprs(){
 	#endif
 	send_AT_cmd(check_PDP_context_cmd,"OK",TRUE,local_rx_buffer,RX_TIMEOUT);
 		
-	pdp_defined = is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"CMNET",sizeof("CMNET")-1);
+	pdp_defined = ! is_subarray_present((uint8_t*)local_rx_buffer,RX_BUFFER_LENGTH,(uint8_t*)"CMNET",sizeof("CMNET")-1);
 		
 	if(pdp_defined==0){
 		/* Build enable_PDP_context_cmd 
@@ -644,14 +644,7 @@ uint8_t publish_mqtt_msg(char * ip_address, char *  tcp_port, char * topic, char
 	uint16_t client_id_length = strlen(client_id);
 	uint8_t connect_packet_remaining_length = 12 + client_id_length;;
 	uint16_t keep_alive = MQTT_KEEP_ALIVE;
-	
-	
-
-uint8_t disconnect_packet[] = {
-	0xe0, // Packet type = DISCONNECT
-	0x00 // Remaining length = 0
-};
-
+		
 	uint8_t connect_packet[MAX_LENGTH_MQTT_PACKET]= {
 	0x10, // Packet type = CONNECT
 	0x10, // Remaining length = 16
@@ -679,25 +672,22 @@ uint8_t disconnect_packet[] = {
 	for(uint8_t i = 0; i< client_id_length ; i++)
 		connect_packet[14+i]=(uint8_t)client_id[i];
 
+
+
+
+	/*** Construct the Publish Packet ***/
+
+	uint16_t topic_length = strlen(topic);
+	uint8_t publish_packet_remaining_length= 2 + topic_length + (uint8_t)strlen(message) ;
 	
 
-	uint16_t topic_length = (uint16_t)strlen(topic);
-	uint8_t publish_packet_remaining_length=0;
-/*
-	0x30, //Packet type = Publish + DUP+QOS+retain=0
-	0x1d, // Remaining length = 29
-	0x00, 0x04, // Topic name length
-	 // Topic name = Client ID
-*/
-
-uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
-	0x30, // Packet type = Publish + DUP+QOS+retain=0
-	0x1d, // Remaining length = 29
-	0x00, 0x04 // Topic name length
-};
+	uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
+		0x30, // Packet type = Publish + DUP+QOS+retain=0
+		0x1d, // Remaining length dummy example 0x1d = 29
+		0x00, 0x04 // Topic name length dummy example = 4
+	};
 	
 	/*insert remaining length */
-	publish_packet_remaining_length = 2 + topic_length + strlen(message);
 	publish_packet[1] = publish_packet_remaining_length;
 	
 	/* Insert topic name length into the packet with same way used for keep_alive */ 
@@ -713,11 +703,22 @@ uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
 	for(uint8_t i = 0; i< strlen(message); i++)
 		publish_packet[4+topic_length+i]=(uint8_t)message[i];
 	
+
+	
+/*** Construct Disconnect Packet ***/
+	
+	uint8_t disconnect_packet[] = {
+		0xe0, // Packet type = DISCONNECT
+		0x00 // Remaining length = 0
+	};	
+
+	
+	
 	#ifdef DEBUG_MODE
-		send_debug("CONNECT packet content:");
+		send_debug("***CONNECT packet content:***");
 		send_raw_debug(connect_packet,14+client_id_length);	
-		send_debug("PUBLISH packet content:");
-		//send_raw_debug(publish_packet,publish_packet_remaining_length+2);
+		send_debug("***PUBLISH packet content:***");
+		send_raw_debug(publish_packet,publish_packet_remaining_length+2);
 	#endif
 	
 		#ifdef DEBUG_MODE
@@ -737,17 +738,17 @@ uint8_t publish_packet[MAX_LENGTH_MQTT_PACKET] ={
 			#ifdef DEBUG_MODE
 				send_debug("Sending MQTT CONNECT Packet");
 			#endif
-			//send_tcp_data(connect_packet,14+client_id_length);
-			
+			//send_tcp_data(connect_packet,2+connect_packet_remaining_length);
+
 			#ifdef DEBUG_MODE
 				send_debug("Sending MQTT PUBLISH Packet");
 			#endif
-			send_tcp_data(publish_packet,publish_packet_remaining_length+2);
+			//send_tcp_data(publish_packet,publish_packet_remaining_length+2);
 			//send_tcp_data((uint8_t *)"hello",5);
 			#ifdef DEBUG_MODE
 				send_debug("Sending MQTT DISCONNECT Packet");
 			#endif
-			send_tcp_data(disconnect_packet,2);
+			//send_tcp_data(disconnect_packet,2);
 			
 			close_tcp_connection();
 			return SUCCESS;
