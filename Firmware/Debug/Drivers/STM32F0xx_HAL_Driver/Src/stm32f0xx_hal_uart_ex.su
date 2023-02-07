@@ -1,0 +1,9 @@
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:150:19:HAL_RS485Ex_Init	24	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:258:13:HAL_UARTEx_WakeupCallback	0	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:344:19:HAL_MultiProcessorEx_AddressLength_Set	16	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:383:19:HAL_UARTEx_StopModeWakeUpSourceConfig	40	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:440:19:HAL_UARTEx_EnableStopMode	8	static,ignoring_inline_asm
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:459:19:HAL_UARTEx_DisableStopMode	8	static,ignoring_inline_asm
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:496:19:HAL_UARTEx_ReceiveToIdle	40	static
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:637:19:HAL_UARTEx_ReceiveToIdle_IT	16	static,ignoring_inline_asm
+../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c:715:19:HAL_UARTEx_ReceiveToIdle_DMA	16	static,ignoring_inline_asm

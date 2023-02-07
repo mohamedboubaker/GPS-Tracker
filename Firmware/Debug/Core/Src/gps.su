@@ -1,0 +1,2 @@
+../Core/Src/gps.c:13:9:enable_gps	56	static
+../Core/Src/gps.c:26:9:get_gps_location	296	static

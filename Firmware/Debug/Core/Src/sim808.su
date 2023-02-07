@@ -1,0 +1,9 @@
+../Core/Src/sim808.c:22:7:send_debug	32	static
+../Core/Src/sim808.c:30:7:send_raw_debug	32	static
+../Core/Src/sim808.c:46:6:HAL_UART_RxCpltCallback	8	static
+../Core/Src/sim808.c:180:9:sim_power_off	16	static
+../Core/Src/sim808.c:213:6:system_reset	8	static
+../Core/Src/sim808.c:262:9:is_subarray_present	20	static
+../Core/Src/sim808.c:220:9:send_AT_cmd	160	static
+../Core/Src/sim808.c:57:9:sim_init	56	static
+../Core/Src/sim808.c:286:9:send_serial_data	168	static
