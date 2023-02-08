@@ -7,6 +7,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 
 
 <b>Note: 
+ 
  click here to go directlty to the <a href="https://mohamedboubaker.github.io/GPS-Tracker/files.html">code documentation</a> 
  
  click here to jump to the <a href="https://github.com/mohamedboubaker/GPS-Tracker#41-Test-drive"> test drive results </a>
