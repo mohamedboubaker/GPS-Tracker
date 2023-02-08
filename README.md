@@ -158,6 +158,7 @@ Below is a 3D picture of the manufactured PCB. The front side is on the left and
 The test drive depicted on the map below was carried out from Nuremberg to Munich on board the ICE train which reaches speeds of 300 km/h. The blue line represents the path that the GPS tracker traveled. The covered distance was around 170Km and the trip was around 1h30 of duration.
 
 The GPS board update frequency for this test was programmed to around 3 times/seconds which resulted in around 1500 position points uploaded to the server. The coordinates uploaded to the server can be examined in this file.
+
 During the trip the GPRS connection suffered 3 times a sudden disruption, but the board rebooted automatically and recovered the connection.
 
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/test_drive_nuremberg_munich.png)
