@@ -1,0 +1,6 @@
+../Core/Src/network_functions.c:14:9:sim_insert_PIN	32	static
+../Core/Src/network_functions.c:46:9:enable_gprs	288	static
+../Core/Src/network_functions.c:465:9:open_tcp_connection	408	static
+../Core/Src/network_functions.c:575:9:close_tcp_connection	16	static
+../Core/Src/network_functions.c:594:9:send_tcp_data	304	static
+../Core/Src/network_functions.c:623:9:publish_mqtt_msg	304	static

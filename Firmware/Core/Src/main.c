@@ -15,81 +15,76 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+
+#include <string.h>
 #include "main.h"
 #include "sim808.h"
+#include "gps.h"
+#include "network_functions.h"
+#include "aes_encryption.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
 
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
-//UART_HandleTypeDef huart1;
-//UART_HandleTypeDef huart2;
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-//static void MX_GPIO_Init(void);
-//static void MX_USART1_UART_Init(void);
-//static void MX_USART2_UART_Init(void);
-/* USER CODE BEGIN PFP */
+static void MX_GPIO_Init(void);
 
-/* USER CODE END PFP */
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
 int main(void)
 {
-	SIM808_typedef * sim;
-	mm
-	sim->power_on_gpio=GPIOB; mmm
-	sim->power_on_pin=GPIO_PIN_9;
-	sim->reset_gpio=GPIOF;
-	sim->reset_pin=GPIO_PIN_7;
-	sim->status_gpio=GPIOC;
-	sim->status_pin=GPIO_PIN_14;
+	
 
+	
+	
+	/* Initialize HAL, GPIO and clocks */
   HAL_Init();
   SystemClock_Config();
   MX_GPIO_Init();
 	
-	sim_uart_init(sim);
+	/* Define the SIM808_typedef */
+	SIM808_typedef sim;
+	sim.AT_uart_instance=USART1;
+	sim.debug_uart_instance=USART2;
+	sim.power_on_gpio=GPIOB; 
+	sim.power_on_pin=GPIO_PIN_9;
+	sim.reset_gpio=GPIOF;
+	sim.reset_pin=GPIO_PIN_7;
+	sim.status_gpio=GPIOC;
+	sim.status_pin=GPIO_PIN_14;
+	
 
-  while (1)
+	/*initialize the SIM808 module */
+	sim_power_off(&sim);
+	sim_init(&sim);
+
+	//uint8_t key[]={0x2b,0x7e,0x15,0x16,0x28,0xae,0xd2,0xa6,0xab,0xf7,0x15,0x88,0x09,0xcf,0x4f,0x3c};
+	//uint8_t txt[]={0x32,0x43,0xf6,0xa8,0x88,0x5a,0x30,0x8d,0x31,0x31,0x98,0xa2,0xe0,0x37,0x07,0x34};
+
+	/* enable GPS/GPRS */
+	enable_gps();
+	enable_gprs();
+	
+	char gps_position[24]="Position_data";
+	char ip_address[]="18.195.228.39";
+	char tcp_port[] = "1883";
+	//char msg[]="STM32CubeIDE";
+	uint8_t tx_error_count=0;
+
+while (1)
   {
-		HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_8);
-		HAL_Delay(300);
 
+		if (get_gps_location(gps_position)){
+			HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_13);
+			if (publish_mqtt_msg(ip_address,tcp_port,"P","B1",gps_position))
+				HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_12);
+			else tx_error_count++;
+	}
+		if (tx_error_count>10)
+			system_reset(&sim);
+		HAL_Delay(2000);
   }
 
 }
+	
 
 /**
   * @brief System Clock Configuration
@@ -135,41 +130,6 @@ void SystemClock_Config(void)
 
 
 /**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART2_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART2_Init 0 */
-
-  /* USER CODE END USART2_Init 0 */
-
-  /* USER CODE BEGIN USART2_Init 1 */
-
-  /* USER CODE END USART2_Init 1 */
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 38400;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART2_Init 2 */
-
-  /* USER CODE END USART2_Init 2 */
-
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -179,18 +139,21 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
- __HAL_RCC_GPIOC_CLK_ENABLE();
+	__HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
 
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12 | GPIO_PIN_13, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PC8 PC9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+  /*Configure GPIO pins : PB13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
