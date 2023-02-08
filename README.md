@@ -7,8 +7,9 @@ The scope of the project is more focoused on the embedded side. In other words, 
 
 
 <b> Quick Links: </b>
-- <a href="https://mohamedboubaker.github.io/GPS-Tracker/files.html">Code documentation</a> 
-- <a href="https://github.com/mohamedboubaker/GPS-Tracker#41-Test-drive"> Test drive results </a>
+- <b><a href="https://mohamedboubaker.github.io/GPS-Tracker/files.html">Code documentation</a></b> 
+- <b><a href="https://github.com/mohamedboubaker/GPS-Tracker#41-Test-drive"> Test drive results </a></b>
+
 
 
 ![](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/PCB.JPG)
