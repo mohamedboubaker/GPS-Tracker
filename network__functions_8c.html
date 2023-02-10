@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><code>#include &lt;string.h&gt;</code><br/>
 <code>#include &lt;stdio.h&gt;</code><br/>
 <code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &quot;<a class="el" href="sim808_8h_source.html">sim808.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="network__functions_8h_source.html">network_functions.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -101,9 +102,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a896ceec96dfa0be19d5f860f90537bb1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__functions_8c.html#a896ceec96dfa0be19d5f860f90537bb1">enable_gprs</a> ()</td></tr>
 <tr class="memdesc:a896ceec96dfa0be19d5f860f90537bb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">gprs_enable() enables GPRS connection. GPRS must be enabled before trying to establish TCP connection. This function goes through a series of the tests below. action is taken depending on the test result  <a href="#a896ceec96dfa0be19d5f860f90537bb1">More...</a><br/></td></tr>
 <tr class="separator:a896ceec96dfa0be19d5f860f90537bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf75c40981bd91e5a0a611a47e5584f9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__functions_8c.html#aaf75c40981bd91e5a0a611a47e5584f9">publish_mqtt_msg</a> (char *ip_address, char *tcp_port, char *topic, char *client_id, char *message)</td></tr>
-<tr class="memdesc:aaf75c40981bd91e5a0a611a47e5584f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">publishes a message to an MQTT topic with QoS 1 by default.  <a href="#aaf75c40981bd91e5a0a611a47e5584f9">More...</a><br/></td></tr>
-<tr class="separator:aaf75c40981bd91e5a0a611a47e5584f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb77841d58d38caaff77e98187d4ffad"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__functions_8c.html#afb77841d58d38caaff77e98187d4ffad">open_tcp_connection</a> (char *server_address, char *port)</td></tr>
 <tr class="memdesc:afb77841d58d38caaff77e98187d4ffad"><td class="mdescLeft">&#160;</td><td class="mdescRight">opens a new TCP connection. if the function is called when there is already an open TCP connection then it closes it and opens a new connection.  <a href="#afb77841d58d38caaff77e98187d4ffad">More...</a><br/></td></tr>
 <tr class="separator:afb77841d58d38caaff77e98187d4ffad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,6 +111,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa7506368f7c307c0908c6b62638ea21d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__functions_8c.html#aa7506368f7c307c0908c6b62638ea21d">send_tcp_data</a> (uint8_t *data, uint8_t data_length)</td></tr>
 <tr class="memdesc:aa7506368f7c307c0908c6b62638ea21d"><td class="mdescLeft">&#160;</td><td class="mdescRight">sends data over an open TCP connection.  <a href="#aa7506368f7c307c0908c6b62638ea21d">More...</a><br/></td></tr>
 <tr class="separator:aa7506368f7c307c0908c6b62638ea21d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf75c40981bd91e5a0a611a47e5584f9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__functions_8c.html#aaf75c40981bd91e5a0a611a47e5584f9">publish_mqtt_msg</a> (char *ip_address, char *tcp_port, char *topic, char *client_id, char *message)</td></tr>
+<tr class="memdesc:aaf75c40981bd91e5a0a611a47e5584f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">publishes a message to an MQTT topic with QoS 1 by default.  <a href="#aaf75c40981bd91e5a0a611a47e5584f9">More...</a><br/></td></tr>
+<tr class="separator:aaf75c40981bd91e5a0a611a47e5584f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>GPRS, TCP and MQTT functions implementation. </p>

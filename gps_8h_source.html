@@ -92,11 +92,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;uint8_t <a class="code" href="gps_8c.html#a3130b6f8898a4b69a65fa6886465c293">sim_gps_enable</a>();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;uint8_t <a class="code" href="gps_8c.html#a9d05f84a5fd686faaef63061c8f957d1">enable_gps</a>();</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;uint8_t <a class="code" href="gps_8c.html#a08d2ce4b33d954abe6a6d06c11aca4a8">sim_gps_get_location</a>(<span class="keywordtype">char</span>* position);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;uint8_t <a class="code" href="gps_8c.html#aa06049118fd2f89519f4ef9cf248e448">get_gps_location</a>(<span class="keywordtype">char</span>* position);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
@@ -106,12 +106,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;uint8_t <a class="code" href="gps_8h.html#a2dcde561de8c8f8b799379d8c2bef406">sim_gps_disable</a>();</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="gps_8c_html_a08d2ce4b33d954abe6a6d06c11aca4a8"><div class="ttname"><a href="gps_8c.html#a08d2ce4b33d954abe6a6d06c11aca4a8">sim_gps_get_location</a></div><div class="ttdeci">uint8_t sim_gps_get_location(char *coordinates)</div><div class="ttdoc">checks if the module has a GPS fix, if yes, it querries the GPS module for the current position...</div><div class="ttdef"><b>Definition:</b> gps.c:26</div></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="gps_8c_html_a9d05f84a5fd686faaef63061c8f957d1"><div class="ttname"><a href="gps_8c.html#a9d05f84a5fd686faaef63061c8f957d1">enable_gps</a></div><div class="ttdeci">uint8_t enable_gps()</div><div class="ttdoc">enables the GPS functionality of the SIM808 module </div><div class="ttdef"><b>Definition:</b> gps.c:13</div></div>
 <div class="ttc" id="gps_8h_html_a8d11f1ab0b372fdcb05eb2d526cd99f0"><div class="ttname"><a href="gps_8h.html#a8d11f1ab0b372fdcb05eb2d526cd99f0">sim_gps_get_speed</a></div><div class="ttdeci">uint8_t sim_gps_get_speed(char *speed)</div><div class="ttdoc">returns the speed relative to ground. </div></div>
 <div class="ttc" id="sim808_8h_html"><div class="ttname"><a href="sim808_8h.html">sim808.h</a></div><div class="ttdoc">Prototypes of functions that communicate with the SIM808 module and control it and definition of rela...</div></div>
 <div class="ttc" id="gps_8h_html_a2dcde561de8c8f8b799379d8c2bef406"><div class="ttname"><a href="gps_8h.html#a2dcde561de8c8f8b799379d8c2bef406">sim_gps_disable</a></div><div class="ttdeci">uint8_t sim_gps_disable()</div><div class="ttdoc">disables the GPS functionality of the SIM808 module and the active antenna power supply ...</div></div>
-<div class="ttc" id="gps_8c_html_a3130b6f8898a4b69a65fa6886465c293"><div class="ttname"><a href="gps_8c.html#a3130b6f8898a4b69a65fa6886465c293">sim_gps_enable</a></div><div class="ttdeci">uint8_t sim_gps_enable()</div><div class="ttdoc">enables the GPS functionality of the SIM808 module </div><div class="ttdef"><b>Definition:</b> gps.c:13</div></div>
+<div class="ttc" id="gps_8c_html_aa06049118fd2f89519f4ef9cf248e448"><div class="ttname"><a href="gps_8c.html#aa06049118fd2f89519f4ef9cf248e448">get_gps_location</a></div><div class="ttdeci">uint8_t get_gps_location(char *coordinates)</div><div class="ttdoc">checks if the module has a GPS fix, if yes, it querries the GPS module for the current position...</div><div class="ttdef"><b>Definition:</b> gps.c:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -95,23 +95,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3130b6f8898a4b69a65fa6886465c293"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8c.html#a3130b6f8898a4b69a65fa6886465c293">sim_gps_enable</a> ()</td></tr>
-<tr class="memdesc:a3130b6f8898a4b69a65fa6886465c293"><td class="mdescLeft">&#160;</td><td class="mdescRight">enables the GPS functionality of the SIM808 module  <a href="#a3130b6f8898a4b69a65fa6886465c293">More...</a><br/></td></tr>
-<tr class="separator:a3130b6f8898a4b69a65fa6886465c293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08d2ce4b33d954abe6a6d06c11aca4a8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8c.html#a08d2ce4b33d954abe6a6d06c11aca4a8">sim_gps_get_location</a> (char *coordinates)</td></tr>
-<tr class="memdesc:a08d2ce4b33d954abe6a6d06c11aca4a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the module has a GPS fix, if yes, it querries the GPS module for the current position. The format of the output is longitude,latitude Example: 3937.656010,1406.059400  <a href="#a08d2ce4b33d954abe6a6d06c11aca4a8">More...</a><br/></td></tr>
-<tr class="separator:a08d2ce4b33d954abe6a6d06c11aca4a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d05f84a5fd686faaef63061c8f957d1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8c.html#a9d05f84a5fd686faaef63061c8f957d1">enable_gps</a> ()</td></tr>
+<tr class="memdesc:a9d05f84a5fd686faaef63061c8f957d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">enables the GPS functionality of the SIM808 module  <a href="#a9d05f84a5fd686faaef63061c8f957d1">More...</a><br/></td></tr>
+<tr class="separator:a9d05f84a5fd686faaef63061c8f957d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa06049118fd2f89519f4ef9cf248e448"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8c.html#aa06049118fd2f89519f4ef9cf248e448">get_gps_location</a> (char *coordinates)</td></tr>
+<tr class="memdesc:aa06049118fd2f89519f4ef9cf248e448"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the module has a GPS fix, if yes, it querries the GPS module for the current position. The format of the output is longitude,latitude Example: 3937.656010,1406.059400  <a href="#aa06049118fd2f89519f4ef9cf248e448">More...</a><br/></td></tr>
+<tr class="separator:aa06049118fd2f89519f4ef9cf248e448"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>GPS functions implementations. </p>
 <dl class="section author"><dt>Author</dt><dd>Mohamed Boubaker </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a3130b6f8898a4b69a65fa6886465c293"></a>
+<a class="anchor" id="a9d05f84a5fd686faaef63061c8f957d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t sim_gps_enable </td>
+          <td class="memname">uint8_t enable_gps </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -124,12 +124,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a08d2ce4b33d954abe6a6d06c11aca4a8"></a>
+<a class="anchor" id="aa06049118fd2f89519f4ef9cf248e448"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t sim_gps_get_location </td>
+          <td class="memname">uint8_t get_gps_location </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>position</em></td><td>)</td>

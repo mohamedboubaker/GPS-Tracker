@@ -95,12 +95,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3130b6f8898a4b69a65fa6886465c293"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8h.html#a3130b6f8898a4b69a65fa6886465c293">sim_gps_enable</a> ()</td></tr>
-<tr class="memdesc:a3130b6f8898a4b69a65fa6886465c293"><td class="mdescLeft">&#160;</td><td class="mdescRight">enables the GPS functionality of the SIM808 module  <a href="#a3130b6f8898a4b69a65fa6886465c293">More...</a><br/></td></tr>
-<tr class="separator:a3130b6f8898a4b69a65fa6886465c293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4830aa1ac598286ad4545eb33d2bab31"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8h.html#a4830aa1ac598286ad4545eb33d2bab31">sim_gps_get_location</a> (char *position)</td></tr>
-<tr class="memdesc:a4830aa1ac598286ad4545eb33d2bab31"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the module has a GPS fix, if yes, it querries the GPS module for the current position. The format of the output is longitude,latitude Example: 3937.656010,1406.059400  <a href="#a4830aa1ac598286ad4545eb33d2bab31">More...</a><br/></td></tr>
-<tr class="separator:a4830aa1ac598286ad4545eb33d2bab31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d05f84a5fd686faaef63061c8f957d1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8h.html#a9d05f84a5fd686faaef63061c8f957d1">enable_gps</a> ()</td></tr>
+<tr class="memdesc:a9d05f84a5fd686faaef63061c8f957d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">enables the GPS functionality of the SIM808 module  <a href="#a9d05f84a5fd686faaef63061c8f957d1">More...</a><br/></td></tr>
+<tr class="separator:a9d05f84a5fd686faaef63061c8f957d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0aeb01ab0f7ce9b289def9e93717853"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8h.html#ad0aeb01ab0f7ce9b289def9e93717853">get_gps_location</a> (char *position)</td></tr>
+<tr class="memdesc:ad0aeb01ab0f7ce9b289def9e93717853"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the module has a GPS fix, if yes, it querries the GPS module for the current position. The format of the output is longitude,latitude Example: 3937.656010,1406.059400  <a href="#ad0aeb01ab0f7ce9b289def9e93717853">More...</a><br/></td></tr>
+<tr class="separator:ad0aeb01ab0f7ce9b289def9e93717853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d11f1ab0b372fdcb05eb2d526cd99f0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gps_8h.html#a8d11f1ab0b372fdcb05eb2d526cd99f0">sim_gps_get_speed</a> (char *speed)</td></tr>
 <tr class="memdesc:a8d11f1ab0b372fdcb05eb2d526cd99f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the speed relative to ground.  <a href="#a8d11f1ab0b372fdcb05eb2d526cd99f0">More...</a><br/></td></tr>
 <tr class="separator:a8d11f1ab0b372fdcb05eb2d526cd99f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -112,30 +112,12 @@ Functions</h2></td></tr>
 <div class="textblock"><p>GPS functions' prototypes and definition of related parameters. </p>
 <dl class="section author"><dt>Author</dt><dd>Mohamed Boubaker </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a2dcde561de8c8f8b799379d8c2bef406"></a>
+<a class="anchor" id="a9d05f84a5fd686faaef63061c8f957d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t sim_gps_disable </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>disables the GPS functionality of the SIM808 module and the active antenna power supply </p>
-<dl class="section return"><dt>Returns</dt><dd>1 if the GPS is successfully disabled, 0 otherwise </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a3130b6f8898a4b69a65fa6886465c293"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t sim_gps_enable </td>
+          <td class="memname">uint8_t enable_gps </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -148,12 +130,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4830aa1ac598286ad4545eb33d2bab31"></a>
+<a class="anchor" id="ad0aeb01ab0f7ce9b289def9e93717853"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t sim_gps_get_location </td>
+          <td class="memname">uint8_t get_gps_location </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>position</em></td><td>)</td>
@@ -170,6 +152,24 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if the GPS position is calculated correctly, 0 if the module doesn't have a fix or an error occurs. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2dcde561de8c8f8b799379d8c2bef406"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t sim_gps_disable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>disables the GPS functionality of the SIM808 module and the active antenna power supply </p>
+<dl class="section return"><dt>Returns</dt><dd>1 if the GPS is successfully disabled, 0 otherwise </dd></dl>
 
 </div>
 </div>

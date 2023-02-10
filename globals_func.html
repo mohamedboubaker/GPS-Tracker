@@ -81,6 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_e"><span>e</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_h"><span>h</span></a></li>
+      <li><a href="#index_i"><span>i</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
@@ -141,9 +142,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="network__functions_8c.html#a896ceec96dfa0be19d5f860f90537bb1">network_functions.c</a>
 , <a class="el" href="network__functions_8h.html#a896ceec96dfa0be19d5f860f90537bb1">network_functions.h</a>
 </li>
+<li>enable_gps()
+: <a class="el" href="gps_8h.html#a9d05f84a5fd686faaef63061c8f957d1">gps.h</a>
+, <a class="el" href="gps_8c.html#a9d05f84a5fd686faaef63061c8f957d1">gps.c</a>
+</li>
 <li>expand_key()
-: <a class="el" href="aes__encryption_8c.html#aebc276093cf7862e378c8ea767f63595">aes_encryption.c</a>
-, <a class="el" href="aes__encryption_8h.html#a67439f8357eef160d8d59ad4bb80dc6c">aes_encryption.h</a>
+: <a class="el" href="aes__encryption_8h.html#a67439f8357eef160d8d59ad4bb80dc6c">aes_encryption.h</a>
+, <a class="el" href="aes__encryption_8c.html#aebc276093cf7862e378c8ea767f63595">aes_encryption.c</a>
 </li>
 </ul>
 
@@ -152,12 +157,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>g()
 : <a class="el" href="aes__encryption_8c.html#a9ded4a1164ad66183c85839a8b6ff1a8">aes_encryption.c</a>
 </li>
+<li>get_gps_location()
+: <a class="el" href="gps_8h.html#ad0aeb01ab0f7ce9b289def9e93717853">gps.h</a>
+, <a class="el" href="gps_8c.html#aa06049118fd2f89519f4ef9cf248e448">gps.c</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
 <li>HAL_UART_RxCpltCallback()
 : <a class="el" href="sim808_8c.html#ae494a9643f29b87d6d81e5264e60e57b">sim808.c</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
+<li>is_subarray_present()
+: <a class="el" href="sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4">sim808.c</a>
+, <a class="el" href="sim808_8h.html#a1f05954d16de4c033a7aca1abd6455d4">sim808.h</a>
 </li>
 </ul>
 
@@ -191,17 +208,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="aes__encryption_8c.html#ada2e96d64eb6609930d31647be7e4a9e">aes_encryption.c</a>
 , <a class="el" href="aes__encryption_8h.html#ada2e96d64eb6609930d31647be7e4a9e">aes_encryption.h</a>
 </li>
-<li>send_cmd()
-: <a class="el" href="sim808_8h.html#ae7fd99066f679511e6da2daa328738f5">sim808.h</a>
-, <a class="el" href="sim808_8c.html#ae7fd99066f679511e6da2daa328738f5">sim808.c</a>
+<li>send_AT_cmd()
+: <a class="el" href="sim808_8h.html#a30b959aa2173672d11610c75d5861865">sim808.h</a>
+, <a class="el" href="sim808_8c.html#a30b959aa2173672d11610c75d5861865">sim808.c</a>
 </li>
 <li>send_debug()
 : <a class="el" href="sim808_8c.html#a6e14828149893fb70f1cee3155436042">sim808.c</a>
 , <a class="el" href="sim808_8h.html#a6e14828149893fb70f1cee3155436042">sim808.h</a>
 </li>
-<li>send_serial()
-: <a class="el" href="sim808_8h.html#a14a3978f311f3f3fca3c0f44b2c55246">sim808.h</a>
-, <a class="el" href="sim808_8c.html#a14a3978f311f3f3fca3c0f44b2c55246">sim808.c</a>
+<li>send_raw_debug()
+: <a class="el" href="sim808_8h.html#a699ae4103a5d99b6bebdfcf3d440a75a">sim808.h</a>
+, <a class="el" href="sim808_8c.html#a699ae4103a5d99b6bebdfcf3d440a75a">sim808.c</a>
+</li>
+<li>send_serial_data()
+: <a class="el" href="sim808_8c.html#aff9a9f03a0382bf577073df2aa44ef03">sim808.c</a>
+, <a class="el" href="sim808_8h.html#a76b4cf1ea76700c13ed5d1f0ee23765a">sim808.h</a>
 </li>
 <li>send_tcp_data()
 : <a class="el" href="network__functions_8c.html#aa7506368f7c307c0908c6b62638ea21d">network_functions.c</a>
@@ -211,30 +232,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="aes__encryption_8c.html#ad1b86ed03464083452d6d99a8343d1b0">aes_encryption.c</a>
 , <a class="el" href="aes__encryption_8h.html#ad1b86ed03464083452d6d99a8343d1b0">aes_encryption.h</a>
 </li>
-<li>sim_get_cmd_reply()
-: <a class="el" href="sim808_8c.html#ad4e284e16e0b826afe2533546eb423da">sim808.c</a>
-, <a class="el" href="sim808_8h.html#ad4e284e16e0b826afe2533546eb423da">sim808.h</a>
-</li>
 <li>sim_gps_disable()
 : <a class="el" href="gps_8h.html#a2dcde561de8c8f8b799379d8c2bef406">gps.h</a>
-</li>
-<li>sim_gps_enable()
-: <a class="el" href="gps_8c.html#a3130b6f8898a4b69a65fa6886465c293">gps.c</a>
-, <a class="el" href="gps_8h.html#a3130b6f8898a4b69a65fa6886465c293">gps.h</a>
-</li>
-<li>sim_gps_get_location()
-: <a class="el" href="gps_8c.html#a08d2ce4b33d954abe6a6d06c11aca4a8">gps.c</a>
-, <a class="el" href="gps_8h.html#a4830aa1ac598286ad4545eb33d2bab31">gps.h</a>
 </li>
 <li>sim_gps_get_speed()
 : <a class="el" href="gps_8h.html#a8d11f1ab0b372fdcb05eb2d526cd99f0">gps.h</a>
 </li>
 <li>sim_init()
-: <a class="el" href="sim808_8c.html#a2605f3426f7113811f78dd74ec94b36f">sim808.c</a>
-, <a class="el" href="sim808_8h.html#a2605f3426f7113811f78dd74ec94b36f">sim808.h</a>
+: <a class="el" href="sim808_8h.html#a2605f3426f7113811f78dd74ec94b36f">sim808.h</a>
+, <a class="el" href="sim808_8c.html#a2605f3426f7113811f78dd74ec94b36f">sim808.c</a>
 </li>
 <li>sim_insert_PIN()
 : <a class="el" href="network__functions_8c.html#aa39fbb7366c1944577dc471b5e39d81b">network_functions.c</a>
+</li>
+<li>sim_power_off()
+: <a class="el" href="sim808_8c.html#a11c7f4c93f5788ac46dcd5ba3332332a">sim808.c</a>
+, <a class="el" href="sim808_8h.html#a11c7f4c93f5788ac46dcd5ba3332332a">sim808.h</a>
+</li>
+<li>system_reset()
+: <a class="el" href="sim808_8h.html#ad3e8d14d18e682e3c7716ecf3683f95a">sim808.h</a>
+, <a class="el" href="sim808_8c.html#ad3e8d14d18e682e3c7716ecf3683f95a">sim808.c</a>
 </li>
 </ul>
 </div><!-- contents -->
