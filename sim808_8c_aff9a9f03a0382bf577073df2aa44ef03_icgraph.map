@@ -1,0 +1,4 @@
+<map id="send_serial_data" name="send_serial_data">
+<area shape="rect" id="node2" href="$network__functions_8h.html#aa7506368f7c307c0908c6b62638ea21d" title="sends data over an open TCP connection. " alt="" coords="187,5,303,32"/>
+<area shape="rect" id="node3" href="$network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="353,5,495,32"/>
+</map>

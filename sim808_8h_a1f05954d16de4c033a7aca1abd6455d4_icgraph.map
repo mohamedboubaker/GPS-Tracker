@@ -1,0 +1,13 @@
+<map id="is_subarray_present" name="is_subarray_present">
+<area shape="rect" id="node2" href="$network__functions_8h.html#a896ceec96dfa0be19d5f860f90537bb1" title="enables the GPRS connection. GPRS must be enabled before trying to establish TCP connection. This function goes through a series of the tests below. action is taken depending on the test result " alt="" coords="601,69,703,96"/>
+<area shape="rect" id="node3" href="$network__functions_8h.html#a8f6426d9956b4a51d120aeac52f07c01" title="opens a new TCP connection. if the function is called when there is already an open TCP connection th..." alt="" coords="782,108,941,134"/>
+<area shape="rect" id="node5" href="$sim808_8h.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="219,196,330,222"/>
+<area shape="rect" id="node12" href="$sim808_8h.html#a76b4cf1ea76700c13ed5d1f0ee23765a" title="sends raw serial data to the SIM808 module through the AT_uart peripheral. Then it deletes the receiv..." alt="" coords="209,322,341,349"/>
+<area shape="rect" id="node4" href="$network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="990,196,1133,222"/>
+<area shape="rect" id="node6" href="$gps_8h.html#a9d05f84a5fd686faaef63061c8f957d1" title="enables the GPS functionality of the SIM808 module " alt="" coords="408,246,504,273"/>
+<area shape="rect" id="node7" href="$gps_8h.html#ad0aeb01ab0f7ce9b289def9e93717853" title="checks if the module has a GPS fix, if yes, it querries the GPS module for the current position..." alt="" coords="390,297,522,324"/>
+<area shape="rect" id="node8" href="$network__functions_8c.html#aa39fbb7366c1944577dc471b5e39d81b" title="sim_insert_PIN" alt="" coords="397,94,515,121"/>
+<area shape="rect" id="node9" href="$network__functions_8h.html#af9394c619bccecd9020108f317437d2b" title="closes an open TCP connection. " alt="" coords="571,196,733,222"/>
+<area shape="rect" id="node10" href="$network__functions_8h.html#aa7506368f7c307c0908c6b62638ea21d" title="sends data over an open TCP connection. " alt="" coords="398,398,514,425"/>
+<area shape="rect" id="node11" href="$sim808_8h.html#a2605f3426f7113811f78dd74ec94b36f" title="it initialises the SIM808_typedef struct members and powers on the module. initializes the UARTs and ..." alt="" coords="419,348,493,374"/>
+</map>

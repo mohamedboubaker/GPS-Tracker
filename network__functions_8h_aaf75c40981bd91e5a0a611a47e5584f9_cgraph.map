@@ -1,0 +1,12 @@
+<map id="publish_mqtt_msg" name="publish_mqtt_msg">
+<area shape="rect" id="node2" href="$sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="974,273,1074,300"/>
+<area shape="rect" id="node3" href="$sim808_8c.html#a699ae4103a5d99b6bebdfcf3d440a75a" title="send_raw_debug" alt="" coords="212,476,343,502"/>
+<area shape="rect" id="node4" href="$network__functions_8c.html#afb77841d58d38caaff77e98187d4ffad" title="opens a new TCP connection. if the function is called when there is already an open TCP connection th..." alt="" coords="198,222,357,249"/>
+<area shape="rect" id="node9" href="$network__functions_8c.html#aa7506368f7c307c0908c6b62638ea21d" title="sends data over an open TCP connection. " alt="" coords="578,273,694,300"/>
+<area shape="rect" id="node11" href="$network__functions_8c.html#af9394c619bccecd9020108f317437d2b" title="closes an open TCP connection. " alt="" coords="555,374,717,401"/>
+<area shape="rect" id="node5" href="$sim808_8c.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="777,172,887,198"/>
+<area shape="rect" id="node6" href="$sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="947,96,1101,122"/>
+<area shape="rect" id="node7" href="$network__functions_8c.html#a896ceec96dfa0be19d5f860f90537bb1" title="gprs_enable() enables GPRS connection. GPRS must be enabled before trying to establish TCP connection..." alt="" coords="405,121,507,148"/>
+<area shape="rect" id="node8" href="$network__functions_8c.html#aa39fbb7366c1944577dc471b5e39d81b" title="sim_insert_PIN" alt="" coords="577,121,695,148"/>
+<area shape="rect" id="node10" href="$sim808_8c.html#aff9a9f03a0382bf577073df2aa44ef03" title="sends raw serial data to the SIM808 module through the AT_uart peripheral. Then it deletes the receiv..." alt="" coords="766,222,898,249"/>
+</map>

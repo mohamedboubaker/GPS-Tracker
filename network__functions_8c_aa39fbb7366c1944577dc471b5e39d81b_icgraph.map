@@ -1,0 +1,5 @@
+<map id="sim_insert_PIN" name="sim_insert_PIN">
+<area shape="rect" id="node2" href="$network__functions_8h.html#a896ceec96dfa0be19d5f860f90537bb1" title="enables the GPRS connection. GPRS must be enabled before trying to establish TCP connection. This function goes through a series of the tests below. action is taken depending on the test result " alt="" coords="173,5,275,32"/>
+<area shape="rect" id="node3" href="$network__functions_8h.html#a8f6426d9956b4a51d120aeac52f07c01" title="opens a new TCP connection. if the function is called when there is already an open TCP connection th..." alt="" coords="323,5,482,32"/>
+<area shape="rect" id="node4" href="$network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="531,5,674,32"/>
+</map>

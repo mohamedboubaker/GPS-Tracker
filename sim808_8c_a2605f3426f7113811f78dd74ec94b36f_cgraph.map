@@ -1,0 +1,5 @@
+<map id="sim_init" name="sim_init">
+<area shape="rect" id="node2" href="$sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="315,5,415,32"/>
+<area shape="rect" id="node3" href="$sim808_8c.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="129,56,239,83"/>
+<area shape="rect" id="node4" href="$sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="289,56,442,83"/>
+</map>

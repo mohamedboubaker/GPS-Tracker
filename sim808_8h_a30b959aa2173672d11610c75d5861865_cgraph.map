@@ -1,0 +1,4 @@
+<map id="send_AT_cmd" name="send_AT_cmd">
+<area shape="rect" id="node2" href="$sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="166,5,319,32"/>
+<area shape="rect" id="node3" href="$sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="193,56,293,83"/>
+</map>

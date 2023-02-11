@@ -1,0 +1,4 @@
+<map id="enable_gprs" name="enable_gprs">
+<area shape="rect" id="node2" href="$network__functions_8h.html#a8f6426d9956b4a51d120aeac52f07c01" title="opens a new TCP connection. if the function is called when there is already an open TCP connection th..." alt="" coords="155,5,314,32"/>
+<area shape="rect" id="node3" href="$network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="363,5,506,32"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="send_AT_cmd" name="send_AT_cmd">
+<area shape="rect" id="node2" href="$gps_8h.html#a9d05f84a5fd686faaef63061c8f957d1" title="enables the GPS functionality of the SIM808 module " alt="" coords="184,5,280,32"/>
+<area shape="rect" id="node3" href="$gps_8h.html#ad0aeb01ab0f7ce9b289def9e93717853" title="checks if the module has a GPS fix, if yes, it querries the GPS module for the current position..." alt="" coords="166,56,298,83"/>
+<area shape="rect" id="node4" href="$network__functions_8c.html#aa39fbb7366c1944577dc471b5e39d81b" title="sim_insert_PIN" alt="" coords="173,107,291,133"/>
+<area shape="rect" id="node5" href="$network__functions_8h.html#a896ceec96dfa0be19d5f860f90537bb1" title="enables the GPRS connection. GPRS must be enabled before trying to establish TCP connection. This function goes through a series of the tests below. action is taken depending on the test result " alt="" coords="377,157,479,184"/>
+<area shape="rect" id="node6" href="$network__functions_8h.html#a8f6426d9956b4a51d120aeac52f07c01" title="opens a new TCP connection. if the function is called when there is already an open TCP connection th..." alt="" coords="558,208,717,235"/>
+<area shape="rect" id="node8" href="$network__functions_8h.html#af9394c619bccecd9020108f317437d2b" title="closes an open TCP connection. " alt="" coords="347,259,509,285"/>
+<area shape="rect" id="node9" href="$network__functions_8h.html#aa7506368f7c307c0908c6b62638ea21d" title="sends data over an open TCP connection. " alt="" coords="579,309,695,336"/>
+<area shape="rect" id="node10" href="$sim808_8h.html#a2605f3426f7113811f78dd74ec94b36f" title="it initialises the SIM808_typedef struct members and powers on the module. initializes the UARTs and ..." alt="" coords="195,360,269,387"/>
+<area shape="rect" id="node7" href="$network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="766,259,909,285"/>
+</map>
