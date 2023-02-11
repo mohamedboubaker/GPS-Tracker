@@ -94,6 +94,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;stdlib.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="sim808_8h_source.html">sim808.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="network__functions_8h_source.html">network_functions.h</a>&quot;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for network_functions.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c__incl.png" border="0" usemap="#network__functions_8c" alt=""/></div>
+<map name="network__functions_8c" id="network__functions_8c">
+<area shape="rect" id="node5" href="sim808_8h.html" title="Prototypes of functions that communicate with the SIM808 module and control it and definition of rela..." alt="" coords="287,80,369,107"/><area shape="rect" id="node8" href="network__functions_8h.html" title="GPRS, TCP and MQTT functions&#39; prototypes and definition of related parameters. " alt="" coords="393,80,548,107"/></map>
+</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -136,6 +143,24 @@ Functions</h2></td></tr>
 <p>closes an open TCP connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>SUCCESS if the connection was successfully closed, FAIL otherwise. </dd></dl>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_af9394c619bccecd9020108f317437d2b_cgraph.png" border="0" usemap="#network__functions_8c_af9394c619bccecd9020108f317437d2b_cgraph" alt=""/></div>
+<map name="network__functions_8c_af9394c619bccecd9020108f317437d2b_cgraph" id="network__functions_8c_af9394c619bccecd9020108f317437d2b_cgraph">
+<area shape="rect" id="node2" href="sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="403,5,503,32"/><area shape="rect" id="node3" href="sim808_8c.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="217,56,327,83"/><area shape="rect" id="node4" href="sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="377,56,530,83"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_af9394c619bccecd9020108f317437d2b_icgraph.png" border="0" usemap="#network__functions_8c_af9394c619bccecd9020108f317437d2b_icgraph" alt=""/></div>
+<map name="network__functions_8c_af9394c619bccecd9020108f317437d2b_icgraph" id="network__functions_8c_af9394c619bccecd9020108f317437d2b_icgraph">
+<area shape="rect" id="node2" href="network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="217,5,359,32"/></map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a896ceec96dfa0be19d5f860f90537bb1"></a>
@@ -162,6 +187,24 @@ Functions</h2></td></tr>
 <li>Checks if GPRS PDP context is defined, if not it tries to define it, enable it, and get IP address.</li>
 </ol>
 <dl class="section return"><dt>Returns</dt><dd>1 if gprs is active, 2 if SIM card is not detected, 3 if SIM PIN is incorrect, 4 if the signal is weak, 0 otherwise </dd></dl>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_a896ceec96dfa0be19d5f860f90537bb1_cgraph.png" border="0" usemap="#network__functions_8c_a896ceec96dfa0be19d5f860f90537bb1_cgraph" alt=""/></div>
+<map name="network__functions_8c_a896ceec96dfa0be19d5f860f90537bb1_cgraph" id="network__functions_8c_a896ceec96dfa0be19d5f860f90537bb1_cgraph">
+<area shape="rect" id="node2" href="sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="510,24,610,51"/><area shape="rect" id="node3" href="sim808_8c.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="323,24,434,51"/><area shape="rect" id="node4" href="sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="483,100,637,127"/><area shape="rect" id="node5" href="network__functions_8c.html#aa39fbb7366c1944577dc471b5e39d81b" title="sim_insert_PIN" alt="" coords="155,62,274,88"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_a896ceec96dfa0be19d5f860f90537bb1_icgraph.png" border="0" usemap="#network__functions_8c_a896ceec96dfa0be19d5f860f90537bb1_icgraph" alt=""/></div>
+<map name="network__functions_8c_a896ceec96dfa0be19d5f860f90537bb1_icgraph" id="network__functions_8c_a896ceec96dfa0be19d5f860f90537bb1_icgraph">
+<area shape="rect" id="node2" href="network__functions_8h.html#a8f6426d9956b4a51d120aeac52f07c01" title="opens a new TCP connection. if the function is called when there is already an open TCP connection th..." alt="" coords="155,5,314,32"/><area shape="rect" id="node3" href="network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="363,5,506,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -198,6 +241,24 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SUCCESS if the connection was successfully opened, FAIL otherwise </dd></dl>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_afb77841d58d38caaff77e98187d4ffad_cgraph.png" border="0" usemap="#network__functions_8c_afb77841d58d38caaff77e98187d4ffad_cgraph" alt=""/></div>
+<map name="network__functions_8c_afb77841d58d38caaff77e98187d4ffad_cgraph" id="network__functions_8c_afb77841d58d38caaff77e98187d4ffad_cgraph">
+<area shape="rect" id="node2" href="sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="718,13,818,40"/><area shape="rect" id="node3" href="sim808_8c.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="531,64,642,90"/><area shape="rect" id="node4" href="sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="691,165,845,192"/><area shape="rect" id="node5" href="network__functions_8c.html#a896ceec96dfa0be19d5f860f90537bb1" title="gprs_enable() enables GPRS connection. GPRS must be enabled before trying to establish TCP connection..." alt="" coords="213,64,315,90"/><area shape="rect" id="node6" href="network__functions_8c.html#aa39fbb7366c1944577dc471b5e39d81b" title="sim_insert_PIN" alt="" coords="363,64,482,90"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_afb77841d58d38caaff77e98187d4ffad_icgraph.png" border="0" usemap="#network__functions_8c_afb77841d58d38caaff77e98187d4ffad_icgraph" alt=""/></div>
+<map name="network__functions_8c_afb77841d58d38caaff77e98187d4ffad_icgraph" id="network__functions_8c_afb77841d58d38caaff77e98187d4ffad_icgraph">
+<area shape="rect" id="node2" href="network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="214,5,357,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -256,6 +317,15 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SUCCESS if the message is successfully delivered, 0 otherwise. </dd></dl>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_aaf75c40981bd91e5a0a611a47e5584f9_cgraph.png" border="0" usemap="#network__functions_8c_aaf75c40981bd91e5a0a611a47e5584f9_cgraph" alt=""/></div>
+<map name="network__functions_8c_aaf75c40981bd91e5a0a611a47e5584f9_cgraph" id="network__functions_8c_aaf75c40981bd91e5a0a611a47e5584f9_cgraph">
+<area shape="rect" id="node2" href="sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="974,273,1074,300"/><area shape="rect" id="node3" href="sim808_8c.html#a699ae4103a5d99b6bebdfcf3d440a75a" title="send_raw_debug" alt="" coords="212,476,343,502"/><area shape="rect" id="node4" href="network__functions_8c.html#afb77841d58d38caaff77e98187d4ffad" title="opens a new TCP connection. if the function is called when there is already an open TCP connection th..." alt="" coords="198,222,357,249"/><area shape="rect" id="node9" href="network__functions_8c.html#aa7506368f7c307c0908c6b62638ea21d" title="sends data over an open TCP connection. " alt="" coords="578,273,694,300"/><area shape="rect" id="node11" href="network__functions_8c.html#af9394c619bccecd9020108f317437d2b" title="closes an open TCP connection. " alt="" coords="555,374,717,401"/><area shape="rect" id="node5" href="sim808_8c.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="777,172,887,198"/><area shape="rect" id="node6" href="sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="947,96,1101,122"/><area shape="rect" id="node7" href="network__functions_8c.html#a896ceec96dfa0be19d5f860f90537bb1" title="gprs_enable() enables GPRS connection. GPRS must be enabled before trying to establish TCP connection..." alt="" coords="405,121,507,148"/><area shape="rect" id="node8" href="network__functions_8c.html#aa39fbb7366c1944577dc471b5e39d81b" title="sim_insert_PIN" alt="" coords="577,121,695,148"/><area shape="rect" id="node10" href="sim808_8c.html#aff9a9f03a0382bf577073df2aa44ef03" title="sends raw serial data to the SIM808 module through the AT_uart peripheral. Then it deletes the receiv..." alt="" coords="766,222,898,249"/></map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="aa7506368f7c307c0908c6b62638ea21d"></a>
@@ -292,6 +362,24 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SUCCESS if the data was successfully sent, FAIL otherwise. </dd></dl>
 
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_aa7506368f7c307c0908c6b62638ea21d_cgraph.png" border="0" usemap="#network__functions_8c_aa7506368f7c307c0908c6b62638ea21d_cgraph" alt=""/></div>
+<map name="network__functions_8c_aa7506368f7c307c0908c6b62638ea21d_cgraph" id="network__functions_8c_aa7506368f7c307c0908c6b62638ea21d_cgraph">
+<area shape="rect" id="node2" href="sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="379,22,479,49"/><area shape="rect" id="node3" href="sim808_8c.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="182,73,293,100"/><area shape="rect" id="node5" href="sim808_8c.html#aff9a9f03a0382bf577073df2aa44ef03" title="sends raw serial data to the SIM808 module through the AT_uart peripheral. Then it deletes the receiv..." alt="" coords="171,22,303,49"/><area shape="rect" id="node4" href="sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="353,73,506,100"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_aa7506368f7c307c0908c6b62638ea21d_icgraph.png" border="0" usemap="#network__functions_8c_aa7506368f7c307c0908c6b62638ea21d_icgraph" alt=""/></div>
+<map name="network__functions_8c_aa7506368f7c307c0908c6b62638ea21d_icgraph" id="network__functions_8c_aa7506368f7c307c0908c6b62638ea21d_icgraph">
+<area shape="rect" id="node2" href="network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="171,5,314,32"/></map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="aa39fbb7366c1944577dc471b5e39d81b"></a>
@@ -307,6 +395,24 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_aa39fbb7366c1944577dc471b5e39d81b_cgraph.png" border="0" usemap="#network__functions_8c_aa39fbb7366c1944577dc471b5e39d81b_cgraph" alt=""/></div>
+<map name="network__functions_8c_aa39fbb7366c1944577dc471b5e39d81b_cgraph" id="network__functions_8c_aa39fbb7366c1944577dc471b5e39d81b_cgraph">
+<area shape="rect" id="node2" href="sim808_8c.html#a30b959aa2173672d11610c75d5861865" title="sends a cmd to the module, if the parameter save_reply == 1 then it copies the reply into the paramet..." alt="" coords="174,31,285,57"/><area shape="rect" id="node3" href="sim808_8c.html#a1f05954d16de4c033a7aca1abd6455d4" title="is_subarray_present" alt="" coords="334,5,487,32"/><area shape="rect" id="node4" href="sim808_8c.html#a6e14828149893fb70f1cee3155436042" title="sends a debug message through the debug UART " alt="" coords="361,56,461,83"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="network__functions_8c_aa39fbb7366c1944577dc471b5e39d81b_icgraph.png" border="0" usemap="#network__functions_8c_aa39fbb7366c1944577dc471b5e39d81b_icgraph" alt=""/></div>
+<map name="network__functions_8c_aa39fbb7366c1944577dc471b5e39d81b_icgraph" id="network__functions_8c_aa39fbb7366c1944577dc471b5e39d81b_icgraph">
+<area shape="rect" id="node2" href="network__functions_8h.html#a896ceec96dfa0be19d5f860f90537bb1" title="enables the GPRS connection. GPRS must be enabled before trying to establish TCP connection. This function goes through a series of the tests below. action is taken depending on the test result " alt="" coords="173,5,275,32"/><area shape="rect" id="node3" href="network__functions_8h.html#a8f6426d9956b4a51d120aeac52f07c01" title="opens a new TCP connection. if the function is called when there is already an open TCP connection th..." alt="" coords="323,5,482,32"/><area shape="rect" id="node4" href="network__functions_8h.html#aaf75c40981bd91e5a0a611a47e5584f9" title="publishes a message to an MQTT topic with QoS 1 by default. " alt="" coords="531,5,674,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
