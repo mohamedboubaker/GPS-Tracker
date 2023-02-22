@@ -168,6 +168,10 @@ During the trip the GPRS connection suffered 3 times a sudden disruption, but th
 
 # 5. Conclusion
 ## 5.1 Summary
+In conclusion, the objective of this project was to design and develop a GPS tracking system. The system comprises a custom-designed PCB board, firmware running on an STM32, and a server for collecting and visualizing data. The PCB board includes a power regulation circuit, GPS/GPRS module, and an STM32 MCU. The firmware includes code to control the SIM808 module and extract GPS and speed information. The server comprises an MQTT broker, an MQTT subscriber, an SQL database, and a web application to display the device's location on a map.
+
+The project went through a prototyping phase, circuit design, PCB layout design, and firmware development. Finally, the system was tested on an ICE train, traveling at a maximum speed of 300km/h, from Nuremberg to Munich, and the results demonstrated the reliability of the device. 
+
 ## 5.2 Reference and bibliography
 - [1] <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf" > Texas Instruments TPS5430DDA datasheet. </a>
 - [2] <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> SIM808_Hardware Design_V1.02 </a>
