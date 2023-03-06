@@ -176,4 +176,3 @@ The project went through a prototyping phase, circuit design, PCB layout design,
 - [1] <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf" > Texas Instruments TPS5430DDA datasheet. </a>
 - [2] <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> SIM808_Hardware Design_V1.02 </a>
 - [3] <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> STM32F030x8 datasheet </a>
-https://drive.google.com/file/d/1xVtOJvHFS2v52yKJd-E9AUKkd-Jy0oyI/view
