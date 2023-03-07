@@ -24,7 +24,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [2.1 System architecture](#21-System-architecture)
   * [2.2 Firmware design](#22-Firmware-design)
      + [2.2.1 Code documentation](#221-Code-documentation) 
-     + [2.2.2 AES Implementation](#222-aes-implemenation)
+     + [2.2.2 AES Implementation](#222-aes-implementation)
   * [2.3 Server design](#23-Server-design)
   * [2.4 Circuit design](#24-Circuit-design)
      + [2.4.1 Voltage regulation](#241-Voltage-regulation)
