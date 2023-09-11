@@ -1,7 +1,7 @@
 # 1. Introduction
 ## 1.1 Project overview
 
-The objective of this project is to deliever a GPS tracking system that can be used to track a vehicule. The system includes a device that periodically sends its position and speed information to a remote server. The data is stored on the server where it can be accessed through a web browser for visualization.
+The objective of this project is to deliver a custom 2G GPS tracker which can be considered as a light GPS tracker that can serve multiple purposes, mainly to track a vehicule. The system includes a device that periodically sends its position and speed information to a remote server. The data is stored on the server where it can be accessed through a web browser for visualization.
 
 The scope of the project is more focoused on the embedded side. In other words, the developement of the server and visualization platform are not mature. However, this work is mainly concerned with: designing a circuit, manufacturing the PCB, and developing firmware to power it, all while ensuring reliability. Below is a picture of the  produced PCB.
 
@@ -20,6 +20,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
   * [1.1 Project overview](#11-Project-overview)
   * [1.2 Toolchain](#12-Toolchain)
   * [1.3 Project timeline](#13-Project-timeline)
+  * [1.4 Possible use cases](#14-Possible-use-cases)
 - [2. System design](#2-System-design)
   * [2.1 System architecture](#21-System-architecture)
   * [2.2 Firmware design](#22-Firmware-design)
@@ -40,6 +41,7 @@ The scope of the project is more focoused on the embedded side. In other words, 
 - [5. Conclusion](#5-Conclusion)
   * [5.1 Summary](#51-Summary)
   * [5.2 Reference and bibliography](#52-Reference-and-bibliography)
+  * [5.3 FAQ](#53-How-much-data-does-GPS-tracker-use)
 
 ## 1.2 Toolchain
 
@@ -61,7 +63,33 @@ The second phase involved designing the circuit and PCB. After the hardware desi
 
 In the third phase, the firmware that was initially developed during the POC stage was further refined to fit the new custom PCB and enhanced to become more reliable. 
 
+## 1.4 Possible use-cases
+This GPS tracker could be installed in many vehicle types, for example:
 
+- Scooter GPS tracker
+- Electric bike GPS tracker
+- Tractor GPS tracker
+- Jet Ski GPS tracker
+- Forklift GPS tracker
+- Container GPS tracker
+- GPS tracker for appliances
+- GPS tracker for lown mower
+- General black box GPS tracker
+
+It can also be extended for other use-cases other than vehicles, for example:
+- GPS tracker for kids shoes
+- GPS tracker with voice recorder
+- Horse GPS tracker, i.e, GPS tracker for horses.
+- GPS tracker for rental equipment
+- SIM card  canbe droped in favor of lora or sigfox which means it will become a lora GPS tracker or Sigfox GPS tracker
+- SIM808 can be changed with a 5g chip to make it a 5g GPS tracker
+- GPS tracker with panic button that can be used for for safety applications
+
+Since the PCB exposes many GPIOs the module can be further developed to add more features, for example:
+
+- Car GPS tracker with audio recorder
+- GPS tracker with fuel cut off to remotely shutdown vehicles
+- Add Solar panel to make it a solar gps tracker
 # 2. System design
 ## 2.1 System architecture
 
@@ -70,6 +98,7 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
 * The PCB circuit contains 3 major elements: 
      * A power regulation circuit based on the Texas Instruments TPS5430DDA DC-DC down converter, which is configured to safely convert any voltage between 5.5V and 20V to 3.6V. 
      * A GPS/GPRS module: SIM808, which is capable of receiving GPS signals and also connecting to a GPRS network, which means connecting to the internet.
+     * This module relies on a gps tracker sim card plan which is a sim card for GPS tracking and other IoT applications from the provider thingsmobile.com which has coverage in many countries and which can be considered as a cheap sim card for a GPS tracker.
      * An STM32 MCU: STM32F030, which is the brains of the PCB. It controls the SIM808 module via UART.
 
 * The firmware is composed of 4 main source files
@@ -92,13 +121,13 @@ The system is composed of 3 main parts: a PCB, firmware and a server.
 ## 2.2 Firmware design
 ### 2.2.1 Code documentation
 
-The code features Doxygen-style documentation for all functions, providing clear explanations of their operations. This documentation has been compiled and can be accessed at the following link  <a href="https://mohamedboubaker.github.io/GPS-Tracker/files.html">Code documentation</a> 
+The code is developed to serve as GPS tracker API for AT-cmd-enabled GPS modules. it features Doxygen-style documentation for all functions, providing clear explanations of their operations. This documentation has been compiled and can be accessed at the following link  <a href="https://mohamedboubaker.github.io/GPS-Tracker/files.html">Code documentation</a> 
 
 ### 2.2.2 AES Implementation
 The implementation details of the AES encryption algorithm are described in a seperae repository <a href="https://github.com/mohamedboubaker/AES-128"> here </a>.
 ## 2.3 Server design
 ## 2.4 Circuit design
-
+Below is the GPS Tracker wiring diagram
 ![alt text](https://github.com/mohamedboubaker/GPS-Tracker/blob/main/Pictures/circuit_diagram.jpg)
 *Figure 2. Circuit schematic*
 
@@ -113,7 +142,7 @@ The voltage regulation circuit is designed to achieve the following goals:
 
 Reverse polarity protection is achieved through the MOSFET transistor denoted as Q1 in the schematic above which has a Gate-Source voltage rating of 20V. This limits the maximum input voltage of the circuit to 20V. 
 
-Protection against short circuits is provided through the Fuse denoted as F1 with a rating of 2.5A. (In practice, 2.5 A is a very high current for such a circuit. If a short circuit happens, many components would fail before the fuse will break the current. This value needs to be reconsidered.)
+Protection against short circuits is provided through the Fuse denoted as F1 with a rating of 2.5A. (In practice, 2.5 A is a very high current for such a circuit. If a short circuit happens, many components would fail before the fuse breaks the current. This value needs to be reconsidered.)
 
 The rest of the requirements are met using the Texas Instruments TPS5430DDA DC-DC down converter. The components on the right side of TPS5430DDA in the schematic are designed according to the recommendations of the datasheet <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf">[1]</a>. 
 
@@ -137,6 +166,8 @@ The SIM808 module is connected to a micro SIM card holder. The lines between the
 The GPS and GPRS antenna outputs are connected to 2 U.FL connectors respectively.
 
 The SIM808 module and the STM32 MCU communicate using UART. The STM32 can also power on, reset and check the status of the module through its GPIO pins which are connected SIM_PWRKEY, SIM_RESET and STATUS pins on the module. These SIM808 pins including the UART are also exposed through the header pins connector on the PCB. Which enable controlling and communicating with the module from the outside, without having to write a program to do so on the STM32. 
+
+
 
 ### 2.4.3 MCU
 The STM32 is connected to a Reset and a User button, and 2 LEDs: D1 and D2. The User button SW2 is surrounded by a typical debouncing circuit which is inspired from the debouncing circuit found on the STM32F4 Discovery board.
@@ -178,3 +209,6 @@ The project went through a prototyping phase, circuit design, PCB layout design,
 - [1] <a href="https://datasheet.octopart.com/TPS5430DDA-Texas-Instruments-datasheet-8428127.pdf" > Texas Instruments TPS5430DDA datasheet. </a>
 - [2] <a href="https://www.openhacks.com/uploadsproductos/sim808_hardware_design_v1.02.pdf"> SIM808_Hardware Design_V1.02 </a>
 - [3] <a href="https://www.st.com/resource/en/datasheet/stm32f030f4.pdf"> STM32F030x8 datasheet </a>
+
+## 5.3 FAQ
+### How much data does GPS tracker use
