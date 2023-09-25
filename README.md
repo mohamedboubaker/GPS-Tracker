@@ -214,6 +214,4 @@ The project went through a prototyping phase, circuit design, PCB layout design,
 ## 5.3 FAQ
 ### How much data does GPS tracker use
 ## 5.4 Contact Information
-E-mail: mohamed.boubaker@outlook.it
-
-Linkedin: https://www.linkedin.com/in/mohamed-boubaker/
+E-mail: mohamed.boubaker@outlook.it | Linkedin: https://www.linkedin.com/in/mohamed-boubaker/
