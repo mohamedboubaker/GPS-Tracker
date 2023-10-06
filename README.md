@@ -7,4 +7,6 @@
 *Produced PCB board*
 
 Contact Information
-E-mail: mohamed.boubaker@outlook.it | Linkedin: https://www.linkedin.com/in/mohamed-boubaker/
+
+E-mail: mohamed.boubaker@outlook.it 
+Linkedin: https://www.linkedin.com/in/mohamed-boubaker/
